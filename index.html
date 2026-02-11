@@ -4,343 +4,400 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Harmony in Diversity - TRDC Annual Concert 2026</title>
- <style>
-  body {
-    font-family: "Times New Roman", serif;
-    margin: 0;
-    padding: 0;
-    background-color: #fdfdfd;
-  }
-  .cv-container {
-    border: 2px solid #003366;
-    border-radius: 15px;
-    padding: 30px;
-    max-width: 900px;
-    margin: auto;
-    overflow-y: auto;
-    max-height: 100vh;
-  }
-  h1 {
-    text-align: center;
-    font-size: 28px;
-    font-weight: bold;
-    color: white;
-    background-color: black;
-    letter-spacing: 2px;
-    margin-bottom: 30px;
-  }
-  h2 {
-    color: #003366;
-    margin-top: 30px;
-    font-size: 20px;
-  }
-  
-  /* ✅ Image centering and responsive styles */
-  .stage-image-container {
-    text-align: center;
-    margin: 30px 0;
-  }
-  .stage-image-container img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  }
-  
-  .personal-info {
-    display: flex;
-    align-items: flex-start;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-  .personal-info img {
-    width: 120px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    flex-shrink: 0;
-  }
-  .info-text {
-    flex: 1;
-    min-width: 200px;
-  }
-  .info-text p {
-    margin: 6px 0;
-  }
-  .info-text strong {
-    display: inline-block;
-    width: 90px;
-  }
-  .summary p {
-    text-align: justify;
-  }
-  .achievements ul {
-    padding-left: 20px;
-  }
-  .achievements li {
-    margin-bottom: 10px;
-  }
-  a {
-    color: #0056b3;
-    text-decoration: none;
-  }
-  a:hover {
-    text-decoration: underline;
-  }
-.schedule-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
-  background-color: white;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.schedule-table thead {
-  background-color: #003366;
-  color: white;
-}
-
-.schedule-table th {
-  padding: 15px;
-  text-align: left;
-  font-weight: bold;
-  letter-spacing: 1px;
-}
-
-.schedule-table td {
-  padding: 12px 15px;
-  border-bottom: 1px solid #ddd;
-  vertical-align: top;
-}
-
-.schedule-table tbody tr:hover {
-  background-color: #f5f5f5;
-}
-
-.schedule-table tbody tr:last-child td {
-  border-bottom: 2px solid #003366;
-}
-
-/* Highlight break time */
-.break-row {
-  background-color: #fff3cd;
-  font-weight: bold;
-}
-
-.break-row:hover {
-  background-color: #ffe69c !important;
-}
-
-   .video-container {
-  text-align: center;
-  margin: 30px auto;
-  max-width: 800px;
-}
-
-.video-container iframe {
-  width: 100%;
-  max-width: 560px;
-  height: 315px;
-  border-radius: 10px;
-}
-
-
-.video-wrapper {
-  position: relative;
-  width: 100%;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
-  height: 0;
-  margin: 30px 0;
-  overflow: hidden;
-}
-
-.video-wrapper iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-  border-radius: 10px;
-}
-
-
-   
-  /* -------------------- */
-  /* ✅ Mobile Adjustments */
-  /* -------------------- */
-  @media screen and (max-width: 600px) {
-    .cv-container {
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: "Georgia", "Times New Roman", serif;
+      margin: 0;
       padding: 20px;
-      border-radius: 0;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      line-height: 1.6;
     }
-    h1 {
-      font-size: 22px;
-      color: white;
+    
+    .container {
+      background-color: white;
+      border: 3px solid #003366;
+      border-radius: 15px;
+      padding: 40px;
+      max-width: 950px;
+      margin: 0 auto;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Header Styles */
+    .main-title {
+      text-align: center;
+      font-size: 32px;
       font-weight: bold;
-      background-color: black;
+      color: white;
+      background: linear-gradient(135deg, #003366 0%, #005599 100%);
+      letter-spacing: 3px;
+      margin: -40px -40px 40px -40px;
+      padding: 30px 20px;
+      border-radius: 12px 12px 0 0;
+      text-transform: uppercase;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
-        h2 {
-      font-size: 18px;
+    
+    .section-title {
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(135deg, #003366 0%, #005599 100%);
+      letter-spacing: 2px;
+      margin: 40px -40px 30px -40px;
+      padding: 20px;
+      text-transform: uppercase;
     }
-    .stage-image-container {
+    
+    h2 {
+      color: #003366;
+      margin-top: 30px;
+      font-size: 20px;
+      border-bottom: 2px solid #003366;
+      padding-bottom: 10px;
+    }
+    
+    /* Image Styles */
+    .image-container {
+      text-align: center;
+      margin: 30px 0;
+    }
+    
+    .image-container img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .logo {
+      max-width: 250px !important;
+    }
+    
+    .qr-code {
+      max-width: 300px !important;
+      border: 3px solid #003366;
+      padding: 15px;
+      background-color: white;
+    }
+    
+    /* Schedule Table */
+    .schedule-table {
+      width: 100%;
+      border-collapse: collapse;
       margin: 20px 0;
+      background-color: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
     }
-    .personal-info {
-      flex-direction: column;
-      align-items: center;
+    
+    .schedule-table thead {
+      background: linear-gradient(135deg, #003366 0%, #005599 100%);
+      color: white;
+    }
+    
+    .schedule-table th {
+      padding: 18px 15px;
+      text-align: left;
+      font-weight: bold;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+    
+    .schedule-table td {
+      padding: 15px;
+      border-bottom: 1px solid #e0e0e0;
+      vertical-align: top;
+    }
+    
+    .schedule-table tbody tr:hover {
+      background-color: #f8f9fa;
+      transition: background-color 0.3s ease;
+    }
+    
+    .schedule-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .break-row {
+      background-color: #fff3cd !important;
+      font-weight: bold;
+    }
+    
+    .break-row:hover {
+      background-color: #ffe69c !important;
+    }
+    
+    /* Links and Social Media */
+    .social-links {
+      text-align: center;
+      margin: 25px 0;
+      padding: 20px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      border-left: 4px solid #003366;
+    }
+    
+    .social-links a {
+      color: #0056b3;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    
+    .social-links a:hover {
+      color: #003366;
+      text-decoration: underline;
+    }
+    
+    /* Info Box */
+    .info-box {
+      background-color: #f0f7ff;
+      border-left: 4px solid #003366;
+      padding: 20px;
+      margin: 25px 0;
+      border-radius: 5px;
+    }
+    
+    .info-box p {
+      margin: 8px 0;
       text-align: center;
     }
-    .info-text {
-      text-align: left;
-      width: 100%;
-    }
-    .info-text strong {
-      width: auto;
-      display: block;
-      margin-bottom: 2px;
-    }
-    .personal-info img {
-      margin-bottom: 15px;
-    }
-.schedule-table {
-    font-size: 14px;
-  }
-  
-  .schedule-table th,
-  .schedule-table td {
-    padding: 10px 8px;
-  }
-  
-  .schedule-table th:first-child,
-  .schedule-table td:first-child {
-    width: 35%;
-  }
-    .video-container iframe {
-    height: 200px;
-  }  
-  }
-
-   
-</style>
-</head>
-  
-<body>
-  <div class="cv-container">
-    <h1>HARMONY IN DIVERSITY</h1>
     
-    <!-- ✅ Centered and responsive stage image -->
-    <div class="stage-image-container">
-      <img src="TRDC - Stage.jpg" alt="Stage" />
+    /* Ticket Section */
+    .ticket-section {
+      text-align: center;
+      padding: 30px;
+      background: linear-gradient(135deg, #f0f7ff 0%, #e6f2ff 100%);
+      border-radius: 10px;
+      margin: 20px 0;
+      border: 2px dashed #003366;
+    }
+    
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 2px solid #003366;
+      color: #666;
+      font-style: italic;
+      font-size: 14px;
+    }
+    
+    hr {
+      border: none;
+      border-top: 2px solid #003366;
+      margin: 40px 0;
+    }
+    
+    /* Mobile Responsiveness */
+    @media screen and (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+      
+      .container {
+        padding: 20px;
+        border-radius: 10px;
+      }
+      
+      .main-title {
+        font-size: 24px;
+        letter-spacing: 2px;
+        margin: -20px -20px 30px -20px;
+        padding: 20px 15px;
+      }
+      
+      .section-title {
+        font-size: 20px;
+        margin: 30px -20px 20px -20px;
+        padding: 15px;
+      }
+      
+      h2 {
+        font-size: 18px;
+      }
+      
+      .schedule-table {
+        font-size: 13px;
+      }
+      
+      .schedule-table th,
+      .schedule-table td {
+        padding: 10px 8px;
+      }
+      
+      .schedule-table th:first-child,
+      .schedule-table td:first-child {
+        width: 30%;
+      }
+      
+      .ticket-section {
+        padding: 20px;
+      }
+    }
+    
+    @media screen and (max-width: 480px) {
+      .main-title {
+        font-size: 20px;
+      }
+      
+      .section-title {
+        font-size: 18px;
+      }
+      
+      .schedule-table {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Main Title -->
+    <h1 class="main-title">Harmony in Diversity</h1>
+    
+    <!-- Stage Image -->
+    <div class="image-container">
+      <img src="TRDC - Stage.jpg" alt="TRDC Stage">
     </div>
-      
-    <section>
-       
-    <h1>Run Down</h1>
-<table class="schedule-table">
-  <thead>
-    <tr>
-      <th>WAKTU</th>
-      <th>KEGIATAN</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>15.00 – 15.55</td>
-      <td>Registrasi / Open Gate</td>
-    </tr>
-    <tr>
-      <td>16.00 – 16.10</td>
-      <td>
-        Pembukaan Acara (MC)<br>
-        - Doa<br>
-        - Sambutan
-      </td>
-    </tr>
-    <tr>
-      <td>16.10 – 16.20</td>
-      <td>Opening : Perform PS Anak</td>
-    </tr>
-    <tr>
-      <td>16.20 – 16.35</td>
-      <td>
-        Perform The Resonare Deo Choir :<br>
-        - O Magnum Mysterium (Kevin Memley)<br>
-        - Cantate Domino (Josu Elberdin)<br>
-        - Joy To The World (Philip Lawson)<br>
-        - A Jubilant Song (J.M.Martin)
-      </td>
-    </tr>
-    <tr class="break-row">
-      <td>16.35 – 16.50</td>
-      <td>BREAK TIME</td>
-    </tr>
-    <tr>
-      <td>16.50 – 17.05</td>
-      <td>
-        - Festival Sanctus (John Leavitt)<br>
-        - Twinkle Twinkle Little Star (Daniel Elder)<br>
-        - The Lion Sleep Tonight (Kirby Shaw)<br>
-        - Thankfull
-      </td>
-    </tr>
-    <tr>
-      <td>17.05 – 17.35</td>
-      <td>Perform The Archipelago Singers (diakhiri 1 lagu bersama dengan TRDC)</td>
-    </tr>
-    <tr>
-      <td>17.35 – 17.45</td>
-      <td>
-        Closing :<br>
-        - Doa
-      </td>
-    </tr>
-  </tbody>
-</table>
-      
-    <h1>TRDC - Portofolio</h1>
-    <h1>Guest Star</h1>
-<h2>
-   <div class="stage-image-container">
-    <img src="Archies_Logo.JPG" alt="Archies_Logo" class="logo" />
-       </div>
-
-   <div class="stage-image-container">
-    <img src="Achi.png" alt="Archies" class="foto" />
-       </div>
-
-
-<p style="text-align: center;">
-  Instagram <a href="https://www.instagram.com/thearchipelagosingers">@thearchipelagosingers</a><br>
-  Blog <a href="https://thearchipelagosingers.blogspot.com/p/home.html">Blog The Archipelago Singers</a><br>
-  Youtube <a href="https://www.youtube.com/@thearchipelagosingers">Youtube The Archipelago Singers</a><br>
-</p>
-  </h2>
-      
-      <h1>
-        Lokasi
-        
-      </h1>
-      <div class="stage-image-container">
-    <img src="Map TRDC.png" alt="Lokasi" class="lokasi" />
-       </div>
-    <h2><p>Lokasi google map  <a href="https://maps.app.goo.gl/DkcWjstopYtgAY9W9">https://maps.app.goo.gl/Ciber</a></p></h2>
-      
-      <h1>Pemesanan Tiket</h1>
-    <div class="stage-image-container">
-    <img src="Bar Code TRDC.png" alt="Tiket" class="qr-code" />
-       </div>
-    <h2><p>Tiket bisa dipesan dengan scan QR code di atas atau klik di <a href="https://docs.google.com/forms/d/e/1FAIpQLSfLfhaCw-BQbC9qtd9aRxBf69Mc3t_AtCrU0ZhOz21nBCkzxQ/viewform?pli=1">sini</a>
-    <br><br>
-    </p></h2>
-
-      
-     </section>
-    <hr style="border: 1px solid #003366;">
- <center>
-   Organized by : Svarga Antari Choir
- </center>
+    
+    <!-- Run Down Section -->
+    <h1 class="section-title">Run Down</h1>
+    
+    <table class="schedule-table">
+      <thead>
+        <tr>
+          <th>Waktu</th>
+          <th>Kegiatan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>15.00 – 15.55</td>
+          <td>Registrasi / Open Gate</td>
+        </tr>
+        <tr>
+          <td>16.00 – 16.10</td>
+          <td>
+            Pembukaan Acara (MC)<br>
+            • Doa<br>
+            • Sambutan
+          </td>
+        </tr>
+        <tr>
+          <td>16.10 – 16.20</td>
+          <td>Opening: Perform PS Anak</td>
+        </tr>
+        <tr>
+          <td>16.20 – 16.35</td>
+          <td>
+            <strong>Perform The Resonare Deo Choir:</strong><br>
+            • O Magnum Mysterium (Kevin Memley)<br>
+            • Cantate Domino (Josu Elberdin)<br>
+            • Joy To The World (Philip Lawson)<br>
+            • A Jubilant Song (J.M.Martin)
+          </td>
+        </tr>
+        <tr class="break-row">
+          <td>16.35 – 16.50</td>
+          <td>⏸️ BREAK TIME</td>
+        </tr>
+        <tr>
+          <td>16.50 – 17.05</td>
+          <td>
+            <strong>Perform The Resonare Deo Choir (continued):</strong><br>
+            • Festival Sanctus (John Leavitt)<br>
+            • Twinkle Twinkle Little Star (Daniel Elder)<br>
+            • The Lion Sleep Tonight (Kirby Shaw)<br>
+            • Thankful
+          </td>
+        </tr>
+        <tr>
+          <td>17.05 – 17.35</td>
+          <td>Perform The Archipelago Singers<br>
+          <em>(diakhiri 1 lagu bersama dengan TRDC)</em></td>
+        </tr>
+        <tr>
+          <td>17.35 – 17.45</td>
+          <td>
+            <strong>Closing:</strong><br>
+            • Doa
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <!-- Portfolio Section -->
+    <h1 class="section-title">TRDC Portfolio</h1>
+    <div class="info-box">
+      <p><em>Coming soon...</em></p>
+    </div>
+    
+    <!-- Guest Star Section -->
+    <h1 class="section-title">Guest Star</h1>
+    
+    <div class="image-container">
+      <img src="Archies_Logo.JPG" alt="The Archipelago Singers Logo" class="logo">
+    </div>
+    
+    <div class="image-container">
+      <img src="Achi.png" alt="The Archipelago Singers">
+    </div>
+    
+    <div class="social-links">
+      <strong>Follow The Archipelago Singers:</strong><br><br>
+      📷 Instagram: <a href="https://www.instagram.com/thearchipelagosingers" target="_blank">@thearchipelagosingers</a><br>
+      📝 Blog: <a href="https://thearchipelagosingers.blogspot.com/p/home.html" target="_blank">The Archipelago Singers Blog</a><br>
+      🎥 YouTube: <a href="https://www.youtube.com/@thearchipelagosingers" target="_blank">The Archipelago Singers Channel</a>
+    </div>
+    
+    <!-- Location Section -->
+    <h1 class="section-title">Lokasi</h1>
+    
+    <div class="image-container">
+      <img src="Map TRDC.png" alt="Location Map">
+    </div>
+    
+    <div class="info-box">
+      <p>📍 <strong>Google Maps:</strong> 
+        <a href="https://maps.app.goo.gl/DkcWjstopYtgAY9W9" target="_blank">Lihat di Google Maps</a>
+      </p>
+    </div>
+    
+    <!-- Ticket Booking Section -->
+    <h1 class="section-title">Pemesanan Tiket</h1>
+    
+    <div class="ticket-section">
+      <div class="image-container">
+        <img src="Bar Code TRDC.png" alt="QR Code Pemesanan Tiket" class="qr-code">
+      </div>
+      <p style="margin-top: 20px; font-size: 16px;">
+        🎫 <strong>Pesan tiket Anda sekarang!</strong><br>
+        Scan QR code di atas atau klik 
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfLfhaCw-BQbC9qtd9aRxBf69Mc3t_AtCrU0ZhOz21nBCkzxQ/viewform?pli=1" target="_blank">
+          <strong>di sini</strong>
+        </a>
+      </p>
+    </div>
+    
+    <!-- Footer -->
+    <hr>
+    <div class="footer">
+      <p><strong>Organized by:</strong> Svarga Antari Choir</p>
+      <p style="font-size: 12px; margin-top: 10px;">© 2026 TRDC Annual Concert - All Rights Reserved</p>
+    </div>
   </div>
 </body>
 </html>
