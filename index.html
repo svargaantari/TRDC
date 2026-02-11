@@ -85,6 +85,50 @@
   a:hover {
     text-decoration: underline;
   }
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.schedule-table thead {
+  background-color: #003366;
+  color: white;
+}
+
+.schedule-table th {
+  padding: 15px;
+  text-align: left;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.schedule-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+  vertical-align: top;
+}
+
+.schedule-table tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+.schedule-table tbody tr:last-child td {
+  border-bottom: 2px solid #003366;
+}
+
+/* Highlight break time */
+.break-row {
+  background-color: #fff3cd;
+  font-weight: bold;
+}
+
+.break-row:hover {
+  background-color: #ffe69c !important;
+}
+   
   /* -------------------- */
   /* ✅ Mobile Adjustments */
   /* -------------------- */
@@ -116,7 +160,23 @@
     .personal-info img {
       margin-bottom: 15px;
     }
+.schedule-table {
+    font-size: 14px;
   }
+  
+  .schedule-table th,
+  .schedule-table td {
+    padding: 10px 8px;
+  }
+  
+  .schedule-table th:first-child,
+  .schedule-table td:first-child {
+    width: 35%;
+  }
+    
+  }
+
+   
 </style>
 </head>
   
@@ -130,11 +190,69 @@
     </div>
       
     <section>
- 
-   
- 
-      
+       
     <h1>Run Down</h1>
+<table class="schedule-table">
+  <thead>
+    <tr>
+      <th>WAKTU</th>
+      <th>KEGIATAN</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>15.00 – 15.55</td>
+      <td>Registrasi / Open Gate</td>
+    </tr>
+    <tr>
+      <td>16.00 – 16.10</td>
+      <td>
+        Pembukaan Acara (MC)<br>
+        - Doa<br>
+        - Sambutan
+      </td>
+    </tr>
+    <tr>
+      <td>16.10 – 16.20</td>
+      <td>Opening : Perform PS Anak</td>
+    </tr>
+    <tr>
+      <td>16.20 – 16.35</td>
+      <td>
+        Perform The Resonare Deo Choir :<br>
+        - O Magnum Mysterium (Kevin Memley)<br>
+        - Cantate Domino (Josu Elberdin)<br>
+        - Joy To The World (Philip Lawson)<br>
+        - A Jubilant Song (J.M.Martin)
+      </td>
+    </tr>
+    <tr class="break-row">
+      <td>16.35 – 16.50</td>
+      <td>BREAK TIME</td>
+    </tr>
+    <tr>
+      <td>16.50 – 17.05</td>
+      <td>
+        - Festival Sanctus (John Leavitt)<br>
+        - Twinkle Twinkle Little Star (Daniel Elder)<br>
+        - The Lion Sleep Tonight (Kirby Shaw)<br>
+        - Thankfull
+      </td>
+    </tr>
+    <tr>
+      <td>17.05 – 17.35</td>
+      <td>Perform The Archipelago Singers (diakhiri 1 lagu bersama dengan TRDC)</td>
+    </tr>
+    <tr>
+      <td>17.35 – 17.45</td>
+      <td>
+        Closing :<br>
+        - Doa
+      </td>
+    </tr>
+  </tbody>
+</table>
+      
     <h1>TRDC - Portofolio</h1>
     <h1>Guest Star</h1>
 
