@@ -11,7 +11,6 @@
     padding: 0;
     background-color: #fdfdfd;
   }
-
   .cv-container {
     border: 2px solid #003366;
     border-radius: 15px;
@@ -21,69 +20,71 @@
     overflow-y: auto;
     max-height: 100vh;
   }
-
   h1 {
     text-align: center;
     font-size: 28px;
     letter-spacing: 2px;
     margin-bottom: 30px;
   }
-
   h2 {
     color: #003366;
     margin-top: 30px;
     font-size: 20px;
   }
-
+  
+  /* ✅ Image centering and responsive styles */
+  .stage-image-container {
+    text-align: center;
+    margin: 30px 0;
+  }
+  .stage-image-container img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  
   .personal-info {
     display: flex;
     align-items: flex-start;
     gap: 20px;
     flex-wrap: wrap;
   }
-
   .personal-info img {
     width: 120px;
     border-radius: 10px;
     border: 1px solid #ccc;
     flex-shrink: 0;
   }
-
   .info-text {
     flex: 1;
     min-width: 200px;
   }
-
   .info-text p {
     margin: 6px 0;
   }
-
   .info-text strong {
     display: inline-block;
     width: 90px;
   }
-
   .summary p {
     text-align: justify;
   }
-
   .achievements ul {
     padding-left: 20px;
   }
-
   .achievements li {
     margin-bottom: 10px;
   }
-
   a {
     color: #0056b3;
     text-decoration: none;
   }
-
   a:hover {
     text-decoration: underline;
   }
-
   /* -------------------- */
   /* ✅ Mobile Adjustments */
   /* -------------------- */
@@ -91,61 +92,5 @@
     .cv-container {
       padding: 20px;
       border-radius: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh; /* This centers vertically on the full screen */
     }
-
     h1 {
-      font-size: 22px;
-    }
-
-    .personal-info {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    .info-text {
-      text-align: left;
-      width: 100%;
-    }
-
-    .info-text strong {
-      width: auto;
-      display: block;
-      margin-bottom: 2px;
-    }
-
-    .personal-info img {
-      margin-bottom: 15px;
-    }
-  }
-</style>
-
-</head>
-
-  
-<body>
-  <div class="cv-container">
-      <h1>HARMONY IN DIVERSITY</h1>
-        <img src="TRDC - Stage.jpg" alt="Stage" />
-      
-    <section>
- 
-    </section>
-
-
-    <h2>Run Down</h2>
-
-  <h2>TRDC - Portofolio</h3>
-  
-
-  <h2>Guest Star </h2>
-  
-
- 
-</div>
-</body>
-</html>
