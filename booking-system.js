@@ -4,13 +4,14 @@
 // TODO: Replace with your Firebase configuration
 // Get this from Firebase Console after creating your project
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyDz5Qe96R4qEHTWu_MCq5nwMSwDuQi_kbg",
+  authDomain: "trdc-annual-concert.firebaseapp.com",
+  databaseURL: "https://trdc-annual-concert-default-rtdb.firebaseio.com",
+  projectId: "trdc-annual-concert",
+  storageBucket: "trdc-annual-concert.firebasestorage.app",
+  messagingSenderId: "291931379499",
+  appId: "1:291931379499:web:31e1d0e39f603b568a976e",
+  measurementId: "G-XYJE4D8DC2"
 };
 
 // Initialize Firebase
@@ -27,15 +28,15 @@ try {
 // Venue Configuration
 const VENUE_CONFIG = {
     vip: {
-        name: 'VIP',
-        price: 500000,
-        rows: 3,
+        name: 'GOLD',
+        price: 10000,
+        rows: 5,
         seatsPerRow: 8,
         color: '#FFD700'
     },
     regular: {
         name: 'Regular',
-        price: 250000,
+        price: 75000,
         rows: 5,
         seatsPerRow: 10,
         color: '#87CEEB'
