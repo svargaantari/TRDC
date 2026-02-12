@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Select Your Seats</title>
+  </head>
+  <body>
+    <div id="seatsquirrel-picker-root"></div>
+
+    <script>
+      window.SeatSquirrelConfig = {
+        onReady: async function () {
+          const layout = await fetch('/api/layouts/123').then(r => r.json());
+          SeatSquirrel.picker.loadLayout(layout);
+
+          const availability = await fetch('/api/availability/123').then(r =>
+            r.json(),
+          );
+          SeatSquirrel.picker.setAvailability({ mode: 'by-slug', ...availability });
+        },
+
+        onSelectionChanged: function (data) {
+          document.getElementById('cart-count').textContent =
+            data.totals.count;
+          document.getElementById('cart-total').textContent =
+            '$' + (data.totals.amount / 100).toFixed(2);
+        },
+
+        onComplete: async function (data) {
+          const response = await fetch('/api/checkout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              selections: data.selections,
+              total: data.totals.amount,
+            }),
+          });
+          if (response.ok) {
+            window.location.href = '/checkout/success';
+          }
+        },
+
+        onError: function (error) {
+          console.error(error);
+        },
+      };
+    </script>
+
+    <!-- Bundled app script (do not modify) -->
+    <script type="module" src="/assets/standalone-picker.js"></script>
+  </body>
+</html>
