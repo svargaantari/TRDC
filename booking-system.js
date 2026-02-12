@@ -1,0 +1,388 @@
+// TRDC Concert Booking System with Firebase
+// Step 1: Configure Firebase (You'll add your config here)
+
+// TODO: Replace with your Firebase configuration
+// Get this from Firebase Console after creating your project
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
+
+// Initialize Firebase
+let database;
+try {
+    firebase.initializeApp(firebaseConfig);
+    database = firebase.database();
+    console.log('Firebase initialized successfully');
+} catch (error) {
+    console.error('Firebase initialization error:', error);
+    showAlert('Error connecting to booking system. Please refresh the page.', 'danger');
+}
+
+// Venue Configuration
+const VENUE_CONFIG = {
+    vip: {
+        name: 'VIP',
+        price: 500000,
+        rows: 3,
+        seatsPerRow: 8,
+        color: '#FFD700'
+    },
+    regular: {
+        name: 'Regular',
+        price: 250000,
+        rows: 5,
+        seatsPerRow: 10,
+        color: '#87CEEB'
+    }
+};
+
+// Global State
+let selectedSeats = [];
+let allSeats = {};
+
+// Initialize the booking system
+document.addEventListener('DOMContentLoaded', function() {
+    initializeSeating();
+    setupEventListeners();
+});
+
+// Create initial seat structure in Firebase if it doesn't exist
+async function initializeSeating() {
+    try {
+        const seatsRef = database.ref('seats');
+        const snapshot = await seatsRef.once('value');
+        
+        if (!snapshot.exists()) {
+            console.log('Initializing seat structure in Firebase...');
+            const initialSeats = {};
+            
+            // Create VIP seats
+            for (let row = 1; row <= VENUE_CONFIG.vip.rows; row++) {
+                for (let seat = 1; seat <= VENUE_CONFIG.vip.seatsPerRow; seat++) {
+                    const seatId = `VIP-${row}-${seat}`;
+                    initialSeats[seatId] = {
+                        section: 'VIP',
+                        row: row,
+                        number: seat,
+                        price: VENUE_CONFIG.vip.price,
+                        status: 'available',
+                        bookedBy: null,
+                        bookedAt: null
+                    };
+                }
+            }
+            
+            // Create Regular seats
+            for (let row = 1; row <= VENUE_CONFIG.regular.rows; row++) {
+                for (let seat = 1; seat <= VENUE_CONFIG.regular.seatsPerRow; seat++) {
+                    const seatId = `REG-${row}-${seat}`;
+                    initialSeats[seatId] = {
+                        section: 'Regular',
+                        row: row,
+                        number: seat,
+                        price: VENUE_CONFIG.regular.price,
+                        status: 'available',
+                        bookedBy: null,
+                        bookedAt: null
+                    };
+                }
+            }
+            
+            await seatsRef.set(initialSeats);
+            console.log('Seat structure initialized');
+        }
+        
+        // Listen for real-time updates
+        listenToSeatUpdates();
+        
+    } catch (error) {
+        console.error('Error initializing seating:', error);
+        showAlert('Error loading seats. Please refresh the page.', 'danger');
+    }
+}
+
+// Listen to real-time seat updates
+function listenToSeatUpdates() {
+    const seatsRef = database.ref('seats');
+    
+    seatsRef.on('value', (snapshot) => {
+        allSeats = snapshot.val() || {};
+        renderSeating();
+        
+        // Hide loading, show seating area
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('seating-area').style.display = 'block';
+    });
+}
+
+// Render the seating chart
+function renderSeating() {
+    renderSection('vip', 'vip-section', VENUE_CONFIG.vip);
+    renderSection('regular', 'regular-section', VENUE_CONFIG.regular);
+}
+
+// Render a specific section
+function renderSection(sectionType, containerId, config) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = '';
+    
+    const prefix = sectionType === 'vip' ? 'VIP' : 'REG';
+    
+    for (let row = 1; row <= config.rows; row++) {
+        const rowDiv = document.createElement('div');
+        rowDiv.className = 'seat-row';
+        
+        // Row label
+        const rowLabel = document.createElement('div');
+        rowLabel.className = 'row-label';
+        rowLabel.textContent = row;
+        rowDiv.appendChild(rowLabel);
+        
+        // Seats
+        for (let seat = 1; seat <= config.seatsPerRow; seat++) {
+            const seatId = `${prefix}-${row}-${seat}`;
+            const seatData = allSeats[seatId];
+            
+            if (seatData) {
+                const seatDiv = createSeatElement(seatId, seatData);
+                rowDiv.appendChild(seatDiv);
+            }
+        }
+        
+        container.appendChild(rowDiv);
+    }
+}
+
+// Create a seat element
+function createSeatElement(seatId, seatData) {
+    const seatDiv = document.createElement('div');
+    seatDiv.className = 'seat';
+    seatDiv.dataset.seatId = seatId;
+    seatDiv.textContent = seatData.number;
+    
+    // Determine seat status
+    if (selectedSeats.includes(seatId)) {
+        seatDiv.classList.add('selected');
+    } else if (seatData.status === 'booked') {
+        seatDiv.classList.add('booked');
+    } else if (seatData.status === 'available') {
+        seatDiv.classList.add('available');
+        seatDiv.onclick = () => toggleSeat(seatId, seatData);
+    } else if (seatData.status === 'processing') {
+        seatDiv.classList.add('processing');
+    }
+    
+    // Tooltip
+    seatDiv.title = `${seatData.section} - Row ${seatData.row}, Seat ${seatData.number}\nRp ${formatCurrency(seatData.price)}`;
+    
+    return seatDiv;
+}
+
+// Toggle seat selection
+function toggleSeat(seatId, seatData) {
+    if (seatData.status !== 'available') {
+        return;
+    }
+    
+    const index = selectedSeats.indexOf(seatId);
+    
+    if (index > -1) {
+        // Deselect
+        selectedSeats.splice(index, 1);
+    } else {
+        // Select
+        if (selectedSeats.length >= 6) {
+            showAlert('Maksimal 6 kursi per pemesanan', 'warning');
+            return;
+        }
+        selectedSeats.push(seatId);
+    }
+    
+    updateBookingSummary();
+    renderSeating(); // Re-render to show selection
+}
+
+// Update booking summary
+function updateBookingSummary() {
+    const seatCount = selectedSeats.length;
+    let totalPrice = 0;
+    
+    // Calculate total and create seat list
+    const seatsList = document.getElementById('selected-seats-display');
+    seatsList.innerHTML = '';
+    
+    if (seatCount === 0) {
+        seatsList.innerHTML = '<p style="color: #999;">Belum ada kursi yang dipilih</p>';
+    } else {
+        selectedSeats.forEach(seatId => {
+            const seatData = allSeats[seatId];
+            totalPrice += seatData.price;
+            
+            const tag = document.createElement('span');
+            tag.className = 'selected-seat-tag';
+            tag.textContent = `${seatData.section} R${seatData.row}S${seatData.number}`;
+            seatsList.appendChild(tag);
+        });
+    }
+    
+    // Update display
+    document.getElementById('seat-count').textContent = seatCount;
+    document.getElementById('total-price').textContent = `Rp ${formatCurrency(totalPrice)}`;
+    
+    // Enable/disable checkout button
+    const checkoutBtn = document.getElementById('checkout-btn');
+    checkoutBtn.disabled = seatCount === 0;
+}
+
+// Setup event listeners
+function setupEventListeners() {
+    const checkoutBtn = document.getElementById('checkout-btn');
+    checkoutBtn.addEventListener('click', handleCheckout);
+}
+
+// Handle checkout
+async function handleCheckout() {
+    if (selectedSeats.length === 0) {
+        showAlert('Silakan pilih kursi terlebih dahulu', 'warning');
+        return;
+    }
+    
+    // Confirm booking
+    const seatList = selectedSeats.map(seatId => {
+        const seat = allSeats[seatId];
+        return `${seat.section} Row ${seat.row} Seat ${seat.number}`;
+    }).join(', ');
+    
+    const totalPrice = selectedSeats.reduce((sum, seatId) => {
+        return sum + allSeats[seatId].price;
+    }, 0);
+    
+    const confirmed = confirm(
+        `Konfirmasi Pemesanan:\n\n` +
+        `Kursi: ${seatList}\n` +
+        `Total: Rp ${formatCurrency(totalPrice)}\n\n` +
+        `Lanjutkan ke pembayaran?`
+    );
+    
+    if (!confirmed) return;
+    
+    // Show processing state
+    showAlert('Memproses pemesanan...', 'info');
+    document.getElementById('checkout-btn').disabled = true;
+    
+    try {
+        // Mark seats as processing first
+        const updates = {};
+        const bookingId = `BOOKING-${Date.now()}`;
+        const timestamp = new Date().toISOString();
+        
+        selectedSeats.forEach(seatId => {
+            updates[`seats/${seatId}/status`] = 'processing';
+        });
+        
+        await database.ref().update(updates);
+        
+        // Create booking record
+        const bookingData = {
+            bookingId: bookingId,
+            seats: selectedSeats,
+            totalPrice: totalPrice,
+            status: 'pending',
+            createdAt: timestamp,
+            expiresAt: new Date(Date.now() + 15 * 60 * 1000).toISOString() // 15 minutes
+        };
+        
+        await database.ref(`bookings/${bookingId}`).set(bookingData);
+        
+        // Redirect to Google Form with booking details
+        const formUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSfLfhaCw-BQbC9qtd9aRxBf69Mc3t_AtCrU0ZhOz21nBCkzxQ/viewform';
+        const seatInfo = encodeURIComponent(seatList);
+        const price = encodeURIComponent(`Rp ${formatCurrency(totalPrice)}`);
+        
+        // You'll need to update these entry IDs from your Google Form
+        const redirectUrl = `${formUrl}?entry.SEAT_FIELD=${seatInfo}&entry.PRICE_FIELD=${price}&entry.BOOKING_ID=${bookingId}`;
+        
+        // Store booking ID in localStorage for confirmation
+        localStorage.setItem('currentBooking', bookingId);
+        
+        // Redirect to form
+        window.location.href = redirectUrl;
+        
+    } catch (error) {
+        console.error('Booking error:', error);
+        showAlert('Terjadi kesalahan. Silakan coba lagi.', 'danger');
+        
+        // Revert seats to available
+        const revertUpdates = {};
+        selectedSeats.forEach(seatId => {
+            revertUpdates[`seats/${seatId}/status`] = 'available';
+        });
+        await database.ref().update(revertUpdates);
+        
+        document.getElementById('checkout-btn').disabled = false;
+    }
+}
+
+// Show alert message
+function showAlert(message, type = 'info') {
+    const container = document.getElementById('alert-container');
+    const alert = document.createElement('div');
+    alert.className = `alert alert-${type} show`;
+    alert.textContent = message;
+    
+    container.innerHTML = '';
+    container.appendChild(alert);
+    
+    // Auto-hide after 5 seconds
+    setTimeout(() => {
+        alert.classList.remove('show');
+    }, 5000);
+}
+
+// Format currency
+function formatCurrency(amount) {
+    return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
+// Handle booking expiration (optional - run periodically)
+async function cleanupExpiredBookings() {
+    try {
+        const now = new Date().toISOString();
+        const bookingsRef = database.ref('bookings');
+        const snapshot = await bookingsRef.once('value');
+        const bookings = snapshot.val() || {};
+        
+        const updates = {};
+        
+        Object.keys(bookings).forEach(bookingId => {
+            const booking = bookings[bookingId];
+            if (booking.status === 'pending' && booking.expiresAt < now) {
+                // Release the seats
+                booking.seats.forEach(seatId => {
+                    updates[`seats/${seatId}/status`] = 'available';
+                    updates[`seats/${seatId}/bookedBy`] = null;
+                    updates[`seats/${seatId}/bookedAt`] = null;
+                });
+                
+                // Mark booking as expired
+                updates[`bookings/${bookingId}/status`] = 'expired';
+            }
+        });
+        
+        if (Object.keys(updates).length > 0) {
+            await database.ref().update(updates);
+            console.log('Cleaned up expired bookings');
+        }
+    } catch (error) {
+        console.error('Error cleaning up bookings:', error);
+    }
+}
+
+// Run cleanup every 5 minutes
+setInterval(cleanupExpiredBookings, 5 * 60 * 1000);
