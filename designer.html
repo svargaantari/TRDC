@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Venue Layout Designer</title>
+  </head>
+  <body>
+    <div id="seatsquirrel-designer-root"></div>
+
+    <script>
+      window.SeatSquirrelConfig = {
+        onReady: function () {
+          console.log('Designer ready');
+        },
+
+        onSave: async function (data) {
+          await fetch('/api/layouts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data.layout),
+          });
+          SeatSquirrel.designer.showToast({
+            title: 'Layout saved',
+            type: 'success',
+          });
+        },
+
+        onLayoutChanged: function (data) {
+          document.title = data.hasChanges
+            ? '* Venue Layout Designer'
+            : 'Venue Layout Designer';
+        },
+
+        onError: function (error) {
+          console.error(error);
+        },
+      };
+    </script>
+
+    <!-- Bundled app script (do not modify) -->
+    <script type="module" src="/assets/standalone-designer.js"></script>
+  </body>
+</html>   
