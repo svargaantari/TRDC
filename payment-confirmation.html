@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konfirmasi Pembayaran - TRDC Annual Concert 2026</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        .confirmation-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header .checkmark {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            animation: scaleIn 0.5s ease-out 0.2s both;
+        }
+        
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+        
+        .checkmark svg {
+            width: 35px;
+            height: 35px;
+            fill: #2ed573;
+        }
+        
+        .content {
+            padding: 2rem;
+        }
+        
+        .booking-info {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        
+        .info-label {
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .info-value {
+            color: #333;
+            font-weight: bold;
+            text-align: right;
+        }
+        
+        .seats-display {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .seat-tag {
+            display: inline-block;
+            background: #e3f2fd;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+        
+        .total-amount {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .total-amount .label {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+        }
+        
+        .total-amount .amount {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+        
+        .payment-instructions {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .payment-instructions h3 {
+            color: #856404;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .payment-instructions .instruction-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .payment-instructions .instruction-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .bank-info {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+        }
+        
+        .bank-info .bank-logo {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 0.5rem;
+        }
+        
+        .bank-info .account-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin: 0.5rem 0;
+            letter-spacing: 1px;
+        }
+        
+        .bank-info .account-name {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        .copy-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .copy-button:hover {
+            background: #0056b3;
+        }
+        
+        .copy-button.copied {
+            background: #2ed573;
+        }
+        
+        .whatsapp-section {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .whatsapp-section h3 {
+            color: #2e7d32;
+            margin-bottom: 1rem;
+        }
+        
+        .whatsapp-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #25d366;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+        }
+        
+        .whatsapp-button:hover {
+            background: #20bd5a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
+        }
+        
+        .whatsapp-icon {
+            width: 24px;
+            height: 24px;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 2rem;
+        }
+        
+        .warning-box p {
+            color: #856404;
+            margin: 0.25rem 0;
+            font-size: 0.9rem;
+        }
+        
+        .back-button {
+            display: block;
+            text-align: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .back-button:hover {
+            background: #e9ecef;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.4rem;
+            }
+            
+            .total-amount .amount {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 1.5rem;
+            }
+            
+            .bank-info .account-number {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="confirmation-card">
+            <!-- Header -->
+            <div class="header">
+                <div class="checkmark">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                    </svg>
+                </div>
+                <h1>Pemesanan Berhasil!</h1>
+                <p>Terima kasih atas pemesanan Anda</p>
+            </div>
+            
+            <!-- Content -->
+            <div class="content">
+                <!-- Booking Information -->
+                <div class="booking-info">
+                    <div class="info-row">
+                        <span class="info-label">Booking ID:</span>
+                        <span class="info-value" id="booking-id">Loading...</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Jumlah Kursi:</span>
+                        <span class="info-value" id="seat-count">-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Kursi yang Dipilih:</span>
+                        <div class="info-value">
+                            <div class="seats-display" id="seats-display"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Total Amount -->
+                <div class="total-amount">
+                    <div class="label">Total Pembayaran</div>
+                    <div class="amount" id="total-amount">Rp 0</div>
+                </div>
+                
+                <!-- Payment Instructions -->
+                <div class="payment-instructions">
+                    <h3>
+                        💳 Instruksi Pembayaran
+                    </h3>
+                    
+                    <div class="instruction-item">
+                        <strong>1. Transfer ke Rekening:</strong>
+                        <div class="bank-info">
+                            <div class="bank-logo">🏦 BCA</div>
+                            <div class="account-number" id="account-number">152144740</div>
+                            <div class="account-name">Atas nama: Maria Niken Kurniawati</div>
+                            <button class="copy-button" onclick="copyAccountNumber()">
+                                📋 Salin Nomor Rekening
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="instruction-item">
+                        <strong>2. Jumlah Transfer:</strong>
+                        <p style="color: #dc3545; font-size: 1.2rem; font-weight: bold; margin-top: 0.5rem;" id="transfer-amount">
+                            Rp 0
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- WhatsApp Section -->
+                <div class="whatsapp-section">
+                    <h3>📱 Kirim Bukti Transfer</h3>
+                    <p style="color: #2e7d32; margin-bottom: 1rem;">
+                        Setelah transfer, kirim bukti pembayaran melalui WhatsApp
+                    </p>
+                    <a href="#" class="whatsapp-button" id="whatsapp-link">
+                        <svg class="whatsapp-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                        </svg>
+                        Kirim via WhatsApp
+                    </a>
+                    <p style="color: #666; font-size: 0.85rem; margin-top: 1rem;">
+                        0821356059
+                    </p>
+                </div>
+                
+                <!-- Warning -->
+                <div class="warning-box">
+                    <p><strong>⚠️ Penting:</strong></p>
+                    <p>• Pemesanan akan expired dalam <strong>2 hari</strong></p>
+                    <p>• Harap segera melakukan pembayaran</p>
+                    <p>• Simpan Booking ID untuk referensi</p>
+                </div>
+                
+                <!-- Back Button -->
+                <a href="booking.html" class="back-button">
+                    ← Kembali ke Halaman Pemesanan
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Get booking data from URL parameters
+        function getBookingData() {
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            const bookingId = urlParams.get('bookingId') || 'N/A';
+            const seats = urlParams.get('seats') || '';
+            const totalPrice = parseInt(urlParams.get('total')) || 0;
+            
+            return { bookingId, seats, totalPrice };
+        }
+        
+        // Display booking information
+        function displayBookingInfo() {
+            const { bookingId, seats, totalPrice } = getBookingData();
+            
+            // Display booking ID
+            document.getElementById('booking-id').textContent = bookingId;
+            
+            // Display seats
+            const seatsArray = seats.split(',').filter(s => s.trim());
+            document.getElementById('seat-count').textContent = seatsArray.length;
+            
+            const seatsDisplay = document.getElementById('seats-display');
+            seatsDisplay.innerHTML = seatsArray.map(seat => 
+                `<span class="seat-tag">${seat.trim()}</span>`
+            ).join('');
+            
+            // Display total amount
+            const formattedPrice = formatCurrency(totalPrice);
+            document.getElementById('total-amount').textContent = `Rp ${formattedPrice}`;
+            document.getElementById('transfer-amount').textContent = `Rp ${formattedPrice}`;
+            
+            // Setup WhatsApp link
+            setupWhatsAppLink(bookingId, seats, totalPrice);
+        }
+        
+        // Setup WhatsApp link with pre-filled message
+        function setupWhatsAppLink(bookingId, seats, totalPrice) {
+            const message = `Halo, saya ingin konfirmasi pembayaran tiket TRDC Concert 2026\n\n` +
+                `Booking ID: ${bookingId}\n` +
+                `Kursi: ${seats}\n` +
+                `Total: Rp ${formatCurrency(totalPrice)}\n\n` +
+                `Saya sudah melakukan transfer. Berikut bukti transfernya.`;
+            
+            const whatsappNumber = '6281356059'; // Format: country code + number without leading 0
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+            
+            document.getElementById('whatsapp-link').href = whatsappUrl;
+        }
+        
+        // Copy account number to clipboard
+        function copyAccountNumber() {
+            const accountNumber = document.getElementById('account-number').textContent;
+            
+            navigator.clipboard.writeText(accountNumber).then(() => {
+                const button = event.target;
+                const originalText = button.textContent;
+                
+                button.textContent = '✓ Tersalin!';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                alert('Gagal menyalin: ' + accountNumber);
+            });
+        }
+        
+        // Format currency
+        function formatCurrency(amount) {
+            return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', displayBookingInfo);
+    </script>
+</body>
+</html>
