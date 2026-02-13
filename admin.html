@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRDC Admin Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .stat-card h3 {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .section {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .section h2 {
+            color: #333;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        table th,
+        table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .status-available {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-booked {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-processing {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .status-confirmed {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5568d3;
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.8rem;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .search-box {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #667eea;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #999;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            table {
+                font-size: 0.85rem;
+            }
+            
+            table th,
+            table td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎭 TRDC Admin Dashboard</h1>
+        <p>Concert Booking Management System</p>
+    </div>
+
+    <div class="container">
+        <!-- Statistics -->
+        <div class="stats">
+            <div class="stat-card">
+                <h3>Total Kursi</h3>
+                <div class="value" id="total-seats">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Kursi Terjual</h3>
+                <div class="value" id="booked-seats">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Kursi Tersedia</h3>
+                <div class="value" id="available-seats">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Total Pendapatan</h3>
+                <div class="value" id="total-revenue">Rp 0</div>
+            </div>
+        </div>
+
+        <!-- Active Bookings -->
+        <div class="section">
+            <h2>📋 Pemesanan Aktif</h2>
+            <div class="controls">
+                <input type="text" class="search-box" id="search-bookings" placeholder="Cari booking ID atau status...">
+                <button class="btn btn-primary" onclick="refreshData()">🔄 Refresh</button>
+                <button class="btn btn-success" onclick="exportBookings()">📥 Export CSV</button>
+            </div>
+            <div id="bookings-loading" class="loading">
+                <p>Loading bookings...</p>
+            </div>
+            <div id="bookings-table"></div>
+        </div>
+
+        <!-- Seat Map Overview -->
+        <div class="section">
+            <h2>🪑 Peta Kursi</h2>
+            <div class="controls">
+                <button class="btn btn-primary" onclick="toggleSeatView('all')">Semua</button>
+                <button class="btn btn-primary" onclick="toggleSeatView('gold')">GOLD Saja</button>
+                <button class="btn btn-primary" onclick="toggleSeatView('regular')">Regular Saja</button>
+            </div>
+            <div id="seats-loading" class="loading">
+                <p>Loading seats...</p>
+            </div>
+            <div id="seats-table"></div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDz5Qe96R4qEHTWu_MCq5nwMSwDuQi_kbg",
+            authDomain: "trdc-annual-concert.firebaseapp.com",
+            databaseURL: "https://trdc-annual-concert-default-rtdb.firebaseio.com",
+            projectId: "trdc-annual-concert",
+            storageBucket: "trdc-annual-concert.firebasestorage.app",
+            messagingSenderId: "291931379499",
+            appId: "1:291931379499:web:31e1d0e39f603b568a976e",
+            measurementId: "G-XYJE4D8DC2"
+        };
+
+        // Initialize Firebase
+        let database;
+        try {
+            firebase.initializeApp(firebaseConfig);
+            database = firebase.database();
+            console.log('Firebase initialized successfully');
+        } catch (error) {
+            console.error('Firebase error:', error);
+            alert('Error connecting to database: ' + error.message);
+        }
+
+        let allBookings = {};
+        let allSeats = {};
+        let currentSeatView = 'all';
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            loadBookings();
+            loadSeats();
+        });
+
+        // Load bookings
+        function loadBookings() {
+            const bookingsRef = database.ref('bookings');
+            
+            bookingsRef.on('value', (snapshot) => {
+                allBookings = snapshot.val() || {};
+                renderBookings();
+                document.getElementById('bookings-loading').style.display = 'none';
+            });
+        }
+
+        // Load seats
+        function loadSeats() {
+            const seatsRef = database.ref('seats');
+            
+            seatsRef.on('value', (snapshot) => {
+                allSeats = snapshot.val() || {};
+                renderSeats();
+                updateStatistics();
+                document.getElementById('seats-loading').style.display = 'none';
+            });
+        }
+
+        // Render bookings table
+        function renderBookings() {
+            const container = document.getElementById('bookings-table');
+            const bookings = Object.entries(allBookings);
+            
+            if (bookings.length === 0) {
+                container.innerHTML = '<div class="empty-state">Belum ada pemesanan</div>';
+                return;
+            }
+
+            let html = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>Kursi</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Waktu</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            bookings.sort((a, b) => new Date(b[1].createdAt) - new Date(a[1].createdAt));
+
+            bookings.forEach(([bookingId, booking]) => {
+                const seatList = booking.seats.join(', ');
+                const statusClass = `status-${booking.status}`;
+                const date = new Date(booking.createdAt).toLocaleString('id-ID');
+                
+                html += `
+                    <tr>
+                        <td><strong>${bookingId}</strong></td>
+                        <td>${seatList}</td>
+                        <td>Rp ${formatCurrency(booking.totalPrice)}</td>
+                        <td><span class="status-badge ${statusClass}">${booking.status}</span></td>
+                        <td>${date}</td>
+                        <td>
+                            ${booking.status === 'pending' || booking.status === 'processing' ? `
+                                <button class="btn btn-success btn-sm" onclick="confirmBooking('${bookingId}')">Konfirmasi</button>
+                                <button class="btn btn-danger btn-sm" onclick="cancelBooking('${bookingId}')">Batal</button>
+                            ` : ''}
+                        </td>
+                    </tr>
+                `;
+            });
+
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        // Render seats table
+        function renderSeats() {
+            const container = document.getElementById('seats-table');
+            let seats = Object.entries(allSeats);
+
+            if (currentSeatView === 'gold') {
+                seats = seats.filter(([id]) => id.startsWith('GOLD'));
+            } else if (currentSeatView === 'regular') {
+                seats = seats.filter(([id]) => id.startsWith('REG'));
+            }
+
+            if (seats.length === 0) {
+                container.innerHTML = '<div class="empty-state">Tidak ada kursi</div>';
+                return;
+            }
+
+            let html = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Seat ID</th>
+                            <th>Section</th>
+                            <th>Row</th>
+                            <th>Seat</th>
+                            <th>Harga</th>
+                            <th>Status</th>
+                            <th>Dipesan Pada</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            seats.forEach(([seatId, seat]) => {
+                const statusClass = `status-${seat.status}`;
+                const bookedTime = seat.bookedAt ? new Date(seat.bookedAt).toLocaleString('id-ID') : '-';
+                
+                html += `
+                    <tr>
+                        <td><strong>${seatId}</strong></td>
+                        <td>${seat.section}</td>
+                        <td>${seat.row}</td>
+                        <td>${seat.number}</td>
+                        <td>Rp ${formatCurrency(seat.price)}</td>
+                        <td><span class="status-badge ${statusClass}">${seat.status}</span></td>
+                        <td>${bookedTime}</td>
+                    </tr>
+                `;
+            });
+
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        // Update statistics
+        function updateStatistics() {
+            const seats = Object.values(allSeats);
+            const total = seats.length;
+            const booked = seats.filter(s => s.status === 'booked').length;
+            const available = seats.filter(s => s.status === 'available').length;
+            
+            let totalRevenue = 0;
+            Object.values(allBookings).forEach(booking => {
+                if (booking.status === 'confirmed' || booking.status === 'booked') {
+                    totalRevenue += booking.totalPrice;
+                }
+            });
+
+            document.getElementById('total-seats').textContent = total;
+            document.getElementById('booked-seats').textContent = booked;
+            document.getElementById('available-seats').textContent = available;
+            document.getElementById('total-revenue').textContent = `Rp ${formatCurrency(totalRevenue)}`;
+        }
+
+        // Confirm booking
+        async function confirmBooking(bookingId) {
+            if (!confirm('Konfirmasi pemesanan ini?')) return;
+
+            try {
+                const booking = allBookings[bookingId];
+                const updates = {};
+
+                // Mark booking as confirmed
+                updates[`bookings/${bookingId}/status`] = 'confirmed';
+
+                // Mark seats as booked
+                booking.seats.forEach(seatId => {
+                    updates[`seats/${seatId}/status`] = 'booked';
+                    updates[`seats/${seatId}/bookedBy`] = bookingId;
+                    updates[`seats/${seatId}/bookedAt`] = new Date().toISOString();
+                });
+
+                await database.ref().update(updates);
+                alert('Pemesanan berhasil dikonfirmasi!');
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Gagal mengkonfirmasi pemesanan');
+            }
+        }
+
+        // Cancel booking
+        async function cancelBooking(bookingId) {
+            if (!confirm('Batalkan pemesanan ini?')) return;
+
+            try {
+                const booking = allBookings[bookingId];
+                const updates = {};
+
+                // Mark booking as cancelled
+                updates[`bookings/${bookingId}/status`] = 'cancelled';
+
+                // Release seats
+                booking.seats.forEach(seatId => {
+                    updates[`seats/${seatId}/status`] = 'available';
+                    updates[`seats/${seatId}/bookedBy`] = null;
+                    updates[`seats/${seatId}/bookedAt`] = null;
+                });
+
+                await database.ref().update(updates);
+                alert('Pemesanan dibatalkan');
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Gagal membatalkan pemesanan');
+            }
+        }
+
+        // Toggle seat view
+        function toggleSeatView(view) {
+            currentSeatView = view;
+            renderSeats();
+        }
+
+        // Refresh data
+        function refreshData() {
+            location.reload();
+        }
+
+        // Export bookings to CSV
+        function exportBookings() {
+            const bookings = Object.entries(allBookings);
+            
+            if (bookings.length === 0) {
+                alert('Tidak ada data untuk di-export');
+                return;
+            }
+            
+            let csv = 'Booking ID,Seats,Total Price,Status,Created At\n';
+            
+            bookings.forEach(([bookingId, booking]) => {
+                const seatList = booking.seats.join('; ');
+                csv += `${bookingId},"${seatList}",${booking.totalPrice},${booking.status},${booking.createdAt}\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `trdc-bookings-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Format currency
+        function formatCurrency(amount) {
+            return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        // Search functionality
+        document.getElementById('search-bookings').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('#bookings-table tbody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(query) ? '' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>
