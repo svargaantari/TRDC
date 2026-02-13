@@ -23,7 +23,7 @@ try {
     showAlert('Error connecting to booking system. Please refresh the page.', 'danger');
 }
 
-// Venue Configuration - Updated with actual layout
+// Venue Configuration - Updated with actual layout and custom row names
 const VENUE_CONFIG = {
     goldLeft: {
         name: 'Gold - L',
@@ -31,7 +31,8 @@ const VENUE_CONFIG = {
         rows: 8,
         seatsPerRow: 13,
         color: '#FFD700',
-        prefix: 'GOLD-L'
+        prefix: 'GOLD-L',
+        rowPrefix: 'B' // B1, B2, B3... B8
     },
     goldRight: {
         name: 'Gold - R',
@@ -39,13 +40,15 @@ const VENUE_CONFIG = {
         rows: 8,
         seatsPerRow: 14,
         color: '#FFD700',
-        prefix: 'GOLD-R'
+        prefix: 'GOLD-R',
+        rowPrefix: 'C' // C1, C2, C3... C8
     },
     regularLeft: {
         name: 'Regular - L',
         price: 75000,
         color: '#E88B8B',
         prefix: 'REG-L',
+        rowPrefix: 'A', // A1, A2, A3... A9
         seatsConfig: [3, 6, 9, 10, 10, 10, 10, 10, 11] // seats per row
     },
     regularRight: {
@@ -53,6 +56,7 @@ const VENUE_CONFIG = {
         price: 75000,
         color: '#E88B8B',
         prefix: 'REG-R',
+        rowPrefix: 'D', // D1, D2, D3... D10
         seatsConfig: [5, 8, 10, 13, 15, 16, 17, 18, 18, 13] // seats per row
     }
 };
@@ -77,13 +81,14 @@ async function initializeSeating() {
             console.log('Initializing seat structure in Firebase...');
             const initialSeats = {};
             
-            // Create Gold - L seats
+            // Create Gold - L seats (B1-B8)
             for (let row = 1; row <= VENUE_CONFIG.goldLeft.rows; row++) {
+                const rowName = `${VENUE_CONFIG.goldLeft.rowPrefix}${row}`;
                 for (let seat = 1; seat <= VENUE_CONFIG.goldLeft.seatsPerRow; seat++) {
-                    const seatId = `${VENUE_CONFIG.goldLeft.prefix}-${row}-${seat}`;
+                    const seatId = `${VENUE_CONFIG.goldLeft.prefix}-${rowName}-${seat}`;
                     initialSeats[seatId] = {
                         section: VENUE_CONFIG.goldLeft.name,
-                        row: row,
+                        row: rowName,
                         number: seat,
                         price: VENUE_CONFIG.goldLeft.price,
                         status: 'available',
@@ -93,13 +98,14 @@ async function initializeSeating() {
                 }
             }
             
-            // Create Gold - R seats
+            // Create Gold - R seats (C1-C8)
             for (let row = 1; row <= VENUE_CONFIG.goldRight.rows; row++) {
+                const rowName = `${VENUE_CONFIG.goldRight.rowPrefix}${row}`;
                 for (let seat = 1; seat <= VENUE_CONFIG.goldRight.seatsPerRow; seat++) {
-                    const seatId = `${VENUE_CONFIG.goldRight.prefix}-${row}-${seat}`;
+                    const seatId = `${VENUE_CONFIG.goldRight.prefix}-${rowName}-${seat}`;
                     initialSeats[seatId] = {
                         section: VENUE_CONFIG.goldRight.name,
-                        row: row,
+                        row: rowName,
                         number: seat,
                         price: VENUE_CONFIG.goldRight.price,
                         status: 'available',
@@ -109,14 +115,15 @@ async function initializeSeating() {
                 }
             }
             
-            // Create Regular - L seats (variable seats per row)
+            // Create Regular - L seats (A1-A9, variable seats per row)
             VENUE_CONFIG.regularLeft.seatsConfig.forEach((seatsInRow, index) => {
                 const row = index + 1;
+                const rowName = `${VENUE_CONFIG.regularLeft.rowPrefix}${row}`;
                 for (let seat = 1; seat <= seatsInRow; seat++) {
-                    const seatId = `${VENUE_CONFIG.regularLeft.prefix}-${row}-${seat}`;
+                    const seatId = `${VENUE_CONFIG.regularLeft.prefix}-${rowName}-${seat}`;
                     initialSeats[seatId] = {
                         section: VENUE_CONFIG.regularLeft.name,
-                        row: row,
+                        row: rowName,
                         number: seat,
                         price: VENUE_CONFIG.regularLeft.price,
                         status: 'available',
@@ -126,14 +133,15 @@ async function initializeSeating() {
                 }
             });
             
-            // Create Regular - R seats (variable seats per row)
+            // Create Regular - R seats (D1-D10, variable seats per row)
             VENUE_CONFIG.regularRight.seatsConfig.forEach((seatsInRow, index) => {
                 const row = index + 1;
+                const rowName = `${VENUE_CONFIG.regularRight.rowPrefix}${row}`;
                 for (let seat = 1; seat <= seatsInRow; seat++) {
-                    const seatId = `${VENUE_CONFIG.regularRight.prefix}-${row}-${seat}`;
+                    const seatId = `${VENUE_CONFIG.regularRight.prefix}-${rowName}-${seat}`;
                     initialSeats[seatId] = {
                         section: VENUE_CONFIG.regularRight.name,
-                        row: row,
+                        row: rowName,
                         number: seat,
                         price: VENUE_CONFIG.regularRight.price,
                         status: 'available',
@@ -192,18 +200,19 @@ function renderSection(sectionType, containerId, config) {
     if (config.seatsConfig) {
         config.seatsConfig.forEach((seatsInRow, index) => {
             const row = index + 1;
+            const rowName = `${config.rowPrefix}${row}`;
             const rowDiv = document.createElement('div');
             rowDiv.className = 'seat-row';
             
             // Row label
             const rowLabel = document.createElement('div');
             rowLabel.className = 'row-label';
-            rowLabel.textContent = row;
+            rowLabel.textContent = rowName;
             rowDiv.appendChild(rowLabel);
             
             // Seats
             for (let seat = 1; seat <= seatsInRow; seat++) {
-                const seatId = `${config.prefix}-${row}-${seat}`;
+                const seatId = `${config.prefix}-${rowName}-${seat}`;
                 const seatData = allSeats[seatId];
                 
                 if (seatData) {
@@ -217,18 +226,19 @@ function renderSection(sectionType, containerId, config) {
     } else {
         // Handle gold sections with fixed seats per row
         for (let row = 1; row <= config.rows; row++) {
+            const rowName = `${config.rowPrefix}${row}`;
             const rowDiv = document.createElement('div');
             rowDiv.className = 'seat-row';
             
             // Row label
             const rowLabel = document.createElement('div');
             rowLabel.className = 'row-label';
-            rowLabel.textContent = row;
+            rowLabel.textContent = rowName;
             rowDiv.appendChild(rowLabel);
             
             // Seats
             for (let seat = 1; seat <= config.seatsPerRow; seat++) {
-                const seatId = `${config.prefix}-${row}-${seat}`;
+                const seatId = `${config.prefix}-${rowName}-${seat}`;
                 const seatData = allSeats[seatId];
                 
                 if (seatData) {
