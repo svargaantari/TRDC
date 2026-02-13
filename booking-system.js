@@ -23,21 +23,37 @@ try {
     showAlert('Error connecting to booking system. Please refresh the page.', 'danger');
 }
 
-// Venue Configuration
+// Venue Configuration - Updated with actual layout
 const VENUE_CONFIG = {
-    vip: {
-        name: 'GOLD',
+    goldLeft: {
+        name: 'Gold - L',
         price: 100000,
-        rows: 3,
-        seatsPerRow: 8,
-        color: '#FFD700'
+        rows: 8,
+        seatsPerRow: 13,
+        color: '#FFD700',
+        prefix: 'GOLD-L'
     },
-    regular: {
-        name: 'Regular',
+    goldRight: {
+        name: 'Gold - R',
+        price: 100000,
+        rows: 8,
+        seatsPerRow: 14,
+        color: '#FFD700',
+        prefix: 'GOLD-R'
+    },
+    regularLeft: {
+        name: 'Regular - L',
         price: 75000,
-        rows: 5,
-        seatsPerRow: 10,
-        color: '#87CEEB'
+        color: '#E88B8B',
+        prefix: 'REG-L',
+        seatsConfig: [3, 6, 9, 10, 10, 10, 10, 10, 11] // seats per row
+    },
+    regularRight: {
+        name: 'Regular - R',
+        price: 75000,
+        color: '#E88B8B',
+        prefix: 'REG-R',
+        seatsConfig: [5, 8, 10, 13, 15, 16, 17, 18, 18, 13] // seats per row
     }
 };
 
@@ -61,15 +77,15 @@ async function initializeSeating() {
             console.log('Initializing seat structure in Firebase...');
             const initialSeats = {};
             
-            // Create GOLD seats
-            for (let row = 1; row <= VENUE_CONFIG.vip.rows; row++) {
-                for (let seat = 1; seat <= VENUE_CONFIG.vip.seatsPerRow; seat++) {
-                    const seatId = `GOLD-${row}-${seat}`;
+            // Create Gold - L seats
+            for (let row = 1; row <= VENUE_CONFIG.goldLeft.rows; row++) {
+                for (let seat = 1; seat <= VENUE_CONFIG.goldLeft.seatsPerRow; seat++) {
+                    const seatId = `${VENUE_CONFIG.goldLeft.prefix}-${row}-${seat}`;
                     initialSeats[seatId] = {
-                        section: 'GOLD',
+                        section: VENUE_CONFIG.goldLeft.name,
                         row: row,
                         number: seat,
-                        price: VENUE_CONFIG.vip.price,
+                        price: VENUE_CONFIG.goldLeft.price,
                         status: 'available',
                         bookedBy: null,
                         bookedAt: null
@@ -77,21 +93,55 @@ async function initializeSeating() {
                 }
             }
             
-            // Create Regular seats
-            for (let row = 1; row <= VENUE_CONFIG.regular.rows; row++) {
-                for (let seat = 1; seat <= VENUE_CONFIG.regular.seatsPerRow; seat++) {
-                    const seatId = `REG-${row}-${seat}`;
+            // Create Gold - R seats
+            for (let row = 1; row <= VENUE_CONFIG.goldRight.rows; row++) {
+                for (let seat = 1; seat <= VENUE_CONFIG.goldRight.seatsPerRow; seat++) {
+                    const seatId = `${VENUE_CONFIG.goldRight.prefix}-${row}-${seat}`;
                     initialSeats[seatId] = {
-                        section: 'Regular',
+                        section: VENUE_CONFIG.goldRight.name,
                         row: row,
                         number: seat,
-                        price: VENUE_CONFIG.regular.price,
+                        price: VENUE_CONFIG.goldRight.price,
                         status: 'available',
                         bookedBy: null,
                         bookedAt: null
                     };
                 }
             }
+            
+            // Create Regular - L seats (variable seats per row)
+            VENUE_CONFIG.regularLeft.seatsConfig.forEach((seatsInRow, index) => {
+                const row = index + 1;
+                for (let seat = 1; seat <= seatsInRow; seat++) {
+                    const seatId = `${VENUE_CONFIG.regularLeft.prefix}-${row}-${seat}`;
+                    initialSeats[seatId] = {
+                        section: VENUE_CONFIG.regularLeft.name,
+                        row: row,
+                        number: seat,
+                        price: VENUE_CONFIG.regularLeft.price,
+                        status: 'available',
+                        bookedBy: null,
+                        bookedAt: null
+                    };
+                }
+            });
+            
+            // Create Regular - R seats (variable seats per row)
+            VENUE_CONFIG.regularRight.seatsConfig.forEach((seatsInRow, index) => {
+                const row = index + 1;
+                for (let seat = 1; seat <= seatsInRow; seat++) {
+                    const seatId = `${VENUE_CONFIG.regularRight.prefix}-${row}-${seat}`;
+                    initialSeats[seatId] = {
+                        section: VENUE_CONFIG.regularRight.name,
+                        row: row,
+                        number: seat,
+                        price: VENUE_CONFIG.regularRight.price,
+                        status: 'available',
+                        bookedBy: null,
+                        bookedAt: null
+                    };
+                }
+            });
             
             await seatsRef.set(initialSeats);
             console.log('Seat structure initialized');
@@ -122,39 +172,73 @@ function listenToSeatUpdates() {
 
 // Render the seating chart
 function renderSeating() {
-    renderSection('vip', 'vip-section', VENUE_CONFIG.vip);
-    renderSection('regular', 'regular-section', VENUE_CONFIG.regular);
+    renderSection('goldLeft', 'gold-left-section', VENUE_CONFIG.goldLeft);
+    renderSection('goldRight', 'gold-right-section', VENUE_CONFIG.goldRight);
+    renderSection('regularLeft', 'regular-left-section', VENUE_CONFIG.regularLeft);
+    renderSection('regularRight', 'regular-right-section', VENUE_CONFIG.regularRight);
 }
 
 // Render a specific section
 function renderSection(sectionType, containerId, config) {
     const container = document.getElementById(containerId);
+    if (!container) {
+        console.warn(`Container ${containerId} not found`);
+        return;
+    }
+    
     container.innerHTML = '';
     
-    const prefix = sectionType === 'vip' ? 'GOLD' : 'REG';
-    
-    for (let row = 1; row <= config.rows; row++) {
-        const rowDiv = document.createElement('div');
-        rowDiv.className = 'seat-row';
-        
-        // Row label
-        const rowLabel = document.createElement('div');
-        rowLabel.className = 'row-label';
-        rowLabel.textContent = row;
-        rowDiv.appendChild(rowLabel);
-        
-        // Seats
-        for (let seat = 1; seat <= config.seatsPerRow; seat++) {
-            const seatId = `${prefix}-${row}-${seat}`;
-            const seatData = allSeats[seatId];
+    // Handle regular sections with variable seats
+    if (config.seatsConfig) {
+        config.seatsConfig.forEach((seatsInRow, index) => {
+            const row = index + 1;
+            const rowDiv = document.createElement('div');
+            rowDiv.className = 'seat-row';
             
-            if (seatData) {
-                const seatDiv = createSeatElement(seatId, seatData);
-                rowDiv.appendChild(seatDiv);
+            // Row label
+            const rowLabel = document.createElement('div');
+            rowLabel.className = 'row-label';
+            rowLabel.textContent = row;
+            rowDiv.appendChild(rowLabel);
+            
+            // Seats
+            for (let seat = 1; seat <= seatsInRow; seat++) {
+                const seatId = `${config.prefix}-${row}-${seat}`;
+                const seatData = allSeats[seatId];
+                
+                if (seatData) {
+                    const seatDiv = createSeatElement(seatId, seatData);
+                    rowDiv.appendChild(seatDiv);
+                }
             }
+            
+            container.appendChild(rowDiv);
+        });
+    } else {
+        // Handle gold sections with fixed seats per row
+        for (let row = 1; row <= config.rows; row++) {
+            const rowDiv = document.createElement('div');
+            rowDiv.className = 'seat-row';
+            
+            // Row label
+            const rowLabel = document.createElement('div');
+            rowLabel.className = 'row-label';
+            rowLabel.textContent = row;
+            rowDiv.appendChild(rowLabel);
+            
+            // Seats
+            for (let seat = 1; seat <= config.seatsPerRow; seat++) {
+                const seatId = `${config.prefix}-${row}-${seat}`;
+                const seatData = allSeats[seatId];
+                
+                if (seatData) {
+                    const seatDiv = createSeatElement(seatId, seatData);
+                    rowDiv.appendChild(seatDiv);
+                }
+            }
+            
+            container.appendChild(rowDiv);
         }
-        
-        container.appendChild(rowDiv);
     }
 }
 
@@ -294,7 +378,7 @@ async function handleCheckout() {
             totalPrice: totalPrice,
             status: 'pending',
             createdAt: timestamp,
-            expiresAt: new Date(Date.now() + 2 * 24 * 60 * 1000).toISOString() // 15 minutes
+            expiresAt: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString() // 2 days
         };
         
         await database.ref(`bookings/${bookingId}`).set(bookingData);
@@ -349,10 +433,7 @@ function formatCurrency(amount) {
     return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
 
-// UPDATED: booking-system.js - FIXED VERSION
-// This fixes the issue where confirmed bookings were being released
-
-// Handle booking expiration (optional - run periodically)
+// Handle booking expiration - FIXED VERSION
 async function cleanupExpiredBookings() {
     try {
         const now = new Date().toISOString();
@@ -365,7 +446,7 @@ async function cleanupExpiredBookings() {
         Object.keys(bookings).forEach(bookingId => {
             const booking = bookings[bookingId];
             
-            // IMPORTANT FIX: Only expire bookings that are PENDING and past expiration
+            // IMPORTANT: Only expire bookings that are PENDING and past expiration
             // Do NOT touch confirmed or cancelled bookings!
             if (booking.status === 'pending' && booking.expiresAt && booking.expiresAt < now) {
                 // Release the seats
@@ -390,14 +471,6 @@ async function cleanupExpiredBookings() {
         console.error('Error cleaning up bookings:', error);
     }
 }
-
-// INSTRUCTIONS:
-// Replace the cleanupExpiredBookings() function in your booking-system.js 
-// with this version. The key changes are:
-// 1. Added check for booking.expiresAt existence
-// 2. Added detailed logging
-// 3. Confirmed bookings will NEVER be released
-
 
 // Run cleanup every 5 minutes
 setInterval(cleanupExpiredBookings, 5 * 60 * 1000);
