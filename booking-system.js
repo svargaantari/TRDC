@@ -294,7 +294,7 @@ async function handleCheckout() {
             totalPrice: totalPrice,
             status: 'pending',
             createdAt: timestamp,
-            expiresAt: new Date(Date.now() + 15 * 60 * 1000).toISOString() // 15 minutes
+            expiresAt: new Date(Date.now() + 2 * 24 * 60 * 1000).toISOString() // 15 minutes
         };
         
         await database.ref(`bookings/${bookingId}`).set(bookingData);
