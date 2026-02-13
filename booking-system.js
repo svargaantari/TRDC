@@ -1,17 +1,6 @@
 // TRDC Concert Booking System with Firebase
-// Step 1: Configure Firebase (You'll add your config here)
+// Firebase Configuration
 
-// TODO: Replace with your Firebase configuration
-// Get this from Firebase Console after creating your project
-
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyDz5Qe96R4qEHTWu_MCq5nwMSwDuQi_kbg",
   authDomain: "trdc-annual-concert.firebaseapp.com",
@@ -22,11 +11,6 @@ const firebaseConfig = {
   appId: "1:291931379499:web:31e1d0e39f603b568a976e",
   measurementId: "G-XYJE4D8DC2"
 };
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
- 
 
 // Initialize Firebase
 let database;
@@ -43,8 +27,8 @@ try {
 const VENUE_CONFIG = {
     vip: {
         name: 'GOLD',
-        price: 10000,
-        rows: 5,
+        price: 100000,
+        rows: 3,
         seatsPerRow: 8,
         color: '#FFD700'
     },
@@ -77,12 +61,12 @@ async function initializeSeating() {
             console.log('Initializing seat structure in Firebase...');
             const initialSeats = {};
             
-            // Create VIP seats
+            // Create GOLD seats
             for (let row = 1; row <= VENUE_CONFIG.vip.rows; row++) {
                 for (let seat = 1; seat <= VENUE_CONFIG.vip.seatsPerRow; seat++) {
-                    const seatId = `VIP-${row}-${seat}`;
+                    const seatId = `GOLD-${row}-${seat}`;
                     initialSeats[seatId] = {
-                        section: 'VIP',
+                        section: 'GOLD',
                         row: row,
                         number: seat,
                         price: VENUE_CONFIG.vip.price,
@@ -147,7 +131,7 @@ function renderSection(sectionType, containerId, config) {
     const container = document.getElementById(containerId);
     container.innerHTML = '';
     
-    const prefix = sectionType === 'vip' ? 'VIP' : 'REG';
+    const prefix = sectionType === 'vip' ? 'GOLD' : 'REG';
     
     for (let row = 1; row <= config.rows; row++) {
         const rowDiv = document.createElement('div');
