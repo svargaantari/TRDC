@@ -46,7 +46,7 @@ const VENUE_CONFIG = {
         price: 75000,
         color: '#E88B8B',
         prefix: 'REG-L',
-        seatsConfig: [2, 6, 9, 10, 10, 10, 10, 10, 11] // seats per row
+        seatsConfig: [3, 6, 9, 10, 10, 10, 10, 10, 11] // seats per row
     },
     regularRight: {
         name: 'Regular - R',
