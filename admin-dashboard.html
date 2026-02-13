@@ -119,6 +119,11 @@
             color: #0c5460;
         }
         
+        .status-confirmed {
+            background: #d4edda;
+            color: #155724;
+        }
+        
         .btn {
             padding: 0.5rem 1rem;
             border: none;
@@ -242,7 +247,7 @@
             <h2>🪑 Peta Kursi</h2>
             <div class="controls">
                 <button class="btn btn-primary" onclick="toggleSeatView('all')">Semua</button>
-                <button class="btn btn-primary" onclick="toggleSeatView('vip')">GOLD Saja</button>
+                <button class="btn btn-primary" onclick="toggleSeatView('gold')">GOLD Saja</button>
                 <button class="btn btn-primary" onclick="toggleSeatView('regular')">Regular Saja</button>
             </div>
             <div id="seats-loading" class="loading">
@@ -257,39 +262,27 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     
     <script>
-        // TODO: Replace with your Firebase configuration
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyDz5Qe96R4qEHTWu_MCq5nwMSwDuQi_kbg",
-  authDomain: "trdc-annual-concert.firebaseapp.com",
-  databaseURL: "https://trdc-annual-concert-default-rtdb.firebaseio.com",
-  projectId: "trdc-annual-concert",
-  storageBucket: "trdc-annual-concert.firebasestorage.app",
-  messagingSenderId: "291931379499",
-  appId: "1:291931379499:web:31e1d0e39f603b568a976e",
-  measurementId: "G-XYJE4D8DC2"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDz5Qe96R4qEHTWu_MCq5nwMSwDuQi_kbg",
+            authDomain: "trdc-annual-concert.firebaseapp.com",
+            databaseURL: "https://trdc-annual-concert-default-rtdb.firebaseio.com",
+            projectId: "trdc-annual-concert",
+            storageBucket: "trdc-annual-concert.firebasestorage.app",
+            messagingSenderId: "291931379499",
+            appId: "1:291931379499:web:31e1d0e39f603b568a976e",
+            measurementId: "G-XYJE4D8DC2"
+        };
 
         // Initialize Firebase
         let database;
         try {
             firebase.initializeApp(firebaseConfig);
             database = firebase.database();
-            console.log('Firebase initialized');
+            console.log('Firebase initialized successfully');
         } catch (error) {
             console.error('Firebase error:', error);
-            alert('Error connecting to database');
+            alert('Error connecting to database: ' + error.message);
         }
 
         let allBookings = {};
@@ -365,7 +358,7 @@ const analytics = getAnalytics(app);
                         <td><span class="status-badge ${statusClass}">${booking.status}</span></td>
                         <td>${date}</td>
                         <td>
-                            ${booking.status === 'pending' ? `
+                            ${booking.status === 'pending' || booking.status === 'processing' ? `
                                 <button class="btn btn-success btn-sm" onclick="confirmBooking('${bookingId}')">Konfirmasi</button>
                                 <button class="btn btn-danger btn-sm" onclick="cancelBooking('${bookingId}')">Batal</button>
                             ` : ''}
@@ -383,8 +376,8 @@ const analytics = getAnalytics(app);
             const container = document.getElementById('seats-table');
             let seats = Object.entries(allSeats);
 
-            if (currentSeatView === 'vip') {
-                seats = seats.filter(([id]) => id.startsWith('VIP'));
+            if (currentSeatView === 'gold') {
+                seats = seats.filter(([id]) => id.startsWith('GOLD'));
             } else if (currentSeatView === 'regular') {
                 seats = seats.filter(([id]) => id.startsWith('REG'));
             }
@@ -511,13 +504,17 @@ const analytics = getAnalytics(app);
 
         // Refresh data
         function refreshData() {
-            loadBookings();
-            loadSeats();
+            location.reload();
         }
 
         // Export bookings to CSV
         function exportBookings() {
             const bookings = Object.entries(allBookings);
+            
+            if (bookings.length === 0) {
+                alert('Tidak ada data untuk di-export');
+                return;
+            }
             
             let csv = 'Booking ID,Seats,Total Price,Status,Created At\n';
             
