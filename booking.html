@@ -31,7 +31,7 @@
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 2rem 1rem;
         }
@@ -50,6 +50,11 @@
             max-width: 100%;
             height: auto;
             border-radius: 8px;
+        }
+        
+        .image-container {
+            text-align: center;
+            margin: 2rem 0;
         }
         
         table {
@@ -96,51 +101,67 @@
             margin-bottom: 2rem;
         }
         
-        .section-title {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            padding: 0.5rem;
-            border-radius: 4px;
+        /* Section Layout - Side by Side */
+        .sections-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
         }
         
-        .section-vip {
+        .section-wrapper {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+        
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .section-gold {
             background: #FFD700;
             color: #000;
         }
         
         .section-regular {
-            background: #87CEEB;
-            color: #000;
+            background: #E88B8B;
+            color: #fff;
         }
         
         .seat-row {
             display: flex;
             justify-content: center;
-            gap: 8px;
-            margin-bottom: 8px;
+            gap: 6px;
+            margin-bottom: 6px;
             flex-wrap: wrap;
         }
         
         .row-label {
             width: 30px;
-            height: 40px;
+            height: 38px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
             color: #666;
+            font-size: 0.85rem;
         }
         
         .seat {
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             border-radius: 6px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: bold;
             transition: all 0.2s;
             border: 2px solid transparent;
@@ -231,7 +252,7 @@
             padding: 0.25rem 0.75rem;
             border-radius: 4px;
             margin: 0.25rem;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         
         .btn {
@@ -317,6 +338,13 @@
             100% { transform: rotate(360deg); }
         }
         
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .sections-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
         @media (max-width: 768px) {
             header h1 {
                 font-size: 1.8rem;
@@ -327,34 +355,61 @@
             }
             
             .seat {
-                width: 35px;
-                height: 35px;
-                font-size: 0.65rem;
+                width: 32px;
+                height: 32px;
+                font-size: 0.6rem;
             }
             
             .row-label {
                 width: 25px;
-                font-size: 0.8rem;
+                height: 32px;
+                font-size: 0.75rem;
             }
             
             .booking-container {
                 padding: 1rem;
+            }
+            
+            .seating-area {
+                padding: 1rem;
+            }
+            
+            .section-wrapper {
+                padding: 0.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .seat {
+                width: 28px;
+                height: 28px;
+                font-size: 0.55rem;
+                gap: 4px;
+            }
+            
+            .row-label {
+                width: 20px;
+                height: 28px;
+                font-size: 0.7rem;
+            }
+            
+            .seat-row {
+                gap: 3px;
+                margin-bottom: 3px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-    <header>
-        <h1>Harmony in Diversity</h1>
-        <p>TRDC Annual Concert 2026</p>
-    </header>
+        <header>
+            <h1>Harmony in Diversity</h1>
+            <p>TRDC Annual Concert 2026</p>
+        </header>
 
-
-     <div class="image-container">
-      <img src="stage.png" alt="Stage" class="Stage">
-    </div>
- 
+        <div class="image-container">
+            <img src="stage.png" alt="Stage" class="Stage">
+        </div>
 
         <!-- Pemesanan Tiket - Firebase Seat Picker -->
         <section id="pemesanan-tiket">
@@ -377,19 +432,50 @@
                 
                 <!-- Seating Area -->
                 <div id="seating-area" class="seating-area" style="display: none;">
-                    <!-- VIP Section -->
-                    <div class="section-title section-vip">
+                    
+                    <!-- GOLD Sections -->
+                    <h3 style="text-align: center; margin-bottom: 1rem; color: #667eea;">
                         👑 GOLD Section - Rp 100.000
+                    </h3>
+                    <div class="sections-container">
+                        <!-- Gold Left -->
+                        <div class="section-wrapper">
+                            <div class="section-title section-gold">
+                                Gold - LEFT (8 rows × 13 seats)
+                            </div>
+                            <div id="gold-left-section"></div>
+                        </div>
+                        
+                        <!-- Gold Right -->
+                        <div class="section-wrapper">
+                            <div class="section-title section-gold">
+                                Gold - RIGHT (8 rows × 14 seats)
+                            </div>
+                            <div id="gold-right-section"></div>
+                        </div>
                     </div>
-                    <div id="vip-section"></div>
                     
-                    <br>
-                    
-                    <!-- Regular Section -->
-                    <div class="section-title section-regular">
+                    <!-- REGULAR Sections -->
+                    <h3 style="text-align: center; margin-bottom: 1rem; color: #667eea;">
                         🎵 Regular Section - Rp 75.000
+                    </h3>
+                    <div class="sections-container">
+                        <!-- Regular Left -->
+                        <div class="section-wrapper">
+                            <div class="section-title section-regular">
+                                Regular - LEFT (9 rows, 78 seats)
+                            </div>
+                            <div id="regular-left-section"></div>
+                        </div>
+                        
+                        <!-- Regular Right -->
+                        <div class="section-wrapper">
+                            <div class="section-title section-regular">
+                                Regular - RIGHT (10 rows, 133 seats)
+                            </div>
+                            <div id="regular-right-section"></div>
+                        </div>
                     </div>
-                    <div id="regular-section"></div>
                 </div>
                 
                 <!-- Legend -->
@@ -403,8 +489,12 @@
                         <span>Dipilih</span>
                     </div>
                     <div class="legend-item">
-                        <div class="legend-box" style="background: #E88B8B;"></div>
+                        <div class="legend-box" style="background: #dc3545;"></div>
                         <span>Sudah Terjual</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-box" style="background: #ffc107;"></div>
+                        <span>Diproses</span>
                     </div>
                 </div>
                 
@@ -429,6 +519,10 @@
                     <button class="btn btn-primary" id="checkout-btn" disabled>
                         Lanjut ke Pembayaran
                     </button>
+                    
+                    <p style="font-size: 0.85rem; color: #666; margin-top: 1rem; text-align: center;">
+                        Maksimal 6 kursi per pemesanan
+                    </p>
                 </div>
             </div>
         </section>
