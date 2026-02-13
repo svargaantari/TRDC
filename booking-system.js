@@ -46,7 +46,7 @@ const VENUE_CONFIG = {
         price: 75000,
         color: '#E88B8B',
         prefix: 'REG-L',
-        seatsConfig: [3, 6, 9, 10, 10, 10, 10, 10, 11] // seats per row
+        seatsConfig: [2, 6, 9, 10, 10, 10, 10, 10, 11] // seats per row
     },
     regularRight: {
         name: 'Regular - R',
@@ -383,18 +383,14 @@ async function handleCheckout() {
         
         await database.ref(`bookings/${bookingId}`).set(bookingData);
         
-        // Redirect to Google Form with booking details
-        const formUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSfLfhaCw-BQbC9qtd9aRxBf69Mc3t_AtCrU0ZhOz21nBCkzxQ/viewform';
+        // Redirect to payment confirmation page
         const seatInfo = encodeURIComponent(seatList);
-        const price = encodeURIComponent(`Rp ${formatCurrency(totalPrice)}`);
-        
-        // You'll need to update these entry IDs from your Google Form
-        const redirectUrl = `${formUrl}?entry.SEAT_FIELD=${seatInfo}&entry.PRICE_FIELD=${price}&entry.BOOKING_ID=${bookingId}`;
+        const redirectUrl = `payment-confirmation.html?bookingId=${bookingId}&seats=${seatInfo}&total=${totalPrice}`;
         
         // Store booking ID in localStorage for confirmation
         localStorage.setItem('currentBooking', bookingId);
         
-        // Redirect to form
+        // Redirect to payment confirmation page
         window.location.href = redirectUrl;
         
     } catch (error) {
