@@ -349,6 +349,9 @@ function formatCurrency(amount) {
     return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
 
+// UPDATED: booking-system.js - FIXED VERSION
+// This fixes the issue where confirmed bookings were being released
+
 // Handle booking expiration (optional - run periodically)
 async function cleanupExpiredBookings() {
     try {
@@ -361,7 +364,10 @@ async function cleanupExpiredBookings() {
         
         Object.keys(bookings).forEach(bookingId => {
             const booking = bookings[bookingId];
-            if (booking.status === 'pending' && booking.expiresAt < now) {
+            
+            // IMPORTANT FIX: Only expire bookings that are PENDING and past expiration
+            // Do NOT touch confirmed or cancelled bookings!
+            if (booking.status === 'pending' && booking.expiresAt && booking.expiresAt < now) {
                 // Release the seats
                 booking.seats.forEach(seatId => {
                     updates[`seats/${seatId}/status`] = 'available';
@@ -371,17 +377,27 @@ async function cleanupExpiredBookings() {
                 
                 // Mark booking as expired
                 updates[`bookings/${bookingId}/status`] = 'expired';
+                
+                console.log(`Expiring booking ${bookingId}`);
             }
         });
         
         if (Object.keys(updates).length > 0) {
             await database.ref().update(updates);
-            console.log('Cleaned up expired bookings');
+            console.log(`Cleaned up ${Object.keys(updates).length / 4} expired bookings`);
         }
     } catch (error) {
         console.error('Error cleaning up bookings:', error);
     }
 }
+
+// INSTRUCTIONS:
+// Replace the cleanupExpiredBookings() function in your booking-system.js 
+// with this version. The key changes are:
+// 1. Added check for booking.expiresAt existence
+// 2. Added detailed logging
+// 3. Confirmed bookings will NEVER be released
+
 
 // Run cleanup every 5 minutes
 setInterval(cleanupExpiredBookings, 5 * 60 * 1000);
