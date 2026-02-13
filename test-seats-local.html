@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Seat Picker - Local Only</title>
+    <style>
+        .seat-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+            justify-content: center;
+        }
+        .seat {
+            width: 40px;
+            height: 40px;
+            background: #28a745;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .seat.selected {
+            background: #007bff;
+        }
+        .seat.booked {
+            background: #dc3545;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <h2>Test Seat Picker (No Firebase)</h2>
+    <div id="seating"></div>
+    <div id="summary"></div>
+
+    <script>
+        let selectedSeats = [];
+        
+        function renderSeats() {
+            const container = document.getElementById('seating');
+            container.innerHTML = '';
+            
+            for (let row = 1; row <= 3; row++) {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'seat-row';
+                
+                for (let seat = 1; seat <= 8; seat++) {
+                    const seatId = `R${row}S${seat}`;
+                    const seatDiv = document.createElement('div');
+                    seatDiv.className = 'seat';
+                    seatDiv.textContent = seat;
+                    
+                    if (selectedSeats.includes(seatId)) {
+                        seatDiv.classList.add('selected');
+                    }
+                    
+                    seatDiv.onclick = () => {
+                        const index = selectedSeats.indexOf(seatId);
+                        if (index > -1) {
+                            selectedSeats.splice(index, 1);
+                        } else {
+                            selectedSeats.push(seatId);
+                        }
+                        renderSeats();
+                        updateSummary();
+                    };
+                    
+                    rowDiv.appendChild(seatDiv);
+                }
+                container.appendChild(rowDiv);
+            }
+        }
+        
+        function updateSummary() {
+            document.getElementById('summary').textContent = 
+                'Selected: ' + selectedSeats.join(', ');
+        }
+        
+        renderSeats();
+    </script>
+</body>
+</html>
