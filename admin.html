@@ -572,7 +572,7 @@
             }).join('');
         }
 
-        // Create booking card HTML - UPDATED for new seat structure
+        // Create booking card HTML - UPDATED for new seat structure with custom row names
         function createBookingCard(bookingId, booking) {
             const createdDate = new Date(booking.createdAt).toLocaleString('id-ID');
             const expiresDate = new Date(booking.expiresAt).toLocaleString('id-ID');
@@ -580,22 +580,26 @@
             const seatsList = booking.seats.map(seatId => {
                 const parts = seatId.split('-');
                 
-                // Handle new structure: GOLD-L-1-1 or REG-L-1-1
+                // Handle new structure with custom row names: GOLD-L-B1-1 or REG-L-A1-1
                 let displayText, seatClass;
                 
                 if (parts.length >= 4) {
-                    // New format: GOLD-L-1-1 or REG-L-1-1
+                    // New format: GOLD-L-B1-1 or REG-L-A1-1
                     const section = parts[0]; // GOLD or REG
                     const side = parts[1]; // L or R
-                    const row = parts[2];
+                    const row = parts[2]; // B1, C3, A5, D10, etc.
                     const seat = parts[3];
                     
-                    displayText = `${section}-${side} R${row}S${seat}`;
+                    displayText = `${section}-${side} ${row}-${seat}`;
                     seatClass = section === 'GOLD' ? 'gold' : 'regular';
-                } else {
+                } else if (parts.length === 3) {
                     // Old format fallback: GOLD-1-1
                     displayText = `${parts[0]} R${parts[1]}S${parts[2]}`;
                     seatClass = parts[0] === 'GOLD' ? 'gold' : 'regular';
+                } else {
+                    // Fallback for any unexpected format
+                    displayText = seatId;
+                    seatClass = '';
                 }
                 
                 return `<span class="seat-tag ${seatClass}">${displayText}</span>`;
