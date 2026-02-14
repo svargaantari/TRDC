@@ -614,17 +614,19 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Optional: Auto-play (change image every 5 seconds)
     // Uncomment the line below if you want auto-play
-     setInterval(() => changeSlide(1), 5000);
+    // setInterval(() => changeSlide(1), 5000);
 });
 
 // Change slide by n (1 for next, -1 for previous)
 function changeSlide(n) {
-    showSlide(currentSlideIndex += n);
+    currentSlideIndex += n;
+    showSlide(currentSlideIndex);
 }
 
 // Show specific slide
 function currentSlide(n) {
-    showSlide(currentSlideIndex = n);
+    currentSlideIndex = n;
+    showSlide(currentSlideIndex);
 }
 
 // Display slide
@@ -632,6 +634,13 @@ function showSlide(n) {
     const slides = document.getElementsByClassName('carousel-image');
     const dots = document.getElementsByClassName('dot');
     
+    // Check if slides exist
+    if (slides.length === 0) {
+        console.error('No carousel images found');
+        return;
+    }
+    
+    // Wrap around logic
     if (n > slides.length) {
         currentSlideIndex = 1;
     }
@@ -639,22 +648,28 @@ function showSlide(n) {
         currentSlideIndex = slides.length;
     }
     
-    // Hide all slides
+    // Hide all slides and deactivate all dots
     for (let i = 0; i < slides.length; i++) {
         slides[i].classList.remove('active');
+        slides[i].style.display = 'none';
     }
     
-    // Remove active from all dots
     for (let i = 0; i < dots.length; i++) {
         dots[i].classList.remove('active');
     }
     
-    // Show current slide
+    // Show current slide and activate current dot
     slides[currentSlideIndex - 1].classList.add('active');
-    dots[currentSlideIndex - 1].classList.add('active');
+    slides[currentSlideIndex - 1].style.display = 'block';
+    
+    if (dots.length > 0) {
+        dots[currentSlideIndex - 1].classList.add('active');
+    }
+    
+    console.log('Showing slide:', currentSlideIndex); // Debug log
 }
 
-// Optional: Keyboard navigation
+// Keyboard navigation
 document.addEventListener('keydown', function(event) {
     if (event.key === 'ArrowLeft') {
         changeSlide(-1);
@@ -663,25 +678,28 @@ document.addEventListener('keydown', function(event) {
     }
 });
 
-// Optional: Touch swipe for mobile
+// Touch swipe for mobile
 let touchStartX = 0;
 let touchEndX = 0;
 
-document.querySelector('.carousel')?.addEventListener('touchstart', function(e) {
-    touchStartX = e.changedTouches[0].screenX;
-});
+const carousel = document.querySelector('.carousel');
+if (carousel) {
+    carousel.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+    });
 
-document.querySelector('.carousel')?.addEventListener('touchend', function(e) {
-    touchEndX = e.changedTouches[0].screenX;
-    handleSwipe();
-});
+    carousel.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    });
+}
 
 function handleSwipe() {
     if (touchEndX < touchStartX - 50) {
-        changeSlide(1); // Swipe left
+        changeSlide(1); // Swipe left = next
     }
     if (touchEndX > touchStartX + 50) {
-        changeSlide(-1); // Swipe right
+        changeSlide(-1); // Swipe right = previous
     }
 }
 </script>
