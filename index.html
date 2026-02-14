@@ -199,6 +199,62 @@
       border-top: 2px solid #003366;
       margin: 40px 0;
     }
+
+/* Navigation Buttons */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    font-size: 24px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s;
+    z-index: 10;
+}
+
+.carousel-btn:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.carousel-btn.prev {
+    left: 10px;
+}
+
+.carousel-btn.next {
+    right: 10px;
+}
+
+/* Dots Indicator */
+.carousel-dots {
+    text-align: center;
+    padding: 15px 0;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.dot {
+    height: 12px;
+    width: 12px;
+    margin: 0 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.dot:hover,
+.dot.active {
+    background-color: white;
+    transform: scale(1.2);
+}
     
     /* Mobile Responsiveness */
     @media screen and (max-width: 768px) {
@@ -245,6 +301,15 @@
       .ticket-section {
         padding: 20px;
       }
+          .carousel-btn {
+        padding: 10px 15px;
+        font-size: 18px;
+    }
+    
+    .dot {
+        height: 10px;
+        width: 10px;
+    }
     }
     
     @media screen and (max-width: 480px) {
@@ -260,6 +325,56 @@
         font-size: 12px;
       }
     }
+
+/* Image Carousel Styles */
+.image-container {
+    text-align: center;
+    margin: 2rem 0;
+    position: relative;
+}
+
+.carousel {
+    position: relative;
+    max-width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-inner {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.carousel-image {
+    width: 100%;
+    height: auto;
+    display: none;
+    border-radius: 12px;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.carousel-image.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+
+
+
+    
   </style>
 </head>
 
@@ -269,9 +384,26 @@
     <h1 class="main-title">Harmony in Diversity</h1>
     
     <!-- Stage Image -->
-    <div class="image-container">
-      <img src="TRDC Annual Concert 2026 - 1.jpeg" alt="TRDC Stage">
+<div class="image-container">
+    <div class="carousel">
+        <div class="carousel-inner">
+            <img src="TRDC Annual Concert 2026 - 1.jpeg" alt="TRDC Stage 1" class="carousel-image active">
+            <img src="TRDC Annual Concert 2026 - 2.jpeg" alt="TRDC Stage 2" class="carousel-image">
+            <!-- Add more images as needed -->
+        </div>
+        
+        <!-- Navigation Buttons -->
+        <button class="carousel-btn prev" onclick="changeSlide(-1)">❮</button>
+        <button class="carousel-btn next" onclick="changeSlide(1)">❯</button>
+        
+        <!-- Dots Indicator -->
+        <div class="carousel-dots">
+            <span class="dot active" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <!-- Add more dots for more images -->
+        </div>
     </div>
+</div>
     
     <!-- Run Down Section -->
     <h1 class="section-title">Run Down</h1>
@@ -473,3 +605,85 @@ Abraham Raymond, Antonius Samudra Bayu Amarta Widi Putra, Silvester Adventio Tri
   </div>
 </body>
 </html>
+
+<script>
+let currentSlideIndex = 1;
+
+// Initialize carousel
+document.addEventListener('DOMContentLoaded', function() {
+    showSlide(currentSlideIndex);
+    
+    // Optional: Auto-play (change image every 5 seconds)
+    // Uncomment the line below if you want auto-play
+     setInterval(() => changeSlide(1), 5000);
+});
+
+// Change slide by n (1 for next, -1 for previous)
+function changeSlide(n) {
+    showSlide(currentSlideIndex += n);
+}
+
+// Show specific slide
+function currentSlide(n) {
+    showSlide(currentSlideIndex = n);
+}
+
+// Display slide
+function showSlide(n) {
+    const slides = document.getElementsByClassName('carousel-image');
+    const dots = document.getElementsByClassName('dot');
+    
+    if (n > slides.length) {
+        currentSlideIndex = 1;
+    }
+    if (n < 1) {
+        currentSlideIndex = slides.length;
+    }
+    
+    // Hide all slides
+    for (let i = 0; i < slides.length; i++) {
+        slides[i].classList.remove('active');
+    }
+    
+    // Remove active from all dots
+    for (let i = 0; i < dots.length; i++) {
+        dots[i].classList.remove('active');
+    }
+    
+    // Show current slide
+    slides[currentSlideIndex - 1].classList.add('active');
+    dots[currentSlideIndex - 1].classList.add('active');
+}
+
+// Optional: Keyboard navigation
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'ArrowLeft') {
+        changeSlide(-1);
+    } else if (event.key === 'ArrowRight') {
+        changeSlide(1);
+    }
+});
+
+// Optional: Touch swipe for mobile
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.querySelector('.carousel')?.addEventListener('touchstart', function(e) {
+    touchStartX = e.changedTouches[0].screenX;
+});
+
+document.querySelector('.carousel')?.addEventListener('touchend', function(e) {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+});
+
+function handleSwipe() {
+    if (touchEndX < touchStartX - 50) {
+        changeSlide(1); // Swipe left
+    }
+    if (touchEndX > touchStartX + 50) {
+        changeSlide(-1); // Swipe right
+    }
+}
+</script>
+
