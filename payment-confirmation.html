@@ -339,6 +339,14 @@
                 <!-- Booking Information -->
                 <div class="booking-info">
                     <div class="info-row">
+                        <span class="info-label">Nama Pemesan:</span>
+                        <span class="info-value" id="customer-name">-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Nomor Telepon:</span>
+                        <span class="info-value" id="customer-phone">-</span>
+                    </div>
+                    <div class="info-row">
                         <span class="info-label">Booking ID:</span>
                         <span class="info-value" id="booking-id">Loading...</span>
                     </div>
@@ -399,7 +407,7 @@
                         Kirim via WhatsApp
                     </a>
                     <p style="color: #666; font-size: 0.85rem; margin-top: 1rem;">
-                        085694316855
+                        08122642445
                     </p>
                 </div>
                 
@@ -427,13 +435,19 @@
             const bookingId = urlParams.get('bookingId') || 'N/A';
             const seats = urlParams.get('seats') || '';
             const totalPrice = parseInt(urlParams.get('total')) || 0;
+            const customerName = urlParams.get('name') || '-';
+            const phoneNumber = urlParams.get('phone') || '-';
             
-            return { bookingId, seats, totalPrice };
+            return { bookingId, seats, totalPrice, customerName, phoneNumber };
         }
         
         // Display booking information
         function displayBookingInfo() {
-            const { bookingId, seats, totalPrice } = getBookingData();
+            const { bookingId, seats, totalPrice, customerName, phoneNumber } = getBookingData();
+            
+            // Display customer info
+            document.getElementById('customer-name').textContent = decodeURIComponent(customerName);
+            document.getElementById('customer-phone').textContent = decodeURIComponent(phoneNumber);
             
             // Display booking ID
             document.getElementById('booking-id').textContent = bookingId;
@@ -458,13 +472,17 @@
         
         // Setup WhatsApp link with pre-filled message
         function setupWhatsAppLink(bookingId, seats, totalPrice) {
+            const { customerName, phoneNumber } = getBookingData();
+            
             const message = `Halo, saya ingin konfirmasi pembayaran tiket TRDC Concert 2026\n\n` +
+                `Nama: ${decodeURIComponent(customerName)}\n` +
+                `Telepon: ${decodeURIComponent(phoneNumber)}\n` +
                 `Booking ID: ${bookingId}\n` +
                 `Kursi: ${seats}\n` +
                 `Total: Rp ${formatCurrency(totalPrice)}\n\n` +
                 `Saya sudah melakukan transfer. Berikut bukti transfernya.`;
             
-            const whatsappNumber = '6285694316855'; // Format: country code + number without leading 0
+            const whatsappNumber = '628122642445'; // Format: country code + number without leading 0
             const encodedMessage = encodeURIComponent(message);
             const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
             
