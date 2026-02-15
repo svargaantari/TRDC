@@ -401,6 +401,15 @@
         <div class="bookings-section">
             <h2>Bookings Management</h2>
             
+            <!-- Search Box -->
+            <div style="margin-bottom: 20px;">
+                <input type="text" 
+                       id="search-input" 
+                       placeholder="🔍 Cari berdasarkan Nama, Booking ID, atau Nomor Telepon..." 
+                       style="width: 100%; padding: 12px; border: 2px solid #667eea; border-radius: 8px; font-size: 16px;"
+                       onkeyup="searchBookings()">
+            </div>
+            
             <div class="filter-tabs">
                 <button class="filter-tab active" onclick="filterBookings('all')">All</button>
                 <button class="filter-tab" onclick="filterBookings('pending')">Pending</button>
@@ -442,6 +451,7 @@
 
         let allBookings = {};
         let currentFilter = 'all';
+        let searchQuery = '';
 
         // Login handling
         document.getElementById('login-form').addEventListener('submit', function(e) {
@@ -551,11 +561,25 @@
             const container = document.getElementById('bookings-container');
             const bookings = Object.entries(allBookings);
             
-            // Filter bookings
-            const filtered = bookings.filter(([id, booking]) => {
+            // Filter bookings by status
+            let filtered = bookings.filter(([id, booking]) => {
                 if (currentFilter === 'all') return true;
                 return booking.status === currentFilter;
             });
+            
+            // Filter by search query
+            if (searchQuery.trim() !== '') {
+                const query = searchQuery.toLowerCase();
+                filtered = filtered.filter(([bookingId, booking]) => {
+                    const customerName = (booking.customerName || '').toLowerCase();
+                    const phoneNumber = (booking.phoneNumber || '').toLowerCase();
+                    const id = bookingId.toLowerCase();
+                    
+                    return customerName.includes(query) || 
+                           phoneNumber.includes(query) || 
+                           id.includes(query);
+                });
+            }
 
             // Sort by creation date (newest first)
             filtered.sort(([, a], [, b]) => {
@@ -570,6 +594,12 @@
             container.innerHTML = filtered.map(([bookingId, booking]) => {
                 return createBookingCard(bookingId, booking);
             }).join('');
+        }
+        
+        // Search bookings
+        function searchBookings() {
+            searchQuery = document.getElementById('search-input').value;
+            renderBookings();
         }
 
         // Create booking card HTML - UPDATED for new seat structure with custom row names
@@ -612,6 +642,11 @@
             const cancelledDate = booking.cancelledAt 
                 ? `<p><strong>Cancelled:</strong> ${new Date(booking.cancelledAt).toLocaleString('id-ID')}</p>`
                 : '';
+            
+            const customerInfo = booking.customerName 
+                ? `<p><strong>Nama Pemesan:</strong> ${booking.customerName}</p>
+                   <p><strong>Telepon:</strong> ${booking.phoneNumber || '-'}</p>`
+                : '';
 
             return `
                 <div class="booking-card ${booking.status}">
@@ -621,6 +656,7 @@
                     </div>
                     
                     <div class="booking-details">
+                        ${customerInfo}
                         <p><strong>Created:</strong> ${createdDate}</p>
                         <p><strong>Expires:</strong> ${expiresDate}</p>
                         ${confirmedDate}
