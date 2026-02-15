@@ -372,6 +372,9 @@
             <h1>🎵 TRDC Concert - Admin Panel</h1>
             <p>Manage bookings and seat reservations</p>
             <div class="header-buttons">
+                <button class="btn btn-primary" onclick="downloadExcel()" style="background: #28a745; padding: 10px 20px;">
+                    📥 Download Excel
+                </button>
                 <button class="reset-btn" onclick="resetDatabase()">🔄 Reset Database</button>
                 <button class="logout-btn" onclick="logout()">Logout</button>
             </div>
@@ -792,6 +795,83 @@
         // Format currency
         function formatCurrency(amount) {
             return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+        
+        // Download Excel function
+        async function downloadExcel() {
+            try {
+                showAlert('Mengunduh data...', 'info');
+                
+                // Get all seats and bookings
+                const seatsSnapshot = await database.ref('seats').once('value');
+                const seats = seatsSnapshot.val() || {};
+                
+                // Prepare data for Excel
+                const excelData = [];
+                
+                // Add headers
+                excelData.push([
+                    'Section',
+                    'Row',
+                    'Seat Number',
+                    'Price',
+                    'Status',
+                    'Booked By (Booking ID)',
+                    'Customer Name',
+                    'Phone Number',
+                    'Booked At'
+                ]);
+                
+                // Process each seat
+                for (const [seatId, seatData] of Object.entries(seats)) {
+                    let customerName = '-';
+                    let phoneNumber = '-';
+                    
+                    // If seat is booked, get customer info from booking
+                    if (seatData.bookedBy && allBookings[seatData.bookedBy]) {
+                        const booking = allBookings[seatData.bookedBy];
+                        customerName = booking.customerName || '-';
+                        phoneNumber = booking.phoneNumber || '-';
+                    }
+                    
+                    excelData.push([
+                        seatData.section,
+                        seatData.row,
+                        seatData.number,
+                        seatData.price,
+                        seatData.status,
+                        seatData.bookedBy || '-',
+                        customerName,
+                        phoneNumber,
+                        seatData.bookedAt ? new Date(seatData.bookedAt).toLocaleString('id-ID') : '-'
+                    ]);
+                }
+                
+                // Convert to CSV
+                const csv = excelData.map(row => 
+                    row.map(cell => `"${cell}"`).join(',')
+                ).join('\n');
+                
+                // Add BOM for proper Excel UTF-8 encoding
+                const BOM = '\uFEFF';
+                const blob = new Blob([BOM + csv], { type: 'text/csv;charset=utf-8;' });
+                
+                // Create download link
+                const link = document.createElement('a');
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', `TRDC_Seats_${new Date().toISOString().split('T')[0]}.csv`);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                showAlert('Excel berhasil diunduh!', 'success');
+                
+            } catch (error) {
+                console.error('Error downloading Excel:', error);
+                showAlert('Gagal mengunduh Excel. Silakan coba lagi.', 'danger');
+            }
         }
     </script>
 </body>
