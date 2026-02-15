@@ -346,6 +346,32 @@ async function handleCheckout() {
         return;
     }
     
+    // Get customer name
+    let customerName = '';
+    while (!customerName || customerName.trim() === '') {
+        customerName = prompt('Masukkan Nama Pemesan:');
+        
+        // If user cancels, exit
+        if (customerName === null) {
+            return;
+        }
+        
+        // Validate name
+        if (!customerName || customerName.trim() === '') {
+            alert('Nama pemesan tidak boleh kosong!');
+        }
+    }
+    
+    customerName = customerName.trim();
+    
+    // Get phone number (optional but recommended)
+    let phoneNumber = prompt('Masukkan Nomor Telepon (WhatsApp):');
+    if (phoneNumber === null) {
+        phoneNumber = '-';
+    } else {
+        phoneNumber = phoneNumber.trim() || '-';
+    }
+    
     // Confirm booking
     const seatList = selectedSeats.map(seatId => {
         const seat = allSeats[seatId];
@@ -358,6 +384,8 @@ async function handleCheckout() {
     
     const confirmed = confirm(
         `Konfirmasi Pemesanan:\n\n` +
+        `Nama: ${customerName}\n` +
+        `Telepon: ${phoneNumber}\n` +
         `Kursi: ${seatList}\n` +
         `Total: Rp ${formatCurrency(totalPrice)}\n\n` +
         `Lanjutkan ke pembayaran?`
@@ -381,9 +409,11 @@ async function handleCheckout() {
         
         await database.ref().update(updates);
         
-        // Create booking record
+        // Create booking record with customer name
         const bookingData = {
             bookingId: bookingId,
+            customerName: customerName,
+            phoneNumber: phoneNumber,
             seats: selectedSeats,
             totalPrice: totalPrice,
             status: 'pending',
@@ -395,7 +425,8 @@ async function handleCheckout() {
         
         // Redirect to payment confirmation page
         const seatInfo = encodeURIComponent(seatList);
-        const redirectUrl = `payment-confirmation.html?bookingId=${bookingId}&seats=${seatInfo}&total=${totalPrice}`;
+        const customerNameEncoded = encodeURIComponent(customerName);
+        const redirectUrl = `payment-confirmation.html?bookingId=${bookingId}&seats=${seatInfo}&total=${totalPrice}&name=${customerNameEncoded}&phone=${encodeURIComponent(phoneNumber)}`;
         
         // Store booking ID in localStorage for confirmation
         localStorage.setItem('currentBooking', bookingId);
