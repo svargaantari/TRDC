@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Harmony in Diversity - TRDC Annual Concert 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;700;900&family=Raleway:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --gold-dim: #8a6e2f;
+      --deep: #08080f;
+      --deep2: #0d0d1a;
+      --panel: rgba(255,255,255,0.03);
+      --border: rgba(201,168,76,0.25);
+      --text: #e8e0d0;
+      --muted: rgba(232,224,208,0.55);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 300;
+      background: var(--deep);
+      color: var(--text);
+      padding: 0;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── STARFIELD ── */
+    #stars {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.04) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 10%, rgba(120,80,200,0.06) 0%, transparent 50%),
+        var(--deep);
+    }
+    #stars::before, #stars::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 30% 70%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 50% 40%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 70% 85%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 85% 15%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 95% 55%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 15% 90%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 60% 10%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 40% 55%, rgba(201,168,76,0.6) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 75% 35%, rgba(201,168,76,0.5) 0%, transparent 100%);
+      background-size: 700px 700px;
+      animation: twinkle 8s ease-in-out infinite alternate;
+    }
+    #stars::after { background-size: 500px 500px; animation-delay: -4s; opacity: 0.6; }
+    @keyframes twinkle { from { opacity: 0.5; } to { opacity: 1; } }
+
+    /* ── CONTAINER ── */
+    .container {
+      position: relative; z-index: 1;
+      max-width: 950px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    /* ── HERO / MAIN TITLE ── */
+    .main-title {
+      text-align: center;
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2rem, 8vw, 5.5rem);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #fff 0%, var(--gold-light) 40%, var(--gold) 70%, #8a6e2f 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      padding: 80px 20px 20px;
+      margin: 0 -20px 10px;
+      opacity: 0;
+      animation: fadeUp 1s 0.3s forwards;
+    }
+
+    .hero-subtitle {
+      text-align: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 1s 0.6s forwards;
+    }
+
+    .hero-divider {
+      display: flex; align-items: center; justify-content: center; gap: 1rem;
+      margin: 0 auto 50px;
+      opacity: 0;
+      animation: fadeUp 1s 0.8s forwards;
+    }
+    .hero-divider::before, .hero-divider::after {
+      content: '';
+      display: block;
+      width: 100px; height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold));
+    }
+    .hero-divider::after { background: linear-gradient(to left, transparent, var(--gold)); }
+    .diamond { width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); }
+
+    /* ── SECTION TITLES ── */
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      text-align: center;
+      padding: 1.2rem 2rem;
+      margin: 50px -20px 30px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.06), transparent);
+      position: relative;
+    }
+    .section-title::before, .section-title::after {
+      content: '✦';
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      color: var(--gold-dim);
+      font-size: 0.7rem;
+    }
+    .section-title::before { left: 1.5rem; }
+    .section-title::after  { right: 1.5rem; }
+
+    /* ── IMAGE CONTAINER ── */
+    .image-container {
+      text-align: center;
+      margin: 2rem 0;
+      position: relative;
+    }
+    .image-container img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      border-radius: 4px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+      border: 1px solid var(--border);
+    }
+    .logo { max-width: 220px !important; }
+    .qr-code { max-width: 260px !important; }
+    .sponsor { width: 100%; height: auto; display: block; }
+
+    /* ── SCHEDULE TABLE ── */
+    .schedule-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    .schedule-table thead {
+      background: linear-gradient(90deg, rgba(201,168,76,0.15), rgba(201,168,76,0.08));
+    }
+    .schedule-table th {
+      padding: 14px 16px;
+      text-align: left;
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      border-bottom: 1px solid var(--border);
+    }
+    .schedule-table td {
+      padding: 16px;
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+      vertical-align: top;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      color: var(--text);
+    }
+    .schedule-table td:first-child {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+    .schedule-table td strong {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 500;
+      color: #fff;
+      font-size: 0.9rem;
+    }
+    .schedule-table tbody tr {
+      transition: background 0.3s;
+    }
+    .schedule-table tbody tr:hover {
+      background: rgba(201,168,76,0.05);
+    }
+    .schedule-table tbody tr:last-child td { border-bottom: none; }
+
+    .break-row td { color: var(--gold-light) !important; }
+    .break-row { background: rgba(201,168,76,0.06) !important; }
+    .break-row:hover { background: rgba(201,168,76,0.1) !important; }
+
+    /* ── INFO BOX ── */
+    .info-box {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 24px 28px;
+      margin: 20px 0;
+      border-radius: 2px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+    }
+    .info-box em { color: var(--muted); font-style: italic; }
+    .info-box p { margin: 8px 0; }
+
+    /* ── PERFORMER TABLE (inside info-box) ── */
+    .info-box table {
+      border: none !important;
+      width: 100%;
+    }
+    .info-box table td {
+      border: none !important;
+      padding: 8px 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+    .info-box table tr[style*="background"] td,
+    .info-box table tr[style*="background"] {
+      background: transparent !important;
+      font-family: 'Cinzel', serif !important;
+      font-size: 0.68rem !important;
+      letter-spacing: 0.3em !important;
+      color: var(--gold) !important;
+      text-align: left !important;
+      padding-top: 1.5rem !important;
+      font-weight: 400 !important;
+    }
+    .info-box strong, .info-box bold {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 500;
+      color: #fff;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── SOCIAL LINKS ── */
+    .social-links {
+      text-align: center;
+      margin: 25px 0;
+      padding: 24px 20px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.85rem;
+      line-height: 2.2;
+    }
+    .social-links strong {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    .social-links a {
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s, color 0.3s;
+      padding-bottom: 1px;
+    }
+    .social-links a:hover {
+      color: var(--gold-light);
+      border-color: var(--gold);
+    }
+
+    /* ── TICKET SECTION ── */
+    .ticket-section {
+      text-align: center;
+      padding: 30px;
+      background: var(--panel);
+      border: 1px dashed var(--border);
+      border-radius: 2px;
+      margin: 20px 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+    }
+    .ticket-section a { color: var(--gold); text-decoration: none; border-bottom: 1px solid var(--gold); }
+
+    /* ── CAROUSEL ── */
+    .carousel {
+      position: relative;
+      max-width: 100%;
+      margin: 0 auto;
+      overflow: hidden;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+    }
+    .carousel-inner {
+      position: relative;
+      width: 100%;
+      display: flex;
+      align-items: center;
+    }
+    .carousel-image {
+      width: 100%;
+      height: auto;
+      display: none;
+      animation: fadeIn 0.5s ease-in;
+    }
+    .carousel-image.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      background: rgba(8,8,15,0.7);
+      color: var(--gold);
+      border: 1px solid var(--border);
+      padding: 12px 16px;
+      font-size: 20px;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.3s;
+      z-index: 10;
+    }
+    .carousel-btn:hover { background: rgba(201,168,76,0.15); border-color: var(--gold); }
+    .carousel-btn.prev { left: 10px; }
+    .carousel-btn.next { right: 10px; }
+
+    .carousel-dots {
+      text-align: center;
+      padding: 12px 0;
+      position: absolute;
+      bottom: 10px;
+      left: 50%; transform: translateX(-50%);
+      z-index: 10;
+    }
+    .dot {
+      height: 8px; width: 8px;
+      margin: 0 5px;
+      background-color: rgba(201,168,76,0.3);
+      border-radius: 50%;
+      display: inline-block;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .dot:hover, .dot.active { background-color: var(--gold); transform: scale(1.2); }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border), transparent);
+      margin: 40px 0;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center;
+      margin-top: 50px;
+      padding-top: 30px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.9rem;
+    }
+    .footer strong {
+      font-family: 'Cinzel', serif;
+      font-style: normal;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+    }
+    .footer p { margin: 6px 0; }
+
+    /* ── REVEAL ANIMATION ── */
+    .reveal {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media screen and (max-width: 768px) {
+      .container { padding: 0 12px 40px; }
+      .main-title { font-size: clamp(1.6rem, 10vw, 3rem); padding-top: 50px; }
+      .section-title { font-size: 0.8rem; margin: 40px -12px 20px; }
+      .schedule-table { font-size: 0.85rem; }
+      .schedule-table th, .schedule-table td { padding: 10px 10px; }
+      .carousel-btn { padding: 8px 12px; font-size: 16px; }
+    }
+    @media screen and (max-width: 480px) {
+      .main-title { font-size: clamp(1.4rem, 9vw, 2.5rem); }
+      .section-title { font-size: 0.72rem; }
+      .schedule-table { font-size: 0.78rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="stars"></div>
+
+<div class="container">
+
+  <!-- Main Title -->
+  <h1 class="main-title">Harmony in Diversity</h1>
+  <p class="hero-subtitle">TRDC Annual Concert 2026</p>
+  <div class="hero-divider"><div class="diamond"></div></div>
+
+  <!-- Stage Image -->
+  <div class="image-container reveal">
+    <img src="TRDC Annual Concert 2026 - R2.png" alt="TRDC Annual Concert 2026 - R2">
+  </div>
+
+  <!-- Run Down Section -->
+  <h1 class="section-title reveal">Run Down</h1>
+
+  <table class="schedule-table reveal">
+    <thead>
+      <tr>
+        <th>Waktu</th>
+        <th>Kegiatan</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>16.30 – 16.55</td>
+        <td><strong>Registrasi / Open Gate</strong></td>
+      </tr>
+      <tr>
+        <td>17.00 – 17.10</td>
+        <td>
+          <strong>Pembukaan Acara (MC)</strong><br>
+          • Doa<br>
+          • Sambutan
+        </td>
+      </tr>
+      <tr>
+        <td>17.10 – 17.55</td>
+        <td>
+          <strong>Perform The Resonare Deo Choir:</strong><br>
+          • O Magnum Mysterium (Kevin Memley)<br>
+          • Cantate Domino (Josu Elberdin)<br>
+          • Joy To The World (Philip Lawson)<br>
+          • A Jubilant Song (J.M.Martin)<br>
+          • Festival Sanctus (John Leavitt)<br>
+          • Twinkle Twinkle Little Star (Daniel Elder)<br>
+          • The Lion Sleep Tonight (Kirby Shaw)<br>
+          • Thankful
+        </td>
+      </tr>
+      <tr class="break-row">
+        <td>17.55 – 18.25</td>
+        <td>⏸️ BREAK TIME</td>
+      </tr>
+      <tr class="break-row">
+        <td>17.55 – 18.25</td>
+        <td><strong>Marlupi Dance Performance</strong></td>
+      </tr>
+      <tr>
+        <td>18.25 – 18.55</td>
+        <td><strong>Perform The Archipelago Singers</strong></td>
+      </tr>
+      <tr>
+        <td>18.55 – 19.00</td>
+        <td><strong>All Singers</strong><br>
+        • Menyanyikan lagu bersama "Why We Sing"</td>
+      </tr>
+      <tr>
+        <td>19.00 – 19.15</td>
+        <td>
+          <strong>Closing:</strong><br>
+          • Penyampaian buket bunga<br>
+          • Doa
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Portfolio Section -->
+  <h1 class="section-title reveal">TRDC Portfolio</h1>
+  <div class="info-box reveal">
+    <p><em>Coming soon...</em></p>
+  </div>
+
+  <!-- Guest Star Section -->
+  <h1 class="section-title reveal">Guest Star</h1>
+
+  <div class="image-container reveal">
+    <img src="Archies_Logo.JPG" alt="The Archipelago Singers Logo" class="logo">
+  </div>
+
+  <div class="image-container reveal">
+    <img src="Achi.png" alt="The Archipelago Singers">
+  </div>
+
+  <div class="social-links reveal">
+    <strong>Follow The Archipelago Singers</strong>
+    📷 Instagram: <a href="https://www.instagram.com/thearchipelagosingers" target="_blank">@thearchipelagosingers</a><br>
+    📝 Blog: <a href="https://thearchipelagosingers.blogspot.com/p/home.html" target="_blank">The Archipelago Singers Blog</a><br>
+    🎥 YouTube: <a href="https://www.youtube.com/@thearchipelagosingers" target="_blank">The Archipelago Singers Channel</a>
+  </div>
+
+  <!-- Singer Section -->
+  <h1 class="section-title reveal">Performers</h1>
+  <div class="info-box reveal">
+    <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
+      <thead>
+        <strong>
+          CONDUCTOR : Y. PRASETIO S<br>
+          PIANIS : ALENZO LEKSANA<br><br>
+          PENYANYI :<br><br>
+        </strong>
+        <tr style="background-color: #d9c2b3; font-weight: bold; text-align: center;">
+          <th colspan="1">SOPRAN</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>
+          Angelina Tornauli Lumban Gaol, Athanasia Austin Bella Sutomo, Athanasia Kirey Affrial, Avril Chatarina Br.Gultom, Klara Chantrea Teja, Fabiola Aretha Krisalyn Kunfianto, Felicia Christabel Jovena, Gabriella Nira Averia Wahyuni, Lidwina Audrey Vania Simamora, Margaretha Indriani Valens, Maria Cahyani Siregar, Theresia Senandung Bayu Widiputri, Yohana Agni Pradita Putri Kusuma, Stefanie Tiara Putri Pakpahan, Sherren, Odilia Efrika Tamaria Sinaga, Regina Natasha Christeana, Natalia Dativa Sila, Naomi Josephine Johan, Lusiana Aline Quinzita Pakpahan, Anika Mei Leia Arsanto, Helena Claritha Wijaya Sihotang, Maria Alena Graciella Jebaru, Nathania Anindita Santoso
+        </td></tr>
+        <tr style="background-color: #d9c2b3; font-weight: bold; text-align: center;">
+          <td>ALTO</td>
+        </tr>
+        <tr><td>
+          Annamora Valentsia Sinaga, Audrey Rosari Ningtyas, Laurentia Emmanuela Chanviorentza Crislly, Matilda Terra, Petra Febrianty, Princesska Miracle Hotnauli Nainggolan, Verena Senandung Gretta Rosario, Abigail Immanuella Prabowo, Fdc Tunggadewi Agdha Saputro, Bernadetha Eka Graceline Sitohang, Martha Mirabelle Hotmianauli Nainggolan, Caroline Valencia Renatha
+        </td></tr>
+        <tr style="background-color: #d9c2b3; font-weight: bold; text-align: center;">
+          <td>TENOR</td>
+        </tr>
+        <tr><td>
+          Alvin Tara Megumareru, Antonius Maryo Arep Sinuor, Rizki Aditia Pratama, Silvano Laurentius Octovian, Gregorius Telaga, Sirilus Mario Juan Meko, Zenevan Valentino S., Antonius Felix Santoso, FX. Radiptha Rahadika, Naresworo Ayodhyo Kusumo
+        </td></tr>
+        <tr style="background-color: #d9c2b3; font-weight: bold; text-align: center;">
+          <td>BASS</td>
+        </tr>
+        <tr><td>
+          Abraham Raymond, Antonius Samudra Bayu Amarta Widi Putra, Silvester Adventio Tri Haryanto, Valentino Adriell Davis Simamora, Winner Agustinus Sihotang, Michael Christian PP, Gaudensius Bima Desyarto, Abraham Nicholas Prabowo, Nikolas Brian Wijaya Sihotang
+        </td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Sponsor Section -->
+  <h1 class="section-title reveal">Sponsor</h1>
+  <div class="info-box reveal">
+    <div class="image-container">
+      <img src="ocbc.png" alt="ocbc" class="sponsor">
+    </div>
+    <div class="image-container">
+      <img src="Sago kitchen.jpg" alt="sago kitchen" class="sponsor">
+    </div>
+    <div class="image-container">
+      <img src="dua kelinci.jpg" alt="dua kelinci" class="sponsor">
+    </div>
+    <div class="image-container">
+      <img src="Rintis Sejahtera.png" alt="Rintis Sejahtera" class="sponsor">
+    </div>
+  </div>
+
+  <!-- Donatur Section -->
+  <h1 class="section-title reveal">Donatur</h1>
+  <div class="info-box reveal">
+    <p>
+      • FIFTIN FATMASARI<br>
+      • FILISITAS KRISTINA S<br>
+      • MARIA YUDHITAMA EKA<br>
+      • AGUSTINA ENDANG<br>
+      • NN<br>
+      • YULITA RINTYASRINI<br>
+      • RR. YULITA RISWIDAJA<br>
+      • HANDOYO<br>
+      • SIREGAR SETIAWAN MANALU<br>
+      • NGATINI<br>
+      • FX SUHARTONO<br>
+      • RITA KURNIASIH<br>
+      • MARGARETHA SETIAWAN<br>
+      • HERYANTO OEMAR<br>
+      • VERONIKA SUVARNA<br>
+      • KUAT SETIA BUDI<br>
+      • EDUARDUS ARY<br>
+      • YOSEFINA RUMENGAN<br>
+      • DEASY LILIYANTY<br>
+      • YULIANI RAHMAT
+    </p>
+  </div>
+
+  <!-- Tim Produksi -->
+  <h1 class="section-title reveal">PENYELENGGARA</h1>
+  <div class="info-box reveal">
+    <td><bold>TIM PRODUKSI</bold><br><br></td>
+    <tr><td>
+      Art Director : ..............<br>
+      Koreografi : ..................<br>
+      Kostum : .....................<br>
+      ...........................
+    </td></tr>
+    <br><br>
+    <td><bold>PANITIA</bold><br><br></td>
+    <tr><td>
+      Ketua : Pramukadi Purwatmojo<br>
+      Wakil Ketua : Andreas Sihono<br>
+      Sekretaris : Maria Astrid Ohoiwutun<br>
+      Bendahara : Maria Niken Kurniawati<br>
+      Sie Acara : Sesilia Novyanti, Bergitta R., Nopi,<br>
+      Sie Dana Usaha/Sponsorhip : Meilany P. H, Netty A, Dhian<br>
+      Sie Tiketing : Zee, Willy<br>
+      Sie Humas : Flo, Emiliana,<br>
+      Sie Publikasi : Leo S.,<br>
+      Sie Dokumentasi : Koko, Lufti<br>
+      Sie Perlengkapan : Hendy K, Willy, Lian, Mario, Ale<br>
+      Sie Penerima Tamu : Senna, Yani, Ica, Priska<br>
+      Sie Lighting : Yannuar<br>
+      Sie Keamanan : Y. Purwanto, Triyono, Totok, Wawan<br>
+      Sie Konsumsi : Fransiska D.
+    </td></tr>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer reveal">
+    <div style="display:flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:1.2rem;">
+      <div style="width:80px;height:1px;background:linear-gradient(to right,transparent,var(--border))"></div>
+      <div class="diamond"></div>
+      <div style="width:80px;height:1px;background:linear-gradient(to left,transparent,var(--border))"></div>
+    </div>
+    <p><strong>Organized by: Svarga Antari Choir</strong></p>
+    <p style="font-size: 0.75rem; margin-top: 8px;">© 2026 TRDC Annual Concert — All Rights Reserved</p>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.06 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── Carousel (unchanged logic) ──
+let currentSlideIndex = 1;
+
+document.addEventListener('DOMContentLoaded', function() {
+  showSlide(currentSlideIndex);
+});
+
+function changeSlide(n) {
+  currentSlideIndex += n;
+  showSlide(currentSlideIndex);
+}
+
+function currentSlide(n) {
+  currentSlideIndex = n;
+  showSlide(currentSlideIndex);
+}
+
+function showSlide(n) {
+  const slides = document.getElementsByClassName('carousel-image');
+  const dots = document.getElementsByClassName('dot');
+  if (slides.length === 0) return;
+  if (n > slides.length) currentSlideIndex = 1;
+  if (n < 1) currentSlideIndex = slides.length;
+  for (let i = 0; i < slides.length; i++) {
+    slides[i].classList.remove('active');
+    slides[i].style.display = 'none';
+  }
+  for (let i = 0; i < dots.length; i++) dots[i].classList.remove('active');
+  slides[currentSlideIndex - 1].classList.add('active');
+  slides[currentSlideIndex - 1].style.display = 'block';
+  if (dots.length > 0) dots[currentSlideIndex - 1].classList.add('active');
+}
+
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'ArrowLeft') changeSlide(-1);
+  else if (event.key === 'ArrowRight') changeSlide(1);
+});
+
+let touchStartX = 0, touchEndX = 0;
+const carousel = document.querySelector('.carousel');
+if (carousel) {
+  carousel.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; });
+  carousel.addEventListener('touchend', e => { touchEndX = e.changedTouches[0].screenX; handleSwipe(); });
+}
+function handleSwipe() {
+  if (touchEndX < touchStartX - 50) changeSlide(1);
+  if (touchEndX > touchStartX + 50) changeSlide(-1);
+}
+</script>
+
+</body>
+</html>
