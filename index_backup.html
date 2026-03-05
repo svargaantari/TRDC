@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Harmony in Diversity - TRDC Annual Concert 2026</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: "Georgia", "Times New Roman", serif;
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      line-height: 1.6;
+    }
+    
+    .container {
+      background-color: white;
+      border: 3px solid #003366;
+      border-radius: 15px;
+      padding: 40px;
+      max-width: 950px;
+      margin: 0 auto;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Header Styles */
+    .main-title {
+      text-align: center;
+      font-size: 32px;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(135deg, #003366 0%, #005599 100%);
+      letter-spacing: 3px;
+      margin: -40px -40px 40px -40px;
+      padding: 30px 20px;
+      border-radius: 12px 12px 0 0;
+      text-transform: uppercase;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .section-title {
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(135deg, #003366 0%, #005599 100%);
+      letter-spacing: 2px;
+      margin: 40px -40px 30px -40px;
+      padding: 20px;
+      text-transform: uppercase;
+    }
+    
+    h2 {
+      color: #003366;
+      margin-top: 30px;
+      font-size: 20px;
+      border-bottom: 2px solid #003366;
+      padding-bottom: 10px;
+    }
+    
+    /* Image Styles */
+    .image-container {
+      text-align: center;
+      margin: 30px 0;
+    }
+    
+    .image-container img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .logo {
+      max-width: 250px !important;
+    }
+    
+    .qr-code {
+      max-width: 300px !important;
+      border: 3px solid #003366;
+      padding: 15px;
+      background-color: white;
+    }
+
+        .sponsor {
+          width: 100%;
+          height: auto; /* maintains aspect ratio */
+          display: block;
+    }
+    
+    /* Schedule Table */
+    .schedule-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background-color: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    .schedule-table thead {
+      background: linear-gradient(135deg, #003366 0%, #005599 100%);
+      color: white;
+    }
+    
+    .schedule-table th {
+      padding: 18px 15px;
+      text-align: left;
+      font-weight: bold;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+    
+    .schedule-table td {
+      padding: 15px;
+      border-bottom: 1px solid #e0e0e0;
+      vertical-align: top;
+    }
+    
+    .schedule-table tbody tr:hover {
+      background-color: #f8f9fa;
+      transition: background-color 0.3s ease;
+    }
+    
+    .schedule-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .break-row {
+      background-color: #fff3cd !important;
+      font-weight: bold;
+    }
+    
+    .break-row:hover {
+      background-color: #ffe69c !important;
+    }
+    
+    /* Links and Social Media */
+    .social-links {
+      text-align: center;
+      margin: 25px 0;
+      padding: 20px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      border-left: 4px solid #003366;
+    }
+    
+    .social-links a {
+      color: #0056b3;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    
+    .social-links a:hover {
+      color: #003366;
+      text-decoration: underline;
+    }
+    
+    /* Info Box */
+    .info-box {
+      background-color: #f0f7ff;
+      border-left: 4px solid #003366;
+      padding: 20px;
+      margin: 25px 0;
+      border-radius: 5px;
+    }
+    
+    .info-box p {
+      margin: 8px 0;
+      text-align: center;
+    }
+    
+    /* Ticket Section */
+    .ticket-section {
+      text-align: center;
+      padding: 30px;
+      background: linear-gradient(135deg, #f0f7ff 0%, #e6f2ff 100%);
+      border-radius: 10px;
+      margin: 20px 0;
+      border: 2px dashed #003366;
+    }
+    
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 2px solid #003366;
+      color: #666;
+      font-style: italic;
+      font-size: 14px;
+    }
+    
+    hr {
+      border: none;
+      border-top: 2px solid #003366;
+      margin: 40px 0;
+    }
+
+/* Navigation Buttons */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    font-size: 24px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s;
+    z-index: 10;
+}
+
+.carousel-btn:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.carousel-btn.prev {
+    left: 10px;
+}
+
+.carousel-btn.next {
+    right: 10px;
+}
+
+/* Dots Indicator */
+.carousel-dots {
+    text-align: center;
+    padding: 15px 0;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.dot {
+    height: 12px;
+    width: 12px;
+    margin: 0 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.dot:hover,
+.dot.active {
+    background-color: white;
+    transform: scale(1.2);
+}
+    
+    /* Mobile Responsiveness */
+    @media screen and (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+      
+      .container {
+        padding: 20px;
+        border-radius: 10px;
+      }
+      
+      .main-title {
+        font-size: 24px;
+        letter-spacing: 2px;
+        margin: -20px -20px 30px -20px;
+        padding: 20px 15px;
+      }
+      
+      .section-title {
+        font-size: 20px;
+        margin: 30px -20px 20px -20px;
+        padding: 15px;
+      }
+      
+      h2 {
+        font-size: 18px;
+      }
+      
+      .schedule-table {
+        font-size: 13px;
+      }
+      
+      .schedule-table th,
+      .schedule-table td {
+        padding: 10px 8px;
+      }
+      
+      .schedule-table th:first-child,
+      .schedule-table td:first-child {
+        width: 30%;
+      }
+      
+      .ticket-section {
+        padding: 20px;
+      }
+          .carousel-btn {
+        padding: 10px 15px;
+        font-size: 18px;
+    }
+    
+    .dot {
+        height: 10px;
+        width: 10px;
+    }
+    }
+    
+    @media screen and (max-width: 480px) {
+      .main-title {
+        font-size: 20px;
+      }
+      
+      .section-title {
+        font-size: 18px;
+      }
+      
+      .schedule-table {
+        font-size: 12px;
+      }
+    }
+
+/* Image Carousel Styles */
+.image-container {
+    text-align: center;
+    margin: 2rem 0;
+    position: relative;
+}
+
+.carousel {
+    position: relative;
+    max-width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-inner {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.carousel-image {
+    width: 100%;
+    height: auto;
+    display: none;
+    border-radius: 12px;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.carousel-image.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+
+
+
+    
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Main Title -->
+    <h1 class="main-title">Harmony in Diversity</h1>
+    
+    <!-- Stage Image --> 
+
+
+        <div class="image-container">
+      <img src="TRDC Annual Concert 2026 - R2.png" alt="TRDC Annual Concert 2026 - R2">
+    </div>
+    
+    <!-- Run Down Section -->
+    <h1 class="section-title">Run Down</h1>
+    
+    <table class="schedule-table">
+      <thead>
+        <tr>
+          <th>Waktu</th>
+          <th>Kegiatan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>16.30 – 16.55</td>
+          <td><strong>Registrasi / Open Gate</strong></td>
+        </tr>
+        <tr>
+          <td>17.00 – 17.10</td>
+          <td>
+            <strong>Pembukaan Acara (MC)</strong><br>
+            • Doa<br>
+            • Sambutan
+          </td>
+        </tr>
+        <tr>
+          <td>17.10 – 17.55</td>
+           
+          <td>
+            <strong>Perform The Resonare Deo Choir:</strong><br>
+            • O Magnum Mysterium (Kevin Memley)<br>
+            • Cantate Domino (Josu Elberdin)<br>
+            • Joy To The World (Philip Lawson)<br>
+            • A Jubilant Song (J.M.Martin)<br>
+            • Festival Sanctus (John Leavitt)<br>
+            • Twinkle Twinkle Little Star (Daniel Elder)<br>
+            • The Lion Sleep Tonight (Kirby Shaw)<br>
+            • Thankful
+          </td>
+        </tr>
+        <tr class="break-row">
+          <td>17.55 – 18.25</td>
+          <td>⏸️ BREAK TIME</td>
+        </tr>
+        <tr class="break-row">
+          <td>17.55 – 18.25</td>
+          <td>
+            <strong>Marlupi Dance Performance</strong><br>
+ 
+          </td>
+        </tr>
+        <tr>
+          <td>18.25 – 18.55</td>
+          <td><strong>Perform The Archipelago Singers</strong> <br>
+           </td>
+        </tr>
+        <tr>
+          <td>18.55 – 19.00</td>
+          <td><strong>All Singers</strong> <br>
+          • Menyanyikan lagu bersama "Why We Sing"</td>
+        </tr>
+        <tr>
+          
+          <td>189.00 – 19.15</td>
+          <td>
+            <strong>Closing:</strong><br>
+            • Penyampaian buket bunga<br>
+            • Doa
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <!-- Portfolio Section -->
+    <h1 class="section-title">TRDC Portfolio</h1>
+    <div class="info-box">
+      <p><em>Coming soon...</em></p>
+    </div>
+    
+    <!-- Guest Star Section -->
+    <h1 class="section-title">Guest Star</h1>
+    
+    <div class="image-container">
+      <img src="Archies_Logo.JPG" alt="The Archipelago Singers Logo" class="logo">
+    </div>
+    
+    <div class="image-container">
+      <img src="Achi.png" alt="The Archipelago Singers">
+    </div>
+    
+    <div class="social-links">
+      <strong>Follow The Archipelago Singers:</strong><br><br>
+      📷 Instagram: <a href="https://www.instagram.com/thearchipelagosingers" target="_blank">@thearchipelagosingers</a><br>
+      📝 Blog: <a href="https://thearchipelagosingers.blogspot.com/p/home.html" target="_blank">The Archipelago Singers Blog</a><br>
+      🎥 YouTube: <a href="https://www.youtube.com/@thearchipelagosingers" target="_blank">The Archipelago Singers Channel</a>
+    </div>
+    
+    <!-- Location Section 
+    <h1 class="section-title">Lokasi</h1>
+    
+    <div class="image-container">
+      <img src="Map TRDC.png" alt="Location Map">
+    </div>
+    
+    <div class="info-box">
+      <p>📍 <strong>Google Maps:</strong> 
+        <a href="https://maps.app.goo.gl/DkcWjstopYtgAY9W9" target="_blank">Lihat di Google Maps</a>
+      </p>
+    </div>
+    -->
+    <!-- Ticket Booking Section 
+    <h1 class="section-title">Pemesanan Tiket</h1>
+  
+    <div class="ticket-section">
+      <div class="image-container">
+        <img src="Bar Code TRDC.png" alt="QR Code Pemesanan Tiket" class="qr-code">
+      </div>
+      <p style="margin-top: 20px; font-size: 16px;">
+        🎫 <strong>Pesan tiket Anda sekarang!</strong><br>
+        Scan QR code di atas atau klik 
+        <a href="https://svargaantari.github.io/TRDC/booking.html" target="_blank">
+          <strong>di sini</strong>
+        </a>
+      </p>
+    </div>
+-->
+    <!-- Singer Section -->
+    <h1 class="section-title">Performers</h1>
+    <div class="info-box">
+     <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
+    <thead>
+      <strong>
+      CONDUCTOR : Y. PRASETIO S <br>
+      PIANIS : ALENZO LEKSANA
+        <br><BR>
+        PENYANYI :
+        <BR><BR>
+        </strong>
+        <tr style="background-color: #d9c2b3; font-weight: bold; text-align: center;">
+            <th colspan="1">SOPRAN</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td>
+          Angelina Tornauli Lumban Gaol, Athanasia Austin Bella Sutomo, Athanasia Kirey Affrial, Avril Chatarina Br.Gultom, Klara Chantrea Teja, Fabiola Aretha Krisalyn Kunfianto, Felicia Christabel Jovena, Gabriella Nira Averia Wahyuni, Lidwina Audrey Vania Simamora, Margaretha Indriani Valens, Maria Cahyani Siregar, Theresia Senandung Bayu Widiputri, Yohana Agni Pradita Putri Kusuma, Stefanie Tiara Putri Pakpahan, Sherren, Odilia Efrika Tamaria Sinaga, Regina Natasha Christeana, Natalia Dativa Sila, Naomi Josephine Johan, Lusiana Aline Quinzita Pakpahan, Anika Mei Leia Arsanto, Helena Claritha Wijaya Sihotang, Maria Alena Graciella Jebaru, Nathania Anindita Santoso
+        </td></tr>
+
+        <tr style="background-color: #d9c2b3; font-weight: bold; text-align: center;">
+            <td>ALTO</td>
+        </tr>
+        <tr><td>
+          Annamora Valentsia Sinaga, Audrey Rosari Ningtyas, Laurentia Emmanuela Chanviorentza Crislly, Matilda Terra, Petra Febrianty, Princesska Miracle Hotnauli Nainggolan, Verena Senandung Gretta Rosario, Abigail Immanuella Prabowo, Fdc Tunggadewi Agdha Saputro, Bernadetha Eka Graceline Sitohang, Martha Mirabelle Hotmianauli Nainggolan, Caroline Valencia Renatha
+          </td></tr>
+
+        <tr style="background-color: #d9c2b3; font-weight: bold; text-align: center;">
+            <td>TENOR</td>
+        </tr>
+        <tr><td>
+        Alvin Tara Megumareru, Antonius Maryo Arep Sinuor, Rizki Aditia Pratama, Silvano Laurentius Octovian, Gregorius Telaga, Sirilus Mario Juan Meko, Zenevan Valentino S., Antonius Felix Santoso, FX. Radiptha Rahadika, Naresworo Ayodhyo Kusumo
+          
+        </td></tr>
+
+        <tr style="background-color: #d9c2b3; font-weight: bold; text-align: center;">
+            <td>BASS</td>
+        </tr>
+        <tr><td>
+Abraham Raymond, Antonius Samudra Bayu Amarta Widi Putra, Silvester Adventio Tri Haryanto, Valentino Adriell Davis Simamora, Winner Agustinus Sihotang, Michael Christian PP, Gaudensius Bima Desyarto, Abraham Nicholas Prabowo, Nikolas Brian Wijaya Sihotang
+          
+        </td></tr>
+    </tbody>
+</table>
+    </div>
+
+    
+    <!-- Suport Section 
+    <h1 class="section-title">Supported by</h1>
+    <div class="info-box">
+      <p><em><a href="https://www.citrakasih.sch.id/sekolah-citra-berkat-citra-raya-tangerang/">Sekolah Citra Berkat Citra Raya Tangerang</a>
+      </em></p>
+          <div class="image-container">
+      <img src="Ciber.jpg" alt="Sekolah Citra Berkat" class="Ciber">
+    </div>
+    </div>
+-->
+    
+
+    <!-- Sponsor Section -->
+    <h1 class="section-title">Sponsor</h1>
+    <div class="info-box">
+
+     <div class="image-container">
+      <img src="ocbc.png" alt="ocbc" class="sponsor">
+      </div>
+      
+     <div class="image-container">
+      <img src="Sago kitchen.jpg" alt="sago kitchen" class="sponsor">
+      </div>
+
+           <div class="image-container">
+      <img src="dua kelinci.jpg" alt="dua kelinci" class="sponsor">
+      </div>
+
+                 <div class="image-container">
+      <img src="Rintis Sejahtera.png" alt="Rintis Sejahtera" class="sponsor">
+      </div>
+      
+    </div>
+    
+      <!-- Donatur Section -->
+    <h1 class="section-title">Donatur</h1>
+    <div class="info-box">
+      <p>
+          •  FIFTIN FATMASARI<br>
+          •  FILISITAS KRISTINA S<br>
+          •  MARIA YUDHITAMA EKA<br>
+          •  AGUSTINA ENDANG<br>
+          •  NN<br>
+          •  YULITA RINTYASRINI<br>
+          •  RR. YULITA RISWIDAJA<br>
+          •  HANDOYO<br>
+          •  SIREGAR SETIAWAN MANALU<br>
+          •  NGATINI<br>
+          •  FX SUHARTONO<br>
+          •  RITA KURNIASIH<br>
+          •  MARGARETHA SETIAWAN<br>
+          •  HERYANTO OEMAR<br>
+          • VERONIKA SUVARNA<BR>
+          • KUAT SETIA BUDI<BR>
+          • EDUARDUS ARY<BR>
+          • YOSEFINA RUMENGAN<BR>
+          • DEASY LILIYANTY <BR>
+          • YULIANI RAHMAT<BR>
+
+      
+      
+      </p>
+    </div>  
+
+    <!-- Tim Produksi -->
+    <h1 class="section-title">PENYELENGGARA</h1>
+    <div class="info-box">
+
+     <td><bold>TIM PRODUKSI </bold> <br><br></td>
+         
+        <tr><td>
+          Art Director : .............. <br>
+        Koreografi : ..................  <br>
+          Kostum : ..................... <br>
+          ...........................
+          </td></tr>
+<br><br>
+          <td><bold>PANITIA</bold><br><br></td>
+              <tr><td>
+Ketua : Pramukadi Purwatmojo <br>
+Wakil Ketua : Andreas Sihono <br>
+Sekretaris : Maria Astrid Ohoiwutun <br>
+Bendahara : Maria Niken Kurniawati <br>
+Sie Acara : Sesilia Novyanti, Bergitta R., Nopi, <br>
+Sie Dana Usaha/Sponsorhip : Meilany P. H, Netty A, Dhian <br>
+Sie Tiketing : Zee, Willy <br>
+Sie Humas : Flo, Emiliana, <br>
+Sie Publikasi : Leo S., <br>
+Sie Dokumentasi : Koko, Lufti <br>
+Sie Perlengkapan : Hendy K, Willy, Lian, Mario, Ale <br>
+Sie Penerima Tamu : Senna, Yani, Ica, Priska <br>
+Sie Lighting : Yannuar <br>
+Sie Keamanan : Y. Purwanto, Triyono, Totok, Wawan <br>
+Sie Konsumsi : Fransiska D. <br>
+ 
+
+         
+          </td></tr>  
+      
+
+      
+    </div>
+
+    
+    
+    <!-- Footer -->
+   
+    <div class="footer">
+      <p><strong>Organized by:</strong> Svarga Antari Choir</p>
+      <p style="font-size: 12px; margin-top: 10px;">© 2026 TRDC Annual Concert - All Rights Reserved</p>
+    </div>
+  </div>
+
+
+<script>
+let currentSlideIndex = 1;
+
+// Initialize carousel
+document.addEventListener('DOMContentLoaded', function() {
+    showSlide(currentSlideIndex);
+    
+    // Optional: Auto-play (change image every 5 seconds)
+    // Uncomment the line below if you want auto-play
+    // setInterval(() => changeSlide(1), 5000);
+});
+
+// Change slide by n (1 for next, -1 for previous)
+function changeSlide(n) {
+    currentSlideIndex += n;
+    showSlide(currentSlideIndex);
+}
+
+// Show specific slide
+function currentSlide(n) {
+    currentSlideIndex = n;
+    showSlide(currentSlideIndex);
+}
+
+// Display slide
+function showSlide(n) {
+    const slides = document.getElementsByClassName('carousel-image');
+    const dots = document.getElementsByClassName('dot');
+    
+    // Check if slides exist
+    if (slides.length === 0) {
+        console.error('No carousel images found');
+        return;
+    }
+    
+    // Wrap around logic
+    if (n > slides.length) {
+        currentSlideIndex = 1;
+    }
+    if (n < 1) {
+        currentSlideIndex = slides.length;
+    }
+    
+    // Hide all slides and deactivate all dots
+    for (let i = 0; i < slides.length; i++) {
+        slides[i].classList.remove('active');
+        slides[i].style.display = 'none';
+    }
+    
+    for (let i = 0; i < dots.length; i++) {
+        dots[i].classList.remove('active');
+    }
+    
+    // Show current slide and activate current dot
+    slides[currentSlideIndex - 1].classList.add('active');
+    slides[currentSlideIndex - 1].style.display = 'block';
+    
+    if (dots.length > 0) {
+        dots[currentSlideIndex - 1].classList.add('active');
+    }
+    
+    console.log('Showing slide:', currentSlideIndex); // Debug log
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'ArrowLeft') {
+        changeSlide(-1);
+    } else if (event.key === 'ArrowRight') {
+        changeSlide(1);
+    }
+});
+
+// Touch swipe for mobile
+let touchStartX = 0;
+let touchEndX = 0;
+
+const carousel = document.querySelector('.carousel');
+if (carousel) {
+    carousel.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+
+    carousel.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    });
+}
+
+function handleSwipe() {
+    if (touchEndX < touchStartX - 50) {
+        changeSlide(1); // Swipe left = next
+    }
+    if (touchEndX > touchStartX + 50) {
+        changeSlide(-1); // Swipe right = previous
+    }
+}
+</script>
+
+</body>
+</html>
