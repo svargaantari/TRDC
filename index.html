@@ -290,6 +290,52 @@
       font-size: 0.88rem;
     }
 
+    /* ── CONDUCTOR PHOTO HEADER ── */
+    .conductor-profile-header {
+      display: flex;
+      gap: 1.6rem;
+      align-items: flex-start;
+      margin-bottom: 1.4rem;
+    }
+    .conductor-photo-wrap {
+      position: relative;
+      flex-shrink: 0;
+      width: 130px;
+    }
+    .conductor-photo {
+      width: 130px;
+      height: 160px;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      border: 1px solid var(--border);
+      filter: grayscale(20%) contrast(1.05);
+      position: relative;
+      z-index: 1;
+    }
+    .conductor-photo-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border: 1px solid rgba(201,168,76,0.35);
+      z-index: 0;
+    }
+    .conductor-photo-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 50%;
+      background: linear-gradient(to top, rgba(8,8,15,0.5), transparent);
+      z-index: 2;
+      pointer-events: none;
+    }
+    .conductor-header-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: 4px;
+    }
+
     /* achievement timeline */
     .achievement-title {
       font-family: 'Cinzel', serif;
@@ -493,6 +539,9 @@
       .carousel-btn { padding: 8px 12px; font-size: 16px; }
       .guest-profile { padding: 20px 18px; }
       .achievement-item { grid-template-columns: 44px 1fr; }
+      .conductor-profile-header { flex-direction: column; align-items: center; text-align: center; }
+      .conductor-photo-wrap { width: 110px; }
+      .conductor-photo { width: 110px; height: 136px; }
     }
     @media screen and (max-width: 480px) {
       .main-title { font-size: clamp(1.4rem, 9vw, 2.5rem); }
@@ -518,8 +567,6 @@
     <img src="TRDC Annual Concert 2026 - R2.png" alt="TRDC Annual Concert 2026 - R2">
   </div>
 
- 
-
   <!-- Portfolio Section -->
   <h1 class="section-title reveal">Profil TRDC</h1>
   <div class="info-box reveal">
@@ -529,7 +576,7 @@
   <!-- Guest Star Section -->
   <h1 class="section-title reveal">Guest Star</h1>
 
- <!-- Logo -->
+  <!-- Logo -->
   <div class="image-container reveal">
     <img src="Archies_Logo.JPG" alt="The Archipelago Singers Logo" class="logo">
   </div>
@@ -612,27 +659,32 @@
     </div>
   </div>
 
-  
-
-
-  
-<!-- Photo 
-  <div class="image-container reveal">
+  <!-- Photo -->
+  <!-- <div class="image-container reveal">
     <img src="Achi.png" alt="The Archipelago Singers">
-  </div>
--->
+  </div> -->
+
   <div class="social-links reveal">
     <strong>Follow The Archipelago Singers</strong>
     📷 Instagram: <a href="https://www.instagram.com/thearchipelagosingers" target="_blank">@thearchipelagosingers</a><br>
     🎥 YouTube: <a href="https://www.youtube.com/@thearchipelagosingers" target="_blank">The Archipelago Singers Channel</a>
   </div>
 
- <!-- Conductor Profile -->
+  <!-- Conductor Profile -->
   <!-- <h1 class="section-title reveal">Profil Konduktor</h1> -->
 
   <div class="guest-profile reveal">
-    <div class="guest-profile-name">Ega O. Azarya</div>
-    <div class="guest-profile-sub">Konduktor &amp; Direktur Musik · The Archipelago Singers</div>
+
+    <!-- ── Photo + Name header ── -->
+    <div class="conductor-profile-header">
+      <div class="conductor-photo-wrap">
+        <img src="Ega Azarya.png" alt="Ega O. Azarya" class="conductor-photo">
+      </div>
+      <div class="conductor-header-text">
+        <div class="guest-profile-name">Ega O. Azarya</div>
+        <div class="guest-profile-sub">Konduktor &amp; Direktur Musik · The Archipelago Singers</div>
+      </div>
+    </div>
 
     <p>
       Memulai pendidikan musik klasik dengan belajar piano pada Ibu Romey Mandala, Ega O. Azarya kemudian belajar vokal pada <strong>Ivan Yohan</strong>, <strong>Dody Soetanto</strong> dan Ibu <strong>Dorcas Soenaryo</strong>. Ia terus memperdalam teknik vokalnya pada <strong>Josep Kristanto Pantioso</strong> juga dengan masterclass oleh <strong>Prof. Rudolf Piernay</strong> (Jerman).
@@ -672,7 +724,6 @@
     </div>
   </div>
 
-  
    <!-- Run Down Section -->
   <h1 class="section-title reveal">Run Down</h1>
 
@@ -748,10 +799,9 @@
         </tr>
       </thead>
       <tbody>
-<tr style="background-color: #d9c2b3; font-weight: bold; text-align: center;">
+        <tr style="background-color: #d9c2b3; font-weight: bold; text-align: center;">
           <td>SOPRAN</td>
         </tr>
-        
         <tr><td>
           Angelina Tornauli Lumban Gaol, Athanasia Austin Bella Sutomo, Athanasia Kirey Affrial, Avril Chatarina Br.Gultom, Klara Chantrea Teja, Fabiola Aretha Krisalyn Kunfianto, Felicia Christabel Jovena, Gabriella Nira Averia Wahyuni, Lidwina Audrey Vania Simamora, Margaretha Indriani Valens, Maria Cahyani Siregar, Theresia Senandung Bayu Widiputri, Yohana Agni Pradita Putri Kusuma, Stefanie Tiara Putri Pakpahan, Sherrenitha Aurelia Pangesta, Odilia Efrika Tamaria Sinaga, Regina Natasha Christeana, Natalia Dativa Sila, Naomi Josephine Johan, Lusiana Aline Quinzita Pakpahan, Anika Mei Leia Arsanto, Helena Claritha Wijaya Sihotang, Maria Alena Graciella Jebaru, Nathania Anindita Santoso
         </td></tr>
@@ -786,32 +836,28 @@
     <div class="image-container">
       <img src="ocbc.png" alt="ocbc" class="sponsor">
     </div>
-   <div class="image-container">
+    <div class="image-container">
       <img src="dua kelinci.jpg" alt="dua kelinci" class="sponsor">
     </div>
-
-       <div class="image-container">
+    <div class="image-container">
       <img src="Sago kitchen.jpg" alt="sago kitchen" class="sponsor">
     </div>
-
-
     <div class="image-container">
       <img src="UMN.png" alt="UMN" class="sponsor">
     </div>
     <div class="image-container">
       <img src="bale ulang.png" alt="bale ulang" class="sponsor">
     </div>
-        <div class="image-container">
-      <img src="tipsy.png" alt="btipsy" class="sponsor">
+    <div class="image-container">
+      <img src="tipsy.png" alt="tipsy" class="sponsor">
     </div>
-        <div class="image-container">
+    <div class="image-container">
       <img src="SSM.png" alt="ssm" class="sponsor">
     </div>
-        <div class="image-container">
+    <div class="image-container">
       <img src="Rintis Sejahtera.png" alt="Rintis Sejahtera" class="sponsor">
     </div>
   </div>
-
 
   <!-- Donatur Section -->
   <h1 class="section-title reveal">Donatur</h1>
@@ -836,10 +882,9 @@
       • EDUARDUS ARY<br>
       • YOSEFINA RUMENGAN<br>
       • DEASY LILIYANTY<br>
-      • YULIANI RAHMAT<BR>
-      • BAPAK VITALIS<BR>
-      • HARINOWO CANTATA DIVINA GS <BR>
-
+      • YULIANI RAHMAT<br>
+      • BAPAK VITALIS<br>
+      • HARINOWO CANTATA DIVINA GS<br>
     </p>
   </div>
 
@@ -849,10 +894,9 @@
     <td><bold>TIM PRODUKSI</bold><br><br></td>
     <tr><td>
       Art Director : Sesilia Novyanti Nugraningsih<br>
-      Pelatih dan Dirigen : Y. Prasetio <br>
+      Pelatih dan Dirigen : Y. Prasetio<br>
       Kostum : Muji Rahayu, Agatha Ferry Setyaningsih, Sarmauli Ros Sumbayak, Nelly Ober Maristella Tondang<br>
       Konsumsi : Brigita Sri Suryani, Fransisca deciana, Fretry LM, Glory maidy, Yohana Vero, Bonor Simamora, Nova laksmawati, Dian Puji Astuti<br>
-      
     </td></tr>
     <br><br>
     <td><bold>PANITIA</bold><br><br></td>
