@@ -162,17 +162,13 @@
         8px 0 24px var(--page-shadow),
         0 4px 16px var(--page-shadow);
       border-radius: 0 4px 4px 0;
-      padding: 50px 55px 50px 65px;
+      padding: 50px 55px 50px 55px;
       position: relative;
       margin-bottom: 3px;
     }
-    /* Left spine */
+    /* Left spine removed */
     .page::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 18px;
-      background: linear-gradient(to right, #0a0704, #1e1609 60%, var(--cream-deep));
+      content: none;
     }
     /* Top/bottom aged edge */
     .page::after {
@@ -185,13 +181,7 @@
       pointer-events: none;
     }
 
-    /* Running margin line */
-    .page .margin-line {
-      position: absolute;
-      left: 52px; top: 0; bottom: 0;
-      width: 1px;
-      background: rgba(180,140,50,0.18);
-    }
+    .page .margin-line { display: none; }
 
     /* ── CHAPTER HEADER ── */
     .chapter-header {
@@ -646,7 +636,7 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 680px) {
       .book-outer { margin: 10px 0; }
-      .page { padding: 30px 24px 30px 36px; }
+      .page { padding: 30px 24px 30px 24px; }
       .book-cover { padding: 40px 28px; }
       .sponsor-grid { grid-template-columns: repeat(2, 1fr); }
       .donatur-list { columns: 1; }
