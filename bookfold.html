@@ -4,576 +4,1158 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Harmony in Diversity - TRDC Annual Concert 2026</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;700;900&family=Raleway:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --gold: #c9a84c;
-      --gold-light: #e8c97a;
-      --gold-dim: #8a6e2f;
-      --paper: #faf6ef;
-      --paper-dark: #f0e9da;
-      --ink: #1a1208;
-      --ink-mid: #3d2f1a;
-      --ink-light: #7a6245;
-      --border: rgba(140,100,40,0.25);
-      --spine-w: 28px;
+      --cream: #f5efe3;
+      --cream-dark: #ede4d2;
+      --cream-deep: #e4d8c0;
+      --ink: #1a1209;
+      --ink-mid: #3d2e18;
+      --ink-light: #6b5533;
+      --ink-muted: #9a7f5a;
+      --gold: #8b6914;
+      --gold-light: #b8922e;
+      --gold-bright: #d4a83a;
+      --red-accent: #8b1a1a;
+      --spine: #2a1f0e;
+      --page-shadow: rgba(30,20,5,0.18);
+      --border-ink: rgba(139,105,20,0.35);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; }
+    html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Raleway', sans-serif;
-      font-weight: 300;
-      background-image: url('Background.jpg');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      overflow: hidden;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      background: #c8b89a;
+      color: var(--ink);
+      line-height: 1.75;
+      overflow-x: hidden;
+      background-image:
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 120px,
+          rgba(100,70,20,0.04) 120px,
+          rgba(100,70,20,0.04) 121px
+        );
     }
 
+    /* ── PAPER TEXTURE OVERLAY ── */
     body::before {
       content: '';
-      position: fixed; inset: 0;
-      background: rgba(5,3,8,0.65);
-      z-index: 0;
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.6;
     }
 
-    /* ══ BOOK WRAPPER ══ */
-    #book-wrap {
-      position: fixed; inset: 0;
-      display: flex; align-items: center; justify-content: center;
-      z-index: 1;
-      padding: 20px 20px 72px;
+    /* ── BOOK OUTER WRAPPER ── */
+    .book-outer {
+      position: relative; z-index: 1;
+      max-width: 860px;
+      margin: 40px auto;
+      padding-bottom: 60px;
     }
 
-    #book {
-      display: flex;
-      width: min(980px, 96vw);
-      height: min(660px, 82vh);
-      filter: drop-shadow(0 30px 60px rgba(0,0,0,0.8));
+    /* ── COVER PAGE ── */
+    .book-cover {
+      background: var(--spine);
+      background-image:
+        linear-gradient(135deg, #1a1209 0%, #2f2010 40%, #1a1209 100%);
+      border-radius: 3px 6px 6px 3px;
+      box-shadow:
+        -6px 0 0 #0d0a04,
+        6px 0 20px rgba(0,0,0,0.4),
+        0 8px 40px rgba(0,0,0,0.5);
+      padding: 60px 60px 50px;
+      margin-bottom: 4px;
       position: relative;
-    }
-
-    /* ── Pages ── */
-    .page-left, .page-right {
-      flex: 1;
       overflow: hidden;
+      text-align: center;
+    }
+    .book-cover::before {
+      content: '';
+      position: absolute; inset: 12px;
+      border: 1px solid rgba(180,140,50,0.3);
+      pointer-events: none;
+    }
+    .book-cover::after {
+      content: '';
+      position: absolute; inset: 17px;
+      border: 1px solid rgba(180,140,50,0.12);
+      pointer-events: none;
+    }
+    /* Spine strip */
+    .book-cover .spine-strip {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 18px;
+      background: linear-gradient(to right, #0a0704, #1e1609, #0a0704);
+      border-right: 1px solid rgba(180,140,50,0.2);
+    }
+
+    .cover-ornament {
+      font-size: 1.1rem;
+      color: var(--gold-bright);
+      letter-spacing: 0.6em;
+      margin-bottom: 2rem;
+      opacity: 0.7;
+    }
+    .cover-year {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.5em;
+      color: var(--gold-bright);
+      opacity: 0.6;
+      margin-bottom: 1.5rem;
+    }
+    .cover-title-main {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2rem, 6vw, 3.8rem);
+      font-weight: 700;
+      color: var(--gold-bright);
+      letter-spacing: 0.1em;
+      line-height: 1.15;
+      text-shadow: 0 2px 20px rgba(212,168,58,0.3);
+      margin-bottom: 0.5rem;
+    }
+    .cover-title-sub {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1rem, 3vw, 1.6rem);
+      font-weight: 400;
+      color: rgba(245,239,227,0.6);
+      letter-spacing: 0.2em;
+      margin-bottom: 2.5rem;
+    }
+    .cover-rule {
+      width: 200px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      margin: 0 auto 1.5rem;
+    }
+    .cover-subtitle {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: rgba(245,239,227,0.5);
+      letter-spacing: 0.08em;
+      margin-bottom: 3rem;
+    }
+    .cover-theme {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(0.9rem, 2vw, 1.15rem);
+      color: rgba(180,140,50,0.75);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── PAGE WRAPPER ── */
+    .page {
+      background: var(--cream);
+      background-image:
+        linear-gradient(to bottom, var(--cream-dark) 0%, var(--cream) 5%, var(--cream) 95%, var(--cream-dark) 100%);
+      box-shadow:
+        -6px 0 0 #0d0a04,
+        8px 0 24px var(--page-shadow),
+        0 4px 16px var(--page-shadow);
+      border-radius: 0 4px 4px 0;
+      padding: 50px 55px 50px 65px;
+      position: relative;
+      margin-bottom: 3px;
+    }
+    /* Left spine */
+    .page::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 18px;
+      background: linear-gradient(to right, #0a0704, #1e1609 60%, var(--cream-deep));
+    }
+    /* Top/bottom aged edge */
+    .page::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(100,70,20,0.06) 0%, transparent 40px),
+        linear-gradient(to top, rgba(100,70,20,0.06) 0%, transparent 40px);
+      pointer-events: none;
+    }
+
+    /* Running margin line */
+    .page .margin-line {
+      position: absolute;
+      left: 52px; top: 0; bottom: 0;
+      width: 1px;
+      background: rgba(180,140,50,0.18);
+    }
+
+    /* ── CHAPTER HEADER ── */
+    .chapter-header {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-ink);
       position: relative;
     }
-
-    /* paper texture lines */
-    .page-left::after, .page-right::after {
-      content: '';
-      position: absolute; inset: 0; pointer-events: none;
-      background-image: repeating-linear-gradient(
-        0deg, transparent, transparent 24px,
-        rgba(180,150,100,0.07) 24px, rgba(180,150,100,0.07) 25px
-      );
-      z-index: 10;
-    }
-
-    .page-left {
-      border-radius: 6px 0 0 6px;
-      box-shadow: inset -8px 0 20px rgba(0,0,0,0.12), inset -2px 0 4px rgba(0,0,0,0.08);
-      background: linear-gradient(to right, #f2e8d8, var(--paper) 75%);
-    }
-    .page-right {
-      border-radius: 0 6px 6px 0;
-      box-shadow: inset 8px 0 20px rgba(0,0,0,0.10), inset 2px 0 4px rgba(0,0,0,0.06);
-      background: linear-gradient(to left, #f2e8d8, var(--paper) 75%);
-    }
-
-    /* ── Spine ── */
-    #spine {
-      width: var(--spine-w);
-      flex-shrink: 0;
-      background: linear-gradient(to right,
-        #a07830 0%, #c9a84c 20%, #f0d080 50%, #c9a84c 80%, #8a5e20 100%
-      );
-      box-shadow: inset -2px 0 6px rgba(0,0,0,0.3), inset 2px 0 6px rgba(0,0,0,0.3);
-      position: relative; z-index: 2;
-    }
-    #spine::before {
-      content: 'TRDC 2026';
-      position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%, -50%) rotate(90deg);
-      white-space: nowrap;
+    .chapter-num {
       font-family: 'Cinzel', serif;
-      font-size: 0.52rem; letter-spacing: 0.25em;
-      color: rgba(30,15,0,0.65); font-weight: 700;
+      font-size: 0.6rem;
+      letter-spacing: 0.5em;
+      color: var(--gold);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 0.4rem;
     }
-
-    /* ── Page content ── */
-    .page-content {
-      position: absolute; inset: 0;
-      overflow-y: auto; overflow-x: hidden;
-      padding: 34px 30px 40px;
+    .chapter-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.2rem, 4vw, 2rem);
+      font-weight: 700;
       color: var(--ink);
-      scrollbar-width: none;
+      letter-spacing: 0.04em;
+      line-height: 1.2;
     }
-    .page-content::-webkit-scrollbar { display: none; }
+    .chapter-title-italic {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.2rem, 4vw, 2rem);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--ink-mid);
+    }
+    .chapter-ornament {
+      margin-top: 0.8rem;
+      color: var(--gold);
+      font-size: 0.9rem;
+      letter-spacing: 0.4em;
+    }
 
+    /* ── DROP CAP ── */
+    .drop-cap::first-letter {
+      float: left;
+      font-family: 'Playfair Display', serif;
+      font-size: 4.2em;
+      line-height: 0.75;
+      padding-right: 0.08em;
+      padding-top: 0.08em;
+      color: var(--ink-mid);
+      font-weight: 700;
+    }
+
+    /* ── BODY TEXT ── */
+    .page p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: var(--ink);
+      text-align: justify;
+      hyphens: auto;
+      margin-bottom: 1rem;
+    }
+    .page p em { font-style: italic; color: var(--ink-mid); }
+    .page p strong {
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    /* ── SECTION RULE ── */
+    .section-rule {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin: 2rem 0;
+    }
+    .section-rule .line {
+      flex: 1; height: 1px;
+      background: var(--border-ink);
+    }
+    .section-rule .fleur {
+      color: var(--gold);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+    }
+
+    /* ── PULL QUOTE ── */
+    .pull-quote {
+      border-left: 3px solid var(--gold);
+      padding: 0.6rem 1.4rem;
+      margin: 1.8rem 0;
+      background: rgba(139,105,20,0.04);
+    }
+    .pull-quote p {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.1rem !important;
+      color: var(--ink-mid) !important;
+      text-align: left !important;
+      margin: 0 !important;
+    }
+
+    /* ── MARGINALIA ── */
+    .marginalia {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 0.78rem;
+      color: var(--ink-muted);
+      line-height: 1.6;
+      padding: 0.4rem 0;
+      border-top: 1px solid rgba(139,105,20,0.2);
+      border-bottom: 1px solid rgba(139,105,20,0.2);
+      margin: 1.5rem 0;
+      text-align: center;
+      letter-spacing: 0.03em;
+    }
+
+    /* ── COLOPHON / SIGN-OFF ── */
+    .sign-off {
+      text-align: right;
+      margin-top: 2rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--border-ink);
+    }
+    .sign-off .name {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--ink);
+    }
+    .sign-off .role {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+    }
+
+    /* ── TIMELINE / ACHIEVEMENT LIST ── */
+    .timeline {
+      margin: 1.5rem 0;
+    }
+    .timeline-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border-ink);
+    }
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: 0 16px;
+      padding: 0.7rem 0;
+      border-bottom: 1px dotted rgba(139,105,20,0.2);
+      position: relative;
+    }
+    .timeline-item:last-child { border-bottom: none; }
+    .tl-year {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--gold);
+      padding-top: 3px;
+    }
+    .tl-desc {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.97rem;
+      line-height: 1.75;
+      color: var(--ink);
+    }
+    .tl-desc em { color: var(--ink-muted); font-style: italic; }
+    .tl-note {
+      display: block;
+      font-size: 0.82rem;
+      font-style: italic;
+      color: var(--gold);
+      margin-top: 2px;
+    }
+
+    /* ── PROGRAMME TABLE ── */
+    .programme-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .programme-table thead tr {
+      border-bottom: 2px solid var(--ink);
+    }
+    .programme-table th {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      color: var(--ink-mid);
+      text-transform: uppercase;
+      padding: 8px 12px 10px;
+      text-align: left;
+    }
+    .programme-table td {
+      padding: 12px 12px;
+      border-bottom: 1px dotted rgba(26,18,9,0.15);
+      vertical-align: top;
+      font-size: 0.97rem;
+      color: var(--ink);
+    }
+    .programme-table td:first-child {
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem;
+      color: var(--gold);
+      white-space: nowrap;
+      letter-spacing: 0.06em;
+    }
+    .programme-table td strong {
+      font-weight: 700;
+      color: var(--ink);
+      display: block;
+      margin-bottom: 2px;
+    }
+    .programme-table tbody tr:last-child td { border-bottom: none; }
+    .programme-table .interlude td {
+      background: rgba(139,105,20,0.06);
+      font-style: italic;
+      color: var(--ink-mid);
+    }
+
+    /* ── ROSTER ── */
+    .roster-section {
+      margin-bottom: 1.5rem;
+    }
+    .roster-voice {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.4em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin: 1.2rem 0 0.5rem;
+      padding-bottom: 0.3rem;
+      border-bottom: 1px solid var(--border-ink);
+    }
+    .roster-names {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.93rem;
+      line-height: 1.9;
+      color: var(--ink);
+    }
+    .roster-key {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--ink);
+    }
+
+    /* ── SPONSOR GRID ── */
+    .sponsor-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 1.5rem 0;
+    }
+    .sponsor-item {
+      border: 1px solid var(--border-ink);
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.5);
+    }
+    .sponsor-item img {
+      max-width: 100%;
+      max-height: 60px;
+      object-fit: contain;
+      filter: sepia(20%) contrast(0.9);
+    }
+
+    /* ── DONATUR LIST ── */
+    .donatur-list {
+      columns: 2;
+      column-gap: 2rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem;
+      line-height: 2;
+      color: var(--ink-mid);
+    }
+    .donatur-list p {
+      font-size: 0.9rem !important;
+      margin: 0 !important;
+      text-align: left !important;
+      line-height: 2 !important;
+      break-inside: avoid;
+    }
+
+    /* ── CONDUCTOR PROFILE ── */
+    .conductor-header {
+      display: flex;
+      gap: 1.6rem;
+      margin-bottom: 1.4rem;
+      align-items: flex-start;
+    }
+    .conductor-photo-wrap {
+      flex-shrink: 0;
+      position: relative;
+      width: 120px;
+    }
+    .conductor-photo-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border: 1px solid var(--border-ink);
+    }
+    .conductor-photo {
+      width: 120px;
+      height: 150px;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      filter: sepia(25%) contrast(1.05);
+    }
+    .conductor-info {
+      padding-top: 4px;
+    }
+    .conductor-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.2rem;
+    }
+    .conductor-role {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+    }
+
+    /* ── SOCIAL / LINKS ── */
+    .book-links {
+      text-align: center;
+      padding: 1rem 0;
+      border: 1px solid var(--border-ink);
+      margin: 1.5rem 0;
+      background: rgba(139,105,20,0.03);
+    }
+    .book-links .label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.4em;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    .book-links a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.92rem;
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(139,105,20,0.3);
+    }
+    .book-links a:hover { border-color: var(--gold); }
+
+    /* ── PAGE NUMBER ── */
     .page-num {
-      position: absolute; bottom: 10px;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.68rem; color: var(--ink-light); letter-spacing: 0.1em;
-    }
-    .page-left .page-num  { left: 26px; }
-    .page-right .page-num { right: 26px; }
-
-    /* ══ TYPOGRAPHY ══ */
-    .pg-eyebrow {
-      font-family: 'Raleway', sans-serif;
-      font-size: 0.54rem; letter-spacing: 0.4em; text-transform: uppercase;
-      color: var(--ink-light); margin-bottom: 0.35rem;
-    }
-    .pg-title {
+      text-align: center;
       font-family: 'Cinzel', serif;
-      font-size: clamp(1.3rem, 3vw, 2.2rem);
-      font-weight: 900; line-height: 1.1; letter-spacing: 0.04em;
-      color: var(--ink); margin-bottom: 0.25rem;
+      font-size: 0.58rem;
+      letter-spacing: 0.4em;
+      color: var(--ink-muted);
+      margin-top: 2.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-ink);
     }
-    .pg-subtitle {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic; font-size: 0.88rem;
-      color: var(--ink-light); letter-spacing: 0.1em; margin-bottom: 0.8rem;
+    .page-num .running-head {
+      float: left;
+      text-transform: uppercase;
     }
-    .pg-divider {
-      display: flex; align-items: center; gap: 0.6rem;
-      margin: 0.7rem 0 1rem;
+    .page-num .running-title {
+      float: right;
+      text-transform: uppercase;
     }
-    .pg-divider::before, .pg-divider::after {
-      content: ''; flex: 1; height: 1px;
-    }
-    .pg-divider::before { background: linear-gradient(to right, var(--gold-dim), transparent); }
-    .pg-divider::after  { background: linear-gradient(to left,  var(--gold-dim), transparent); }
-    .diamond { width: 5px; height: 5px; background: var(--gold); transform: rotate(45deg); flex-shrink: 0; }
+    .page-num::after { content: ''; display: table; clear: both; }
 
-    .pg-section {
+    /* ── IMAGE in page ── */
+    .page-image {
+      margin: 1.5rem -10px;
+      text-align: center;
+    }
+    .page-image img {
+      max-width: 100%;
+      display: block;
+      margin: 0 auto;
+      filter: sepia(15%) contrast(1.02);
+      border: 1px solid var(--border-ink);
+    }
+    .image-caption {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+
+    /* ── FOOTER / BACK COVER ── */
+    .book-footer {
+      background: var(--spine);
+      border-radius: 0 4px 4px 0;
+      box-shadow: -6px 0 0 #0d0a04;
+      padding: 40px 55px;
+      text-align: center;
+      position: relative;
+    }
+    .book-footer::before {
+      content: '';
+      position: absolute; inset: 10px;
+      border: 1px solid rgba(180,140,50,0.2);
+      pointer-events: none;
+    }
+    .book-footer .spine-strip {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 18px;
+      background: linear-gradient(to right, #0a0704, #1e1609, #0a0704);
+      border-right: 1px solid rgba(180,140,50,0.15);
+    }
+    .book-footer p {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.88rem;
+      color: rgba(245,239,227,0.45);
+      margin: 4px 0;
+      text-align: center !important;
+    }
+    .book-footer strong {
       font-family: 'Cinzel', serif;
-      font-size: 0.58rem; letter-spacing: 0.32em; text-transform: uppercase;
-      color: var(--gold-dim); margin: 1.3rem 0 0.5rem;
-      padding-bottom: 0.25rem; border-bottom: 1px solid rgba(140,100,40,0.2);
-    }
-    .pg-body {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.86rem; line-height: 1.85; color: var(--ink-mid);
-    }
-    .pg-body strong {
-      font-family: 'Raleway', sans-serif; font-weight: 500;
-      color: var(--ink); font-size: 0.78rem;
+      font-style: normal;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      color: var(--gold-bright);
+      display: block;
+      margin-bottom: 0.8rem;
     }
 
-    /* table */
-    .pg-table { width: 100%; border-collapse: collapse; font-family: 'Cormorant Garamond', serif; font-size: 0.81rem; }
-    .pg-table th {
-      font-family: 'Cinzel', serif; font-size: 0.54rem; letter-spacing: 0.25em; text-transform: uppercase;
-      color: var(--ink-light); padding: 6px 8px; border-bottom: 1px solid var(--border); text-align: left;
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0; transform: translateY(12px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
     }
-    .pg-table td {
-      padding: 6px 8px; border-bottom: 1px solid rgba(140,100,40,0.1);
-      vertical-align: top; color: var(--ink-mid); line-height: 1.55;
-    }
-    .pg-table td:first-child {
-      font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.05em;
-      color: var(--gold-dim); white-space: nowrap; padding-right: 10px;
-    }
-    .pg-table td strong { font-family: 'Raleway', sans-serif; font-weight: 500; color: var(--ink); font-size: 0.76rem; }
-    .pg-table .break-row td { color: var(--gold-dim); font-style: italic; }
-    .pg-table tbody tr:last-child td { border-bottom: none; }
+    .reveal.visible { opacity: 1; transform: none; }
 
-    /* voice */
-    .voice-label {
-      font-family: 'Cinzel', serif; font-size: 0.56rem; letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--gold-dim); margin: 0.9rem 0 0.25rem;
-      padding-bottom: 0.2rem; border-bottom: 1px solid rgba(140,100,40,0.15);
-    }
-    .voice-names {
-      font-family: 'Cormorant Garamond', serif; font-size: 0.76rem;
-      line-height: 1.8; color: var(--ink-mid); columns: 2; column-gap: 1rem;
-    }
-
-    /* conductor */
-    .conductor-box {
-      background: rgba(201,168,76,0.08); border: 1px solid rgba(140,100,40,0.2);
-      padding: 9px 13px; margin-bottom: 0.8rem; display: flex; gap: 2rem; flex-wrap: wrap;
-    }
-    .conductor-role { font-family: 'Cinzel', serif; font-size: 0.5rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 2px; }
-    .conductor-name { font-family: 'Cormorant Garamond', serif; font-size: 0.88rem; font-weight: 600; color: var(--ink); }
-
-    /* sponsors */
-    .sponsor-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-    .sponsor-pill { padding: 4px 12px; border: 1px solid rgba(140,100,40,0.25); font-family: 'Cinzel', serif; font-size: 0.57rem; letter-spacing: 0.12em; color: var(--ink-light); }
-
-    /* donatur */
-    .donatur-cols { columns: 2; column-gap: 1rem; font-family: 'Cormorant Garamond', serif; font-size: 0.78rem; line-height: 2; color: var(--ink-mid); }
-
-    /* links */
-    .pg-links { margin-top: 0.6rem; }
-    .pg-links a { display: block; font-family: 'Raleway', sans-serif; font-size: 0.7rem; color: var(--gold-dim); text-decoration: none; line-height: 2.1; border-bottom: 1px dotted rgba(140,100,40,0.3); padding-bottom: 1px; margin-bottom: 3px; }
-
-    /* images */
-    .cover-img { width: 100%; height: auto; display: block; border: 1px solid rgba(140,100,40,0.2); box-shadow: 0 4px 16px rgba(0,0,0,0.15); margin-top: 0.6rem; }
-    .guest-logo { display: block; max-width: 110px; margin: 0.4rem auto; }
-
-    /* panitia */
-    .panitia-body { font-family: 'Cormorant Garamond', serif; font-size: 0.79rem; line-height: 1.9; color: var(--ink-mid); }
-    .panitia-body strong { font-family: 'Raleway', sans-serif; font-weight: 500; color: var(--ink); font-size: 0.7rem; }
-
-    .coming-soon { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.88rem; color: var(--ink-light); text-align: center; padding: 0.8rem 0; }
-
-    /* contents list */
-    .contents-list { font-family: 'Cormorant Garamond', serif; font-size: 0.84rem; line-height: 2.3; color: var(--ink-mid); }
-
-    /* ══ NAVIGATION ══ */
-    #nav {
-      position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
-      z-index: 10; display: flex; align-items: center; gap: 12px;
-    }
-    .nav-btn {
-      background: rgba(10,8,5,0.78); border: 1px solid rgba(201,168,76,0.4);
-      color: var(--gold-light); font-family: 'Cinzel', serif;
-      font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
-      padding: 8px 18px; cursor: pointer; transition: all 0.25s; backdrop-filter: blur(6px);
-    }
-    .nav-btn:hover:not(:disabled) { background: rgba(201,168,76,0.15); border-color: var(--gold); color: #fff; }
-    .nav-btn:disabled { opacity: 0.22; cursor: default; }
-
-    .nav-dots { display: flex; gap: 6px; align-items: center; }
-    .nav-dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: rgba(201,168,76,0.22); border: 1px solid rgba(201,168,76,0.4);
-      cursor: pointer; transition: all 0.2s;
-    }
-    .nav-dot.active { background: var(--gold); border-color: var(--gold); transform: scale(1.3); }
-    .nav-label { font-family: 'Cinzel', serif; font-size: 0.52rem; letter-spacing: 0.22em; color: rgba(201,168,76,0.6); text-transform: uppercase; min-width: 70px; text-align: center; }
-
-    /* ── Page fade transition ── */
-    .page-left, .page-right { transition: opacity 0.3s ease; }
-    .page-left.turning, .page-right.turning { opacity: 0; }
-
-    /* ══ MOBILE ══ */
+    /* ── RESPONSIVE ── */
     @media (max-width: 680px) {
-      #book { width: 96vw; height: 82vh; }
-      .page-right { display: none; }
-      #spine { display: none; }
-      .page-left { border-radius: 6px; flex: 1; }
-      .page-content { padding: 22px 18px 34px; }
-      .voice-names { columns: 1; }
-      .donatur-cols { columns: 1; }
+      .book-outer { margin: 10px 0; }
+      .page { padding: 30px 24px 30px 36px; }
+      .book-cover { padding: 40px 28px; }
+      .sponsor-grid { grid-template-columns: repeat(2, 1fr); }
+      .donatur-list { columns: 1; }
+      .conductor-header { flex-direction: column; align-items: center; text-align: center; }
     }
   </style>
 </head>
 <body>
 
-<div id="book-wrap">
-  <div id="book">
-    <div class="page-left" id="page-left">
-      <div class="page-content" id="content-left"></div>
-      <span class="page-num" id="pnum-left"></span>
+<div class="book-outer">
+
+  <!-- ══ COVER ══ -->
+  <div class="book-cover">
+    <div class="spine-strip"></div>
+    <div class="cover-year">ANNO DOMINI · MMX X X V I</div>
+    <div class="cover-ornament">✦ · ✦ · ✦</div>
+    <div class="cover-title-main">Program Book</div>
+    <div class="cover-title-sub">The Resonare Deo Choir</div>
+    <div class="cover-rule"></div>
+    <div class="cover-subtitle">Annual Concert 2026</div>
+    <div class="cover-theme">"Harmony in Diversity: When Voices Become Home"</div>
+    <div class="cover-ornament" style="margin-top:2.5rem; margin-bottom:0">— ✦ —</div>
+  </div>
+
+  <!-- ══ PAGE: KATA SAMBUTAN ══ -->
+  <div class="page reveal">
+    <div class="margin-line"></div>
+    <div class="chapter-header">
+      <span class="chapter-num">Sambutan</span>
+      <div class="chapter-title">Kata Sambutan</div>
+      <div class="chapter-ornament">— ✦ —</div>
     </div>
-    <div id="spine"></div>
-    <div class="page-right" id="page-right">
-      <div class="page-content" id="content-right"></div>
-      <span class="page-num" id="pnum-right"></span>
+
+    <div class="marginalia">Ketua Panitia · The Resonare Deo Choir Annual Concert 2026</div>
+
+    <p class="drop-cap">
+      Puji dan syukur kami panjatkan kepada Tuhan Yang Maha Esa atas kasih dan penyertaan-Nya sehingga The Resonare Deo Choir Annual Concert dengan tema <em>"Harmony in Diversity: When Voices Become Home"</em> dapat terselenggara dengan baik.
+    </p>
+    <p>
+      Konser ini merupakan sebuah langkah awal yang sangat berarti bagi perjalanan The Resonare Deo Choir (TRDC). Lebih dari sekadar sebuah pertunjukan, konser ini adalah hasil dari proses panjang yang dipenuhi latihan, kerja sama, serta dedikasi dari para anggota paduan suara, pelatih, dan seluruh tim yang terlibat.
+    </p>
+    <p>
+      Panitia melihat secara langsung bagaimana semangat, disiplin, dan kebersamaan tumbuh selama proses persiapan konser ini. Setiap nada yang akan kita dengarkan malam ini merupakan hasil dari kerja keras, komitmen, dan kecintaan para anggota terhadap musik paduan suara.
+    </p>
+
+    <div class="pull-quote">
+      <p>"Harmoni tercipta bukan karena kesamaan, tetapi karena keberagaman yang saling melengkapi."</p>
+    </div>
+
+    <p>
+      Tema <em>"Harmony in Diversity"</em> mengajak kita semua untuk melihat bahwa perbedaan warna suara, karakter, dan latar belakang justru menjadi kekuatan yang menghadirkan keindahan dalam satu kesatuan musikal.
+    </p>
+    <p>
+      Kami juga merasa sangat terhormat atas kehadiran paduan suara profesional <strong>The Archipelago Singers</strong> sebagai bintang tamu dalam konser ini. Kehadiran mereka menjadi inspirasi bagi kami semua, khususnya bagi para anggota TRDC dalam terus berkembang dan berkarya.
+    </p>
+    <p>
+      Akhir kata, saya mengucapkan terima kasih yang sebesar-besarnya kepada seluruh pihak yang telah mendukung terselenggaranya konser ini: Tim Produksi, pelatih, panitia, sponsor, orang tua, serta semua pihak yang telah memberikan dukungan dan kepercayaan. Semoga konser ini dapat menjadi awal dari perjalanan panjang TRDC dalam menghadirkan karya-karya musikal yang menginspirasi.
+    </p>
+    <p><em>Selamat menikmati konser ini. Terima kasih.</em></p>
+
+    <div class="sign-off">
+      <div class="name">Pramukadi Purwatmojo</div>
+      <div class="role">Ketua Panitia · The Resonare Deo Choir Annual Concert</div>
+    </div>
+
+    <div class="page-num">
+      <span class="running-head">TRDC Annual Concert 2026</span>
+      <span>1</span>
+      <span class="running-title">Kata Sambutan</span>
     </div>
   </div>
-</div>
 
-<div id="nav">
-  <button class="nav-btn" id="btn-prev">◂ Prev</button>
-  <div class="nav-dots" id="nav-dots"></div>
-  <span class="nav-label" id="spread-label"></span>
-  <button class="nav-btn" id="btn-next">Next ▸</button>
-</div>
+  <!-- ══ PAGE: PROFIL TRDC ══ -->
+  <div class="page reveal">
+    <div class="margin-line"></div>
+    <div class="chapter-header">
+      <span class="chapter-num">Profil</span>
+      <div class="chapter-title">The Resonare Deo Choir</div>
+      <div class="chapter-ornament">— ✦ —</div>
+    </div>
 
-<script>
-const spreads = [
+    <div class="marginalia">Paduan Suara Remaja Katolik Tangerang · Est. 2025</div>
 
-  /* 0 — Cover */
-  {
-    label: 'Cover',
-    left: `
-      <div class="pg-eyebrow">The Resonare Deo Choir · Annual Concert 2026</div>
-      <div class="pg-title">Harmony<br>in Diversity</div>
-      <div class="pg-subtitle">A Evening of Sacred &amp; Choral Music</div>
-      <div class="pg-divider"><div class="diamond"></div></div>
-      <img src="TRDC Annual Concert 2026 - R2.png" class="cover-img" alt="Concert Poster">
-    `,
-    right: `
-      <div class="pg-eyebrow">Welcome</div>
-      <div class="pg-title" style="font-size:1.4rem;">Selamat Datang</div>
-      <div class="pg-divider"><div class="diamond"></div></div>
-      <div class="pg-body" style="margin-bottom:1rem;">
-        Selamat datang di malam yang penuh keindahan — <em>Harmony in Diversity</em>, konser tahunan The Resonare Deo Choir bersama tamu istimewa The Archipelago Singers.
-      </div>
-      <div class="pg-body" style="margin-bottom:1.2rem;">
-        Malam ini kami mempersembahkan perpaduan suara dari berbagai genre dan budaya, merayakan keberagaman melalui musik yang menyatukan hati.
-      </div>
-      <div class="pg-divider"><div class="diamond"></div></div>
-      <div class="pg-section">Daftar Isi</div>
-      <div class="contents-list">
-        Run Down Acara ·················· 2<br>
-        Guest Star ······················· 3<br>
-        Performers ······················· 4<br>
-        Sponsor &amp; Donatur ·············· 5<br>
-        Penyelenggara ···················· 6<br>
-      </div>
-      <div style="margin-top:1.4rem;">
-        <div class="pg-divider"><div class="diamond"></div></div>
-        <div class="pg-body" style="text-align:center; font-style:italic; font-size:0.78rem; color:var(--ink-light);">
-          Organized by Svarga Antari Choir
-        </div>
-      </div>
-    `
-  },
+    <p class="drop-cap">
+      The Resonare Deo Choir (TRDC) adalah paduan suara remaja Katolik yang beranggotakan remaja berusia <strong>11–18 tahun</strong> dan berdomisili di Tangerang. TRDC didirikan pada Oktober <strong>2025</strong> sebagai wadah pembinaan generasi muda yang memiliki minat dan bakat dalam seni tarik suara, khususnya dalam bidang paduan suara.
+    </p>
+    <p>
+      Nama <em>Resonare Deo</em> berasal dari bahasa Latin yang berarti <em>"bergema bagi Tuhan"</em>, yang mencerminkan semangat pelayanan melalui musik paduan suara. Melalui harmoni suara dan kebersamaan dalam bermusik, TRDC berupaya menghadirkan pujian yang indah serta membangun karakter para anggotanya dalam semangat iman, kedisiplinan, dan kerja sama.
+    </p>
+    <p>
+      Dalam proses pembinaannya, TRDC tidak hanya berfokus pada pengembangan teknik vokal, tetapi juga pada pembentukan kualitas musikal dan kekompakan tim. Untuk mencapai standar artistik yang semakin baik, TRDC secara rutin menyelenggarakan <em>coaching clinic</em> dengan menghadirkan pelatih berpengalaman, di antaranya <strong>Leonardus Joseph, Roni Sugiarto, Ega O. Azarya,</strong> dan <strong>Leo Dimas</strong>.
+    </p>
 
-  /* 1 — Run Down */
-  {
-    label: 'Run Down',
-    left: `
-      <div class="pg-eyebrow">Programme</div>
-      <div class="pg-title" style="font-size:1.5rem;">Run Down<br>Acara</div>
-      <div class="pg-divider"><div class="diamond"></div></div>
-      <table class="pg-table">
-        <thead><tr><th>Waktu</th><th>Kegiatan</th></tr></thead>
-        <tbody>
-          <tr><td>16.30 – 16.55</td><td><strong>Registrasi / Open Gate</strong></td></tr>
-          <tr><td>17.00 – 17.10</td><td><strong>Pembukaan Acara (MC)</strong><br>• Doa &nbsp;•&nbsp; Sambutan</td></tr>
-          <tr>
-            <td>17.10 – 17.55</td>
-            <td>
-              <strong>Perform The Resonare Deo Choir</strong><br>
-              • O Magnum Mysterium — Kevin Memley<br>
-              • Cantate Domino — Josu Elberdin<br>
-              • Joy To The World — Philip Lawson<br>
-              • A Jubilant Song — J.M. Martin<br>
-              • Festival Sanctus — John Leavitt<br>
-              • Twinkle Twinkle Little Star — Daniel Elder<br>
-              • The Lion Sleep Tonight — Kirby Shaw<br>
-              • Thankful
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    `,
-    right: `
-      <div class="pg-eyebrow">Programme (cont.)</div>
-      <div class="pg-divider"><div class="diamond"></div></div>
-      <table class="pg-table">
-        <tbody>
-          <tr class="break-row"><td>17.55 – 18.25</td><td>⏸ Break Time</td></tr>
-          <tr class="break-row"><td>17.55 – 18.25</td><td><strong>Marlupi Dance Performance</strong></td></tr>
-          <tr><td>18.25 – 18.55</td><td><strong>Perform The Archipelago Singers</strong></td></tr>
-          <tr><td>18.55 – 19.00</td><td><strong>All Singers</strong><br>• Menyanyikan lagu bersama "Why We Sing"</td></tr>
-          <tr><td>19.00 – 19.15</td><td><strong>Closing</strong><br>• Penyampaian buket bunga<br>• Doa</td></tr>
-        </tbody>
-      </table>
-      <div style="margin-top:1.4rem;">
-        <div class="pg-section">TRDC Portfolio</div>
-        <div class="coming-soon">Coming soon…</div>
-      </div>
-    `
-  },
+    <div class="section-rule"><div class="line"></div><div class="fleur">✦</div><div class="line"></div></div>
 
-  /* 2 — Guest Star */
-  {
-    label: 'Guest Star',
-    left: `
-      <div class="pg-eyebrow">Special Appearance</div>
-      <div class="pg-title" style="font-size:1.5rem;">Guest Star</div>
-      <div class="pg-divider"><div class="diamond"></div></div>
-      <img src="Archies_Logo.JPG" class="guest-logo" alt="The Archipelago Singers Logo">
-      <div style="text-align:center; margin:0.5rem 0 0.8rem;">
-        <div style="font-family:'Cinzel',serif; font-size:0.9rem; color:var(--ink); letter-spacing:0.05em;">The Archipelago Singers</div>
+    <div class="timeline">
+      <div class="timeline-label">Partisipasi dan Pencapaian</div>
+      <div class="timeline-item">
+        <div class="tl-year">2026</div>
+        <div class="tl-desc">Partisipasi dalam Konser Paskah se-KAJ — <em>Jubilate Deo</em>.</div>
       </div>
-      <img src="Achi.png" class="cover-img" alt="The Archipelago Singers">
-    `,
-    right: `
-      <div class="pg-eyebrow">Guest Star</div>
-      <div class="pg-title" style="font-size:1.3rem;">The Archipelago<br>Singers</div>
-      <div class="pg-divider"><div class="diamond"></div></div>
-      <div class="pg-body" style="margin-bottom:1.2rem;">
-        The Archipelago Singers adalah paduan suara tamu istimewa malam ini, hadir untuk mempersembahkan penampilan yang memukau bersama The Resonare Deo Choir dalam malam yang penuh harmoni.
+      <div class="timeline-item">
+        <div class="tl-year">2025</div>
+        <div class="tl-desc">Gold Medal — <em>Christmas Bell Choir Competition</em>, Kompetisi Nasional oleh Bandung Choral Society, Bandung.</div>
       </div>
-      <div class="pg-section">Follow Them</div>
-      <div class="pg-links">
-        <a href="https://www.instagram.com/thearchipelagosingers" target="_blank">📷 Instagram &nbsp; @thearchipelagosingers</a>
-        <a href="https://thearchipelagosingers.blogspot.com/p/home.html" target="_blank">📝 Blog &nbsp; The Archipelago Singers Blog</a>
-        <a href="https://www.youtube.com/@thearchipelagosingers" target="_blank">🎥 YouTube &nbsp; The Archipelago Singers Channel</a>
+      <div class="timeline-item">
+        <div class="tl-year">2025</div>
+        <div class="tl-desc">Partisipasi dalam <em>Festival Pesparani Banten 2025</em>.</div>
       </div>
-    `
-  },
+    </div>
 
-  /* 3 — Performers */
-  {
-    label: 'Performers',
-    left: `
-      <div class="pg-eyebrow">The Resonare Deo Choir</div>
-      <div class="pg-title" style="font-size:1.5rem;">Performers</div>
-      <div class="pg-divider"><div class="diamond"></div></div>
-      <div class="conductor-box">
-        <div><div class="conductor-role">Conductor</div><div class="conductor-name">Y. Prasetio S.</div></div>
-        <div><div class="conductor-role">Pianis</div><div class="conductor-name">Alenzo Leksana</div></div>
+    <div class="book-links">
+      <span class="label">Follow The Resonare Deo Choir</span>
+      📷 Instagram: <a href="https://www.instagram.com/trdc_tangerang" target="_blank">@trdc_tangerang</a>
+    </div>
+
+    <div class="page-num">
+      <span class="running-head">TRDC Annual Concert 2026</span>
+      <span>2</span>
+      <span class="running-title">Profil TRDC</span>
+    </div>
+  </div>
+
+  <!-- ══ PAGE: GUEST STAR ══ -->
+  <div class="page reveal">
+    <div class="margin-line"></div>
+    <div class="chapter-header">
+      <span class="chapter-num">Bintang Tamu</span>
+      <div class="chapter-title">The Archipelago Singers</div>
+      <div class="chapter-ornament">— ✦ —</div>
+    </div>
+
+    <div class="marginalia">Paduan Suara Independen Indonesia · Est. 2008</div>
+
+    <div class="page-image">
+      <img src="Archies_Logo.JPG" alt="The Archipelago Singers Logo" style="max-width:200px;">
+    </div>
+
+    <p class="drop-cap">
+      The Archipelago Singers adalah paduan suara independen Indonesia yang telah meraih berbagai penghargaan internasional, didirikan pada tahun <strong>2008</strong> oleh sekelompok pecinta musik paduan suara yang memiliki dedikasi tinggi terhadap pengembangan seni vokal.
+    </p>
+    <p>
+      Nama <em>Archipelago</em> mencerminkan Indonesia sebagai negara kepulauan terbesar di dunia, sekaligus melambangkan semangat <em>"Persatuan dalam Keberagaman"</em>. Melalui musik paduan suara, The Archipelago Singers berupaya menghadirkan keindahan harmoni yang merefleksikan keberagaman budaya Indonesia kepada masyarakat dunia.
+    </p>
+    <p>
+      Kelompok ini secara konsisten meraih berbagai penghargaan dalam kompetisi paduan suara internasional bergengsi serta telah menyelenggarakan lebih dari <strong>tiga puluh konser</strong> di Indonesia maupun di berbagai negara. Saat ini berada di bawah arahan konduktor <strong>Ega O. Azarya</strong>.
+    </p>
+
+    <div class="section-rule"><div class="line"></div><div class="fleur">✦</div><div class="line"></div></div>
+
+    <div class="timeline">
+      <div class="timeline-label">Prestasi Internasional Pilihan</div>
+      <div class="timeline-item">
+        <div class="tl-year">2025</div>
+        <div class="tl-desc">Juara 2 Umum &amp; Penghargaan Interpretasi Terbaik — <em>Gallus–Maribor International Choir Competition</em>, Maribor, Slovenia.
+          <span class="tl-note">Paduan suara Indonesia pertama yang meraih penghargaan dalam kompetisi ini.</span></div>
       </div>
-      <div class="voice-label">Sopran</div>
-      <div class="voice-names">
-        Angelina Tornauli Lumban Gaol, Athanasia Austin Bella Sutomo, Athanasia Kirey Affrial, Avril Chatarina Br.Gultom, Klara Chantrea Teja, Fabiola Aretha Krisalyn Kunfianto, Felicia Christabel Jovena, Gabriella Nira Averia Wahyuni, Lidwina Audrey Vania Simamora, Margaretha Indriani Valens, Maria Cahyani Siregar, Theresia Senandung Bayu Widiputri, Yohana Agni Pradita Putri Kusuma, Stefanie Tiara Putri Pakpahan, Sherren, Odilia Efrika Tamaria Sinaga, Regina Natasha Christeana, Natalia Dativa Sila, Naomi Josephine Johan, Lusiana Aline Quinzita Pakpahan, Anika Mei Leia Arsanto, Helena Claritha Wijaya Sihotang, Maria Alena Graciella Jebaru, Nathania Anindita Santoso
+      <div class="timeline-item">
+        <div class="tl-year">2023</div>
+        <div class="tl-desc">Juara 3 Kategori Sacred &amp; Secular — <em>71st Guido d'Arezzo International Polyphonic Competition</em>, Arezzo, Italia.</div>
       </div>
-    `,
-    right: `
-      <div class="pg-eyebrow">Performers (cont.)</div>
-      <div class="pg-divider"><div class="diamond"></div></div>
-      <div class="voice-label">Alto</div>
-      <div class="voice-names" style="columns:1;">
+      <div class="timeline-item">
+        <div class="tl-year">2019</div>
+        <div class="tl-desc">Grand Prize · Juara 1 Kategori Classical Mixed Choir · Best Conductor Prize — <em>Busan International Choral Festival and Competition</em>, Korea Selatan.
+          <span class="tl-note">Paduan suara Indonesia pertama meraih Grand Prize dalam sejarah kompetisi ini.</span></div>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-year">2018</div>
+        <div class="tl-desc">Diundang dalam <em>Festival des Choeurs Lauréats</em>, Provence, Prancis — sebagai paduan suara Indonesia pertama.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-year">2016</div>
+        <div class="tl-desc">Juara 1 Kategori Mixed Choir — <em>37th International May Choir Competition</em>, Varna, Bulgaria.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-year">2015</div>
+        <div class="tl-desc">Juara 1 Kategori Chamber Choir — <em>Andrea O. Veneracion International Choral Festival</em>, Manila, Filipina.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-year">2014</div>
+        <div class="tl-desc">Juara 1 Kategori Mixed Choir — <em>Cantonigros International Music Festival</em>, Vic, Spanyol.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-year">2012</div>
+        <div class="tl-desc">Juara 1 Kategori Folklore — <em>9th International Choir Competition</em>, Miltenberg, Jerman.</div>
+      </div>
+    </div>
+
+    <div class="book-links">
+      <span class="label">Follow The Archipelago Singers</span>
+      📷 <a href="https://www.instagram.com/thearchipelagosingers" target="_blank">@thearchipelagosingers</a>&nbsp;&nbsp;
+      🎥 <a href="https://www.youtube.com/@thearchipelagosingers" target="_blank">YouTube Channel</a>
+    </div>
+
+    <div class="page-num">
+      <span class="running-head">TRDC Annual Concert 2026</span>
+      <span>3</span>
+      <span class="running-title">Guest Star</span>
+    </div>
+  </div>
+
+  <!-- ══ PAGE: CONDUCTOR ══ -->
+  <div class="page reveal">
+    <div class="margin-line"></div>
+    <div class="chapter-header">
+      <span class="chapter-num">Konduktor</span>
+      <div class="chapter-title">Ega O. Azarya</div>
+      <div class="chapter-ornament">— ✦ —</div>
+    </div>
+
+    <div class="conductor-header">
+      <div class="conductor-photo-wrap">
+        <img src="Ega Azarya.png" alt="Ega O. Azarya" class="conductor-photo">
+      </div>
+      <div class="conductor-info">
+        <div class="conductor-name">Ega O. Azarya</div>
+        <div class="conductor-role">Konduktor &amp; Direktur Musik<br>The Archipelago Singers</div>
+      </div>
+    </div>
+
+    <p>
+      Memulai pendidikan musik klasik dengan belajar piano pada Ibu Romey Mandala, Ega O. Azarya kemudian belajar vokal pada <strong>Ivan Yohan</strong>, <strong>Dody Soetanto</strong> dan Ibu <strong>Dorcas Soenaryo</strong>, serta memperdalam teknik vokalnya melalui masterclass oleh <strong>Prof. Rudolf Piernay</strong> (Jerman).
+    </p>
+    <p>
+      Sebagai solis bariton-bas, Ega tampil bersama Orkes Concordia dan Jakarta City Philharmonic Orchestra. Pada tahun 2016 ia mengikuti <em>International Choir Conducting Masterclass</em> di Debrecen, Hungaria di bawah bimbingan <strong>Peter Broadbent</strong> dan <strong>Mate Szabo Sipos</strong>.
+    </p>
+    <p>
+      Sebagai konduktor The Archipelago Singers, Ega telah membawa paduan suara ini meraih <strong>Grand Prix</strong> di Busan (2019), First Prize di Spanyol (2014), Bulgaria (2016), serta penghargaan internasional di Italia, Filipina, dan Slovenia. Pada Juli <strong>2025</strong>, ia membawa PSM Unpar menjadi juara Grand Prix di Gorizia, Italia.
+    </p>
+
+    <div class="timeline">
+      <div class="timeline-label">Penghargaan Konduktor</div>
+      <div class="timeline-item">
+        <div class="tl-year">2025</div>
+        <div class="tl-desc"><em>Prize to the Conductor for the Best Performance of a Work by Jacobus Handl-Gallus</em> — Maribor, Slovenia.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-year">2019</div>
+        <div class="tl-desc"><em>Best Conductor Prize</em> — Busan International Choral Festival and Competition, Korea Selatan.</div>
+      </div>
+    </div>
+
+    <div class="marginalia">Saat ini, Ega dipercaya menjadi juri pada berbagai festival dan lomba paduan suara nasional dan internasional, choral clinician, serta konduktor tamu pada konser paduan suara dan orkestra.</div>
+
+    <div class="page-num">
+      <span class="running-head">TRDC Annual Concert 2026</span>
+      <span>4</span>
+      <span class="running-title">Konduktor</span>
+    </div>
+  </div>
+
+  <!-- ══ PAGE: RUN DOWN ══ -->
+  <div class="page reveal">
+    <div class="margin-line"></div>
+    <div class="chapter-header">
+      <span class="chapter-num">Programme</span>
+      <div class="chapter-title">Run Down Acara</div>
+      <div class="chapter-ornament">— ✦ —</div>
+    </div>
+
+    <table class="programme-table">
+      <thead>
+        <tr>
+          <th>Waktu</th>
+          <th>Kegiatan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>16.30 – 16.55</td>
+          <td><strong>Registrasi / Open Gate</strong></td>
+        </tr>
+        <tr>
+          <td>17.00 – 17.10</td>
+          <td><strong>Pembukaan Acara (MC)</strong><br>Doa · Sambutan</td>
+        </tr>
+        <tr>
+          <td>17.10 – 17.55</td>
+          <td>
+            <strong>Perform The Resonare Deo Choir</strong><br>
+            Selalu Ada di Nadimu — <em>arr. Andreas Baladika</em><br>
+            Thankful — <em>arr. John Leavitt</em><br>
+            O Magnum Mysterium — <em>arr. Kevin Memley</em><br>
+            Twinkle Twinkle Little Star — <em>arr. Daniel Elder</em><br>
+            The Lion Sleep Tonight — <em>arr. Kirby Shaw</em><br>
+            Cantate Domino — <em>arr. Josu Elberdin</em><br>
+            Festival Sanctus — <em>arr. John Leavitt</em>
+          </td>
+        </tr>
+        <tr class="interlude">
+          <td>17.55 – 18.25</td>
+          <td><em>— Rehat —</em></td>
+        </tr>
+        <tr>
+          <td>18.25 – 18.55</td>
+          <td>
+            <strong>Perform The Archipelago Singers</strong><br>
+            Leonardo Dreams of His Flying Machine — <em>Eric Whitacre</em><br>
+            Imagine — <em>arr. Nilo Alcala</em><br>
+            Soleram — <em>arr. Josu Elberdin</em><br>
+            Negeri di Awan — <em>arr. Yosan Cahyadi</em><br>
+            Laskar Pelangi — <em>arr. Ily Matthew Maniano</em><br>
+            Circle of Life — <em>arr. Anna Tabita Abeleda</em>
+          </td>
+        </tr>
+        <tr>
+          <td>18.55 – 19.00</td>
+          <td><strong>All Singers</strong><br><em>Why We Sing</em> — dinyanyikan bersama</td>
+        </tr>
+        <tr>
+          <td>19.00 – 19.15</td>
+          <td><strong>Penutupan</strong><br>Penyampaian buket bunga · Doa</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="page-num">
+      <span class="running-head">TRDC Annual Concert 2026</span>
+      <span>5</span>
+      <span class="running-title">Run Down</span>
+    </div>
+  </div>
+
+  <!-- ══ PAGE: PERFORMERS ══ -->
+  <div class="page reveal">
+    <div class="margin-line"></div>
+    <div class="chapter-header">
+      <span class="chapter-num">Penampil</span>
+      <div class="chapter-title">TRDC Performers</div>
+      <div class="chapter-ornament">— ✦ —</div>
+    </div>
+
+    <div class="roster-section">
+      <div style="margin-bottom:1.2rem;">
+        <span class="roster-key">Conductor:</span> Yanuar Prasetio S<br>
+        <span class="roster-key">Pianis:</span> Alenzo Leksana
+      </div>
+
+      <div class="section-rule"><div class="line"></div><div class="fleur">✦</div><div class="line"></div></div>
+
+      <div class="roster-voice">Sopran</div>
+      <div class="roster-names">
+        Angelina Tornauli Lumban Gaol, Athanasia Austin Bella Sutomo, Athanasia Kirey Affrial, Avril Chatarina Br. Gultom, Klara Chantrea Teja, Fabiola Aretha Krisalyn Kunfianto, Felicia Christabel Jovena, Gabriella Nira Averia Wahyuni, Lidwina Audrey Vania Simamora, Margaretha Indriani Valens, Maria Cahyani Siregar, Theresia Senandung Bayu Widiputri, Yohana Agni Pradita Putri Kusuma, Stefanie Tiara Putri Pakpahan, Sherrenitha Aurelia Pangesta, Odilia Efrika Tamaria Sinaga, Regina Natasha Christeana, Natalia Dativa Sila, Naomi Josephine Johan, Lusiana Aline Quinzita Pakpahan, Anika Mei Leia Arsanto, Helena Claritha Wijaya Sihotang, Maria Alena Graciella Jebaru, Nathania Anindita Santoso
+      </div>
+
+      <div class="roster-voice">Alto</div>
+      <div class="roster-names">
         Annamora Valentsia Sinaga, Audrey Rosari Ningtyas, Laurentia Emmanuela Chanviorentza Crislly, Matilda Terra, Petra Febrianty, Princesska Miracle Hotnauli Nainggolan, Verena Senandung Gretta Rosario, Abigail Immanuella Prabowo, Fdc Tunggadewi Agdha Saputro, Bernadetha Eka Graceline Sitohang, Martha Mirabelle Hotmianauli Nainggolan, Caroline Valencia Renatha
       </div>
-      <div class="voice-label">Tenor</div>
-      <div class="voice-names" style="columns:1;">
+
+      <div class="roster-voice">Tenor</div>
+      <div class="roster-names">
         Alvin Tara Megumareru, Antonius Maryo Arep Sinuor, Rizki Aditia Pratama, Silvano Laurentius Octovian, Gregorius Telaga, Sirilus Mario Juan Meko, Zenevan Valentino S., Antonius Felix Santoso, FX. Radiptha Rahadika, Naresworo Ayodhyo Kusumo
       </div>
-      <div class="voice-label">Bass</div>
-      <div class="voice-names" style="columns:1;">
+
+      <div class="roster-voice">Bass</div>
+      <div class="roster-names">
         Abraham Raymond, Antonius Samudra Bayu Amarta Widi Putra, Silvester Adventio Tri Haryanto, Valentino Adriell Davis Simamora, Winner Agustinus Sihotang, Michael Christian PP, Gaudensius Bima Desyarto, Abraham Nicholas Prabowo, Nikolas Brian Wijaya Sihotang
       </div>
-    `
-  },
+    </div>
 
-  /* 4 — Sponsor + Donatur */
-  {
-    label: 'Sponsor',
-    left: `
-      <div class="pg-eyebrow">Didukung Oleh</div>
-      <div class="pg-title" style="font-size:1.5rem;">Sponsor</div>
-      <div class="pg-divider"><div class="diamond"></div></div>
-      <div class="sponsor-row">
-        <div class="sponsor-pill">OCBC</div>
-        <div class="sponsor-pill">Sago Kitchen</div>
-        <div class="sponsor-pill">Dua Kelinci</div>
-        <div class="sponsor-pill">Rintis Sejahtera</div>
+    <div class="page-num">
+      <span class="running-head">TRDC Annual Concert 2026</span>
+      <span>6</span>
+      <span class="running-title">Performers</span>
+    </div>
+  </div>
+
+  <!-- ══ PAGE: SPONSOR ══ -->
+  <div class="page reveal">
+    <div class="margin-line"></div>
+    <div class="chapter-header">
+      <span class="chapter-num">Pendukung</span>
+      <div class="chapter-title">Sponsor</div>
+      <div class="chapter-ornament">— ✦ —</div>
+    </div>
+
+    <div class="sponsor-grid">
+      <div class="sponsor-item"><img src="BCA.png" alt="BCA"></div>
+      <div class="sponsor-item"><img src="Sago kitchen.jpg" alt="Sago Kitchen"></div>
+      <div class="sponsor-item"><img src="UMN.png" alt="UMN"></div>
+      <div class="sponsor-item"><img src="Rintis Sejahtera.png" alt="Rintis Sejahtera"></div>
+      <div class="sponsor-item"><img src="ocbc.png" alt="OCBC"></div>
+      <div class="sponsor-item"><img src="Little Tree.png" alt="Little Tree"></div>
+      <div class="sponsor-item"><img src="Gemoy.jpeg" alt="Duren Gemoy"></div>
+      <div class="sponsor-item"><img src="Dian Mandiri.jpeg" alt="Dian Mandiri"></div>
+      <div class="sponsor-item"><img src="dua kelinci.jpg" alt="Dua Kelinci"></div>
+      <div class="sponsor-item"><img src="bale ulang.png" alt="Bale Ulang"></div>
+      <div class="sponsor-item"><img src="tipsy.png" alt="Tipsy"></div>
+      <div class="sponsor-item"><img src="SSM.png" alt="SSM"></div>
+      <div class="sponsor-item"><img src="Panin.jpeg" alt="Panin"></div>
+      <div class="sponsor-item"><img src="Dapur LS17.jpg" alt="Dapur LS17"></div>
+    </div>
+
+    <div class="section-rule"><div class="line"></div><div class="fleur">✦</div><div class="line"></div></div>
+
+    <div class="chapter-header" style="margin-top:2rem; border-bottom:none; padding-bottom:0;">
+      <span class="chapter-num">Donatur</span>
+      <div class="chapter-title" style="font-size:1.3rem;">Para Donatur</div>
+    </div>
+
+    <div class="donatur-list" style="margin-top:1rem;">
+      <p>Fiftin Fatmasari</p>
+      <p>Filisitas Kristina S</p>
+      <p>Maria Yudhitama Eka</p>
+      <p>Agustina Endang</p>
+      <p>Dapur LS 17 Citra Raya</p>
+      <p>Yulita Rintyasrini</p>
+      <p>RR. Yulita Riswidaja</p>
+      <p>Handoyo</p>
+      <p>Siregar Setiawan Manalu</p>
+      <p>Ngatini</p>
+      <p>FX Suhartono</p>
+      <p>Rita Kurniasih</p>
+      <p>Margaretha Setiawan</p>
+      <p>Heryanto Oemar</p>
+      <p>Veronika Suvarna</p>
+      <p>Kuat Setia Budi</p>
+      <p>Eduardus Ary</p>
+      <p>Yosefina Rumengan</p>
+      <p>Deasy Liliyanty</p>
+      <p>Yuliani Rahmat</p>
+      <p>Vitalis Jebarus</p>
+      <p>Harinowo Cantata Divina GS</p>
+      <p>Agnes Bebasari</p>
+      <p>Caroline Budyerlin</p>
+      <p>Catharina Ratnawati</p>
+      <p>Irene Mariani Tjan</p>
+      <p>Jeni Widjaja</p>
+      <p>Josy Suryanti</p>
+      <p>Martina Nelly</p>
+      <p>Meilinda Hardjali</p>
+      <p>Mia Tantina Iskandar</p>
+      <p>Suryono Hidayat</p>
+      <p>PT. Mayora</p>
+      <p>PT. Indofood</p>
+    </div>
+
+    <div class="page-num">
+      <span class="running-head">TRDC Annual Concert 2026</span>
+      <span>7</span>
+      <span class="running-title">Sponsor &amp; Donatur</span>
+    </div>
+  </div>
+
+  <!-- ══ PAGE: PENYELENGGARA ══ -->
+  <div class="page reveal">
+    <div class="margin-line"></div>
+    <div class="chapter-header">
+      <span class="chapter-num">Penyelenggara</span>
+      <div class="chapter-title">Tim Produksi &amp; Panitia</div>
+      <div class="chapter-ornament">— ✦ —</div>
+    </div>
+
+    <div style="margin-bottom:2rem;">
+      <div class="roster-voice">Tim Produksi</div>
+      <div class="roster-names" style="line-height:2.1;">
+        <span class="roster-key">Art Director:</span> Sesilia Novyanti Nugraningsih<br>
+        <span class="roster-key">Pelatih &amp; Dirigen:</span> Yanuar Prasetio<br>
+        <span class="roster-key">Kostum:</span> Muji Rahayu, Agatha Ferry Setyaningsih, Sarmauli Ros Sumbayak, Nelly Ober Maristella Tondang<br>
+        <span class="roster-key">Konsumsi:</span> Brigita Sri Suryani, Fransisca Deciana, Fretry LM, Glory Maidy, Yohana Vero, Bonor Simamora, Nova Laksmawati, Dian Puji Astuti
       </div>
-      <div style="margin-top:1.3rem;">
-        <div class="pg-section">Donatur</div>
-        <div class="donatur-cols">
-          <div>Fiftin Fatmasari</div><div>Filisitas Kristina S.</div>
-          <div>Maria Yudhitama Eka</div><div>Agustina Endang</div>
-          <div>NN</div><div>Yulita Rintyasrini</div>
-          <div>RR. Yulita Riswidaja</div><div>Handoyo</div>
-          <div>Siregar Setiawan Manalu</div><div>Ngatini</div>
-          <div>FX Suhartono</div><div>Rita Kurniasih</div>
-          <div>Margaretha Setiawan</div><div>Heryanto Oemar</div>
-          <div>Veronika Suvarna</div><div>Kuat Setia Budi</div>
-          <div>Eduardus Ary</div><div>Yosefina Rumengan</div>
-          <div>Deasy Liliyanty</div><div>Yuliani Rahmat</div>
-        </div>
+    </div>
+
+    <div class="section-rule"><div class="line"></div><div class="fleur">✦</div><div class="line"></div></div>
+
+    <div>
+      <div class="roster-voice">Panitia</div>
+      <div class="roster-names" style="line-height:2.1;">
+        <span class="roster-key">Ketua:</span> Pramukadi Purwatmojo<br>
+        <span class="roster-key">Wakil Ketua:</span> Andreas Sihono<br>
+        <span class="roster-key">Sekretaris:</span> Maria Astrid Ohoiwutun<br>
+        <span class="roster-key">Bendahara:</span> Maria Niken Kurniawati<br>
+        <span class="roster-key">Sie Acara:</span> Sesilia Novyanti, Bergitta Redawati, Nopi<br>
+        <span class="roster-key">Sie Dana Usaha:</span> Meilany P. H, Netty A, Dhian Oscarani<br>
+        <span class="roster-key">Sie Tiketing:</span> Elisabeth Zee, Wilibold Gulabertus Affrial<br>
+        <span class="roster-key">Sie Humas:</span> Florentina Nancy, Emiliana Ardian Farida<br>
+        <span class="roster-key">Sie Publikasi:</span> Leonardus Simamora<br>
+        <span class="roster-key">Sie Dokumentasi:</span> Koko, Lufti<br>
+        <span class="roster-key">Sie Perlengkapan:</span> Hendy K, Willy, Lian, Mario, Ale<br>
+        <span class="roster-key">Sie Penerima Tamu:</span> Senna, Yani, Ica, Priska<br>
+        <span class="roster-key">Sie Lighting:</span> Yannuar Prasetio, Antonius Wisnu<br>
+        <span class="roster-key">Sie Keamanan:</span> Yohanes Purwanto, Nazarius Triyono, Totok, Martinus Iswandi<br>
+        <span class="roster-key">Sie Konsumsi:</span> Fransiska D.
       </div>
-    `,
-    right: `
-      <div class="pg-eyebrow">Tim Penyelenggara</div>
-      <div class="pg-title" style="font-size:1.5rem;">Panitia</div>
-      <div class="pg-divider"><div class="diamond"></div></div>
-      <div class="pg-section">Tim Produksi</div>
-      <div class="panitia-body">
-        Art Director : ..............<br>
-        Koreografi : ..................<br>
-        Kostum : .....................
-      </div>
-      <div class="pg-section" style="margin-top:1rem;">Panitia</div>
-      <div class="panitia-body">
-        <strong>Ketua</strong> · Pramukadi Purwatmojo<br>
-        <strong>Wakil Ketua</strong> · Andreas Sihono<br>
-        <strong>Sekretaris</strong> · Maria Astrid Ohoiwutun<br>
-        <strong>Bendahara</strong> · Maria Niken Kurniawati<br>
-        <strong>Sie Acara</strong> · Sesilia Novyanti, Bergitta R., Nopi<br>
-        <strong>Sie Dana Usaha</strong> · Meilany P.H, Netty A, Dhian<br>
-        <strong>Sie Tiketing</strong> · Zee, Willy<br>
-        <strong>Sie Humas</strong> · Flo, Emiliana<br>
-        <strong>Sie Publikasi</strong> · Leo S.<br>
-        <strong>Sie Dokumentasi</strong> · Koko, Lufti<br>
-        <strong>Sie Perlengkapan</strong> · Hendy K, Willy, Lian, Mario, Ale<br>
-        <strong>Sie Penerima Tamu</strong> · Senna, Yani, Ica, Priska<br>
-        <strong>Sie Lighting</strong> · Yannuar<br>
-        <strong>Sie Keamanan</strong> · Y. Purwanto, Triyono, Totok, Wawan<br>
-        <strong>Sie Konsumsi</strong> · Fransiska D.
-      </div>
-      <div style="margin-top:1.2rem;">
-        <div class="pg-divider"><div class="diamond"></div></div>
-        <div style="text-align:center; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:0.76rem; color:var(--ink-light);">
-          © 2026 TRDC Annual Concert<br>Organized by Svarga Antari Choir
-        </div>
-      </div>
-    `
-  }
+    </div>
 
-];
+    <div class="page-num">
+      <span class="running-head">TRDC Annual Concert 2026</span>
+      <span>8</span>
+      <span class="running-title">Penyelenggara</span>
+    </div>
+  </div>
 
-// ── Render engine ──
-let current = 0;
-const cL = document.getElementById('content-left');
-const cR = document.getElementById('content-right');
-const pL = document.getElementById('pnum-left');
-const pR = document.getElementById('pnum-right');
-const pLeft  = document.getElementById('page-left');
-const pRight = document.getElementById('page-right');
-const btnPrev = document.getElementById('btn-prev');
-const btnNext = document.getElementById('btn-next');
-const labelEl = document.getElementById('spread-label');
-const dotsEl  = document.getElementById('nav-dots');
+  <!-- ══ BACK COVER ══ -->
+  <div class="book-footer reveal">
+    <div class="spine-strip"></div>
+    <div style="color:rgba(212,168,58,0.4); font-size:1rem; letter-spacing:0.5em; margin-bottom:1.5rem;">✦ · ✦ · ✦</div>
+    <strong>Organized by: Svarga Antari Choir</strong>
+    <p>"When voices become home, the world finds harmony."</p>
+    <p style="margin-top:1rem; font-size:0.75rem;">© 2026 TRDC Annual Concert — All Rights Reserved</p>
+  </div>
 
-spreads.forEach((_, i) => {
-  const d = document.createElement('div');
-  d.className = 'nav-dot';
-  d.onclick = () => goTo(i);
-  dotsEl.appendChild(d);
-});
+</div><!-- /book-outer -->
 
-function render(idx, animate) {
-  const s = spreads[idx];
-  function swap() {
-    cL.innerHTML = s.left;
-    cR.innerHTML = s.right;
-    cL.scrollTop = cR.scrollTop = 0;
-    pL.textContent = idx * 2 + 1;
-    pR.textContent = idx * 2 + 2;
-    labelEl.textContent = s.label;
-    btnPrev.disabled = idx === 0;
-    btnNext.disabled = idx === spreads.length - 1;
-    document.querySelectorAll('.nav-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
-  }
-  if (animate) {
-    pLeft.classList.add('turning');
-    pRight.classList.add('turning');
-    setTimeout(() => {
-      swap();
-      pLeft.classList.remove('turning');
-      pRight.classList.remove('turning');
-    }, 300);
-  } else { swap(); }
-}
-
-function goTo(idx) {
-  if (idx < 0 || idx >= spreads.length) return;
-  current = idx; render(current, true);
-}
-
-btnPrev.onclick = () => goTo(current - 1);
-btnNext.onclick = () => goTo(current + 1);
-
-document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goTo(current + 1);
-  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   goTo(current - 1);
-});
-
-let tx = 0;
-document.getElementById('book').addEventListener('touchstart', e => { tx = e.changedTouches[0].clientX; });
-document.getElementById('book').addEventListener('touchend',   e => {
-  const dx = e.changedTouches[0].clientX - tx;
-  if (dx < -50) goTo(current + 1);
-  if (dx >  50) goTo(current - 1);
-});
-
-render(0, false);
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.04 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
